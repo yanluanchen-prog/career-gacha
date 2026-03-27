@@ -2627,9 +2627,14 @@ function renderHeader() {
 
 
 // ── Card Detail Modal ──────────────────────────────────
+// 当前显示的卡牌名称（用于事件处理）
+let currentDetailCardName = null;
+
 function showCardDetail(name) {
   const career = CAREERS.find(c => c.name === name);
   if (!career) return;
+  
+  currentDetailCardName = name;
   
   // 显示完整卡牌（放大版）
   document.getElementById('cardDetailFace').innerHTML = buildCard(career, false);
@@ -2639,25 +2644,24 @@ function showCardDetail(name) {
   const count = G.collection[name] || 0;
   const actions = document.getElementById('cardDetailActions');
   
-  // 三个按钮：出战、放回、分享
+  // 三个按钮：出战、放回、分享 - 使用data-action属性而不是onclick
   let btnHtml = '';
   
   // 出战按钮
   if (inTeam) {
-    btnHtml += '<button class="btn btn-sm" style="flex:1" onclick="handleDetailAction(\'' + name + '\', \'remove\')">✕ 移出队伍</button>';
+    btnHtml += '<button class="btn btn-sm detail-btn" data-action="remove" style="flex:1">✕ 移出队伍</button>';
   } else if (teamFull) {
     btnHtml += '<button class="btn btn-sm" style="flex:1;opacity:0.5;cursor:not-allowed;" disabled>队伍已满</button>';
   } else {
-    var toastMsg = career.rarity === 'UR' ? '⚡ 绝版秘技已解锁！用完即焚' : name + ' 加入队伍！';
-    btnHtml += '<button class="btn btn-red btn-sm" style="flex:1" onclick="handleDetailAction(\'' + name + '\', \'add\', \'' + toastMsg + '\')">⚔ 出战</button>';
+    btnHtml += '<button class="btn btn-red btn-sm detail-btn" data-action="add" data-is-ur="' + (career.rarity === 'UR') + '" style="flex:1">⚔ 出战</button>';
   }
   
   // 放回按钮（关闭弹窗）
-  btnHtml += '<button class="btn btn-outline btn-sm" style="flex:1" onclick="closeCardDetail()">↩ 放回</button>';
+  btnHtml += '<button class="btn btn-outline btn-sm detail-btn" data-action="close" style="flex:1">↩ 放回</button>';
   
   // 分享按钮（仅当有重复卡时可用）
   if (count > 1) {
-    btnHtml += '<button class="btn btn-outline btn-sm" style="flex:1" onclick="handleDetailAction(\'' + name + '\', \'share\', ' + count + ')">↗ 分享</button>';
+    btnHtml += '<button class="btn btn-outline btn-sm detail-btn" data-action="share" style="flex:1">↗ 分享</button>';
   } else {
     btnHtml += '<button class="btn btn-outline btn-sm" style="flex:1;opacity:0.4;cursor:not-allowed;" disabled title="需要重复卡才能分享">↗ 分享</button>';
   }
@@ -2665,21 +2669,37 @@ function showCardDetail(name) {
   actions.innerHTML = '<div style="display:flex;gap:8px;width:100%;">' + btnHtml + '</div>';
   actions.style.flexDirection = 'row';
   
+  // 绑定按钮事件（使用事件委托）
+  actions.querySelectorAll('.detail-btn').forEach(btn => {
+    btn.onclick = function() {
+      const action = this.getAttribute('data-action');
+      const isUR = this.getAttribute('data-is-ur') === 'true';
+      handleDetailAction(action, isUR);
+    };
+  });
+  
   document.getElementById('cardDetailModal').classList.add('open');
 }
 
 // 处理卡牌详情弹窗的操作
-function handleDetailAction(name, action, param) {
+function handleDetailAction(action, isUR) {
+  const name = currentDetailCardName;
+  if (!name) return;
+  
   if (action === 'add') {
     toggleTeam(name);
     closeCardDetail();
-    showToast(param);
+    const toastMsg = isUR ? '⚡ 绝版秘技已解锁！用完即焚' : name + ' 加入队伍！';
+    showToast(toastMsg);
   } else if (action === 'remove') {
     toggleTeam(name);
     closeCardDetail();
     showToast(name + ' 已移出队伍');
   } else if (action === 'share') {
-    showExchangeCode(name, param);
+    const count = G.collection[name] || 0;
+    showExchangeCode(name, count);
+    closeCardDetail();
+  } else if (action === 'close') {
     closeCardDetail();
   }
 }
