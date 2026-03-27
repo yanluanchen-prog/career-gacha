@@ -947,6 +947,7 @@ body{
   <p>2026，你的职业，还能撑多久？</p>
   <p style="font-size:9px;color:var(--ink-faint);opacity:0.55;letter-spacing:1px;margin-top:4px;font-style:italic;">数据来源：Anthropic经济指数报告 · 2026</p>
   <div class="header-stamp">档案局<br>认证</div>
+  <button id="soundToggle" onclick="toggleSound()" style="position:absolute;top:12px;left:16px;width:36px;height:36px;border-radius:50%;background:transparent;border:1px solid rgba(244,238,216,0.3);color:var(--paper);font-size:14px;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:0;opacity:0.7;transition:all 0.3s;" title="开关音效">🔊</button>
 </div>
 
 <!-- TOAST -->
@@ -1329,6 +1330,7 @@ const DEFAULT_STATE = {
   sameTeamCount: 0,    // 连续使用同一卡组的次数
   cardUsage: {},       // 卡组疲劳：{name: count} 每张卡连续使用次数
   bossAdaptation: {},  // Boss学习：{bossId: {type: 克制类型}}
+  soundEnabled: true,  // 音效开关
 };
 
 let G = loadState();
@@ -1366,8 +1368,21 @@ function tone(freq, dur, vol=0.15, type='sine', delay=0) {
   } catch(e) {}
 }
 
+function toggleSound() {
+  G.soundEnabled = !G.soundEnabled;
+  saveState();
+  const btn = document.getElementById('soundToggle');
+  if (btn) {
+    btn.textContent = G.soundEnabled ? '🔊' : '🔇';
+    btn.style.opacity = G.soundEnabled ? '0.7' : '0.4';
+  }
+  showToast(G.soundEnabled ? '🔊 音效已开启' : '🔇 音效已关闭');
+}
+
 function playSound(type) {
   try {
+    // 检查音效开关
+    if (G.soundEnabled === false) return;
     if (AC.state === 'suspended') AC.resume();
     const t = AC.currentTime;
     if (type === 'draw') {
@@ -2451,27 +2466,91 @@ function openExchangeImport() {
     <p style="font-size:12px;color:var(--ink-lt);margin-bottom:12px;line-height:1.6;">
       粘贴朋友发来的卡片交换码，获得对应职业卡。<br>（重复卡可在职业档案中长按生成交换码）
     </p>
-    <input type="text" id="exchangeInput" placeholder="粘贴交换码到这里...">
-    <div class="btn-row">
+    <input type="text" id="exchangeInput" placeholder="粘贴交换码到这里..." style="width:100%;padding:10px;border:1px solid var(--border);border-radius:4px;font-size:14px;font-family:monospace;" onkeydown="if(event.key==='Enter')importExchange()">
+    <div class="btn-row" style="margin-top:12px;">
       <button class="btn btn-red btn-sm" onclick="importExchange()">导入卡片</button>
-    </div>`;
+    </div>
+    <div id="exchangeFeedback"></div>`;
   document.getElementById('exchangeModal').classList.add('open');
+  // 自动聚焦输入框
+  setTimeout(() => document.getElementById('exchangeInput')?.focus(), 100);
 }
 
 function importExchange() {
-  const code = document.getElementById('exchangeInput').value.trim();
+  const input = document.getElementById('exchangeInput');
+  const code = input.value.trim();
+  const feedbackEl = document.getElementById('exchangeFeedback');
+  
   try {
     const data = JSON.parse(atob(code));
     if (!data.name) throw new Error('invalid');
+    
+    // 检查是否是有效职业
+    const career = CAREERS.find(c => c.name === data.name);
+    if (!career) throw new Error('invalid career');
+    
+    // 检查是否已拥有
+    const hadBefore = !!G.collection[data.name];
+    
     G.collection[data.name] = (G.collection[data.name] || 0) + 1;
     saveState();
     renderAll();
-    closeModal('exchangeModal');
-    showToast(`获得 ${data.name}（${data.rarity}）！`);
+    
+    // 显示成功反馈（带卡片预览）
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `
+        <div style="background:rgba(26,107,58,0.1);border:1px solid var(--green);border-radius:8px;padding:16px;margin-top:12px;text-align:center;">
+          <div style="font-size:32px;margin-bottom:8px;">${career.icon}</div>
+          <div style="font-size:16px;font-weight:700;color:var(--green);margin-bottom:4px;">✓ 导入成功！</div>
+          <div style="font-size:14px;color:var(--ink);">获得「${career.name}」</div>
+          <div style="font-size:12px;color:var(--ink-lt);margin-top:4px;">${RARITY_LABEL[career.rarity]} · ${career.type}</div>
+          ${hadBefore ? '<div style="font-size:11px;color:#B85A00;margin-top:8px;">（已有此卡，数量+1）</div>' : '<div style="font-size:11px;color:var(--green);margin-top:8px;">新职业解锁！</div>'}
+        </div>
+      `;
+      // 2秒后关闭弹窗
+      setTimeout(() => {
+        closeModal('exchangeModal');
+        if (!hadBefore) {
+          showToast(`🎉 新职业「${career.name}」解锁！`, 2500);
+        } else {
+          showToast(`✓ ${career.name} 数量+1`, 1500);
+        }
+      }, 1800);
+    } else {
+      closeModal('exchangeModal');
+      showToast(`获得 ${career.name}（${RARITY_LABEL[career.rarity]}）！`);
+    }
   } catch(e) {
-    showToast('无效的交换码，请检查');
+    // 显示错误反馈
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `
+        <div style="background:rgba(196,26,26,0.08);border:1px solid var(--red);border-radius:8px;padding:12px;margin-top:12px;text-align:center;">
+          <div style="font-size:20px;margin-bottom:4px;">❌</div>
+          <div style="font-size:13px;color:var(--red);">交换码无效或已损坏</div>
+          <div style="font-size:11px;color:var(--ink-faint);margin-top:4px;">请检查是否复制完整</div>
+        </div>
+      `;
+    } else {
+      showToast('❌ 无效的交换码，请检查是否复制完整');
+    }
+    // 输入框震动动画提示
+    input.style.animation = 'shake 0.4s ease';
+    setTimeout(() => { input.style.animation = ''; }, 400);
   }
 }
+
+// 添加震动动画CSS
+const shakeStyle = document.createElement('style');
+shakeStyle.textContent = `
+  @keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20% { transform: translateX(-8px); }
+    40% { transform: translateX(8px); }
+    60% { transform: translateX(-4px); }
+    80% { transform: translateX(4px); }
+  }
+`;
+document.head.appendChild(shakeStyle);
 
 function generateExchangeCode(careerName) {
   const c = CAREERS.find(x => x.name === careerName);
@@ -2624,9 +2703,25 @@ function renderCollection() {
 
   // Long-press for exchange code
   grid.querySelectorAll('.mini-card').forEach(el => {
+    // 添加长按提示（仅在有多张卡时显示）
+    const name = el.querySelector('.mini-name').textContent;
+    const count = G.collection[name] || 0;
+    if (count > 1) {
+      el.style.position = 'relative';
+      const hint = document.createElement('div');
+      hint.className = 'long-press-hint';
+      hint.innerHTML = '长按分享';
+      hint.style.cssText = 'position:absolute;top:2px;left:2px;background:rgba(184,90,0,0.9);color:#fff;font-size:8px;padding:2px 4px;border-radius:3px;opacity:0;transition:opacity 0.3s;pointer-events:none;';
+      el.appendChild(hint);
+      
+      el.addEventListener('mouseenter', () => hint.style.opacity = '1');
+      el.addEventListener('mouseleave', () => hint.style.opacity = '0');
+      el.addEventListener('touchstart', () => hint.style.opacity = '1', {passive:true});
+      el.addEventListener('touchend', () => setTimeout(() => hint.style.opacity = '0', 1000), {passive:true});
+    }
+    
     el.addEventListener('contextmenu', e => {
       e.preventDefault();
-      const name = el.querySelector('.mini-name').textContent;
       const count = G.collection[name] || 0;
       if (count > 1) {
         showExchangeCode(name, count);
@@ -2641,23 +2736,34 @@ function showExchangeCode(name, count) {
   const code = generateExchangeCode(name);
   const c = CAREERS.find(x => x.name === name);
   document.getElementById('exchangeContent').innerHTML = `
-    <p style="font-size:12px;color:var(--ink-lt);margin-bottom:8px;">
-      你有 ${count} 张「${name}」，发给朋友一张：
-    </p>
-    <div class="exchange-code-box">${code}</div>
-    <div class="btn-row">
-      <button class="btn btn-red btn-sm" onclick="copyExchangeCode('${code}')">复制交换码</button>
+    <div style="text-align:center;margin-bottom:16px;">
+      <div style="font-size:48px;margin-bottom:8px;">${c.icon}</div>
+      <div style="font-size:16px;font-weight:700;color:var(--ink);">${c.name}</div>
+      <div style="font-size:12px;color:var(--ink-lt);margin-top:4px;">${RARITY_LABEL[c.rarity]} · ${c.type}</div>
+      <div style="font-size:11px;color:#B85A00;margin-top:8px;">你有 ${count} 张，可分享 ${count-1} 张</div>
     </div>
-    <p style="font-size:10px;color:var(--ink-faint);margin-top:8px;font-family:monospace;">
-      注意：复制后你的这张卡数量-1
-    </p>`;
+    <div style="background:var(--paper-dk);border:1px dashed var(--border);border-radius:6px;padding:12px;margin-bottom:12px;">
+      <div style="font-size:10px;color:var(--ink-faint);margin-bottom:6px;letter-spacing:1px;font-family:monospace;">交换码（发给朋友粘贴导入）</div>
+      <div class="exchange-code-box" style="font-size:11px;word-break:break-all;background:transparent;border:none;padding:0;">${code}</div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-red btn-sm" onclick="copyExchangeCode('${code}')" style="flex:1;">📋 复制交换码</button>
+    </div>
+    <div style="background:rgba(196,26,26,0.06);border-radius:6px;padding:10px;margin-top:12px;">
+      <p style="font-size:10px;color:var(--red);margin:0;font-family:monospace;line-height:1.5;">
+        ⚠️ 复制后你的「${c.name}」数量将 -1<br>
+        <span style="color:var(--ink-faint);">对方导入后数量 +1</span>
+      </p>
+    </div>`;
   document.getElementById('exchangeModal').classList.add('open');
 }
 
 function copyExchangeCode(code) {
   // Find name from code and reduce count
+  let cardName = '';
   try {
     const data = JSON.parse(atob(code));
+    cardName = data.name;
     if (G.collection[data.name] > 0) {
       G.collection[data.name]--;
       if (G.collection[data.name] === 0) delete G.collection[data.name];
@@ -2667,7 +2773,25 @@ function copyExchangeCode(code) {
   } catch(e) {}
   navigator.clipboard.writeText(code).then(() => {
     closeModal('exchangeModal');
-    showToast('交换码已复制！发给朋友吧');
+    // 更丰富的复制成功反馈
+    const feedback = document.createElement('div');
+    feedback.innerHTML = `
+      <div style="position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);background:var(--ink);color:var(--paper);padding:20px 32px;border-radius:12px;text-align:center;z-index:1000;box-shadow:0 8px 32px rgba(0,0,0,0.3);">
+        <div style="font-size:32px;margin-bottom:8px;">✓</div>
+        <div style="font-size:14px;font-weight:700;">交换码已复制！</div>
+        <div style="font-size:12px;color:#888;margin-top:4px;">${cardName ? '「' + cardName + '」已准备分享' : '快去发给朋友吧'}</div>
+      </div>
+    `;
+    document.body.appendChild(feedback);
+    setTimeout(() => {
+      feedback.style.opacity = '0';
+      feedback.style.transition = 'opacity 0.3s';
+      setTimeout(() => feedback.remove(), 300);
+    }, 1500);
+    
+    showToast('📋 交换码已复制！快去发给朋友吧');
+  }).catch(() => {
+    showToast('❌ 复制失败，请手动复制');
   });
 }
 
@@ -2732,6 +2856,13 @@ if (G.bossProgress >= 5) {
 }
 
 renderAll();
+
+// 初始化音效按钮状态
+const soundBtn = document.getElementById('soundToggle');
+if (soundBtn) {
+  soundBtn.textContent = G.soundEnabled !== false ? '🔊' : '🔇';
+  soundBtn.style.opacity = G.soundEnabled !== false ? '0.7' : '0.4';
+}
 
 // Unlock AudioContext on first interaction
 document.addEventListener('click', () => {
