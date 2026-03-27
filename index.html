@@ -333,8 +333,8 @@ body{
 }
 .team-slot.filled .team-remove-btn{
   position:absolute;
-  top:3px;
-  right:3px;
+  top:8px;
+  right:8px;
   width:18px;
   height:18px;
   border-radius:50%;
@@ -1079,13 +1079,10 @@ body{
         </div>
       </div>
       <div class="pity-wrap">
-        <div id="pitySegments" style="display:flex;gap:3px;justify-content:center;margin:6px 0;">
-          <div class="pity-seg" id="pitySeg0"></div><div class="pity-seg" id="pitySeg1"></div>
-          <div class="pity-seg" id="pitySeg2"></div><div class="pity-seg" id="pitySeg3"></div>
-          <div class="pity-seg" id="pitySeg4"></div><div class="pity-seg" id="pitySeg5"></div>
-          <div class="pity-seg" id="pitySeg6"></div><div class="pity-seg" id="pitySeg7"></div>
-          <div class="pity-seg" id="pitySeg8"></div><div class="pity-seg" id="pitySeg9"></div>
+        <div class="pity-track">
+          <div class="pity-bar" id="pityBar" style="width:0%"></div>
         </div>
+        <div class="pity-label"></div>
       </div>
       <div style="font-size:10px;color:var(--ink-faint);text-align:center;margin-top:4px;" id="pityInfo"></div>
       <div class="btn-row">
@@ -1812,8 +1809,11 @@ function renderTeam() {
       const c = CAREERS.find(x => x.name === name);
       el.className = `team-slot filled ${c.rarity}`;
       // 先插入mini-card，再单独添加关闭按钮
-      el.innerHTML = buildMiniCard(c, 1, false) + 
-        `<button class="team-remove-btn" onclick="event.stopPropagation();toggleTeam('${name}')">×</button>`;
+      el.innerHTML =
+        `<div style="position:relative;width:100%;">` +
+        buildMiniCard(c, 1, false) +
+        `<button class="team-remove-btn" onclick="event.stopPropagation();toggleTeam('${name}')">×</button>` +
+        `</div>`;
     } else {
       el.className = 'team-slot empty';
       el.innerHTML = `<div class="slot-no">第${i+1}位</div>`;
@@ -2068,7 +2068,7 @@ function renderBoss() {
         ${team.map(c => {
           return `<div style="position:relative;display:inline-block;width:100%;">` +
             buildMiniCard(c, 1, false) +
-            `<button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` +
+            `<button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:8px;right:8px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` +
             `</div>`;
         }).join('')}
       </div>
@@ -2691,19 +2691,22 @@ function renderHeader() {
   document.getElementById('pullsLeft').textContent = G.pullsLeft;
   document.getElementById('totalPulls').textContent = G.totalPulls;
   
+  // 进度条：剩余翻阅次数，10次满格，颜色警示
+  const maxPulls = 10;
+  const currentPulls = Math.min(G.pullsLeft, maxPulls);
+  const progressPercent = (currentPulls / maxPulls) * 100;
+  const pBar = document.getElementById('pityBar');
+  if (pBar) {
+    pBar.style.width = progressPercent + '%';
+    if (currentPulls <= 2) pBar.style.background = 'var(--red)';
+    else if (currentPulls <= 5) pBar.style.background = 'var(--orange)';
+    else pBar.style.background = 'var(--green)';
+  }
+
   const pitySSR = G.pitySSR || 0;
   const pityUR  = G.pityUR  || 0;
   const toSSR = 50  - pitySSR;
   const toUR  = 100 - pityUR;
-
-  // 10格保底进度条（每10抽一个周期）
-  const segFilled = pitySSR % 10;
-  for (let i = 0; i < 10; i++) {
-    const seg = document.getElementById('pitySeg' + i);
-    if (!seg) continue;
-    seg.className = i < segFilled ? (toSSR <= 10 ? 'pity-seg urgent' : 'pity-seg filled') : 'pity-seg';
-  }
-
   const pi = document.getElementById('pityInfo');
   if (pi) pi.textContent = `再抽 ${toSSR} 次必出紧缺档案 · 再抽 ${toUR} 次必出绝版档案`;
   const plr = document.getElementById('pityLeftRow');
