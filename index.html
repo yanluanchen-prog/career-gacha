@@ -1717,10 +1717,13 @@ function buildCard(career, animate) {
 }
 
 function buildMiniCard(career, count, inTeam) {
+  // 转义HTML属性中的特殊字符
+  const safeName = career.name.replace(/"/g, '&quot;');
+  const safeDesc = career.desc.replace(/"/g, '&quot;').replace(/\n/g, ' ');
   return `
   <div class="mini-card ${career.rarity} ${inTeam ? 'in-team' : ''}"
-       data-name="${career.name}"
-       title="${career.desc}">
+       data-name="${safeName}"
+       title="${safeDesc}">
     <div class="mini-header">
       <div class="mini-rarity">${RARITY_SHORT[career.rarity]}</div>
       ${count > 1 ? `<div class="mini-count">×${count}</div>` : '<div></div>'}
@@ -2722,9 +2725,13 @@ function renderCollection() {
     const card = e.target.closest('.mini-card[data-name]');
     if (card) {
       const name = card.getAttribute('data-name');
-      if (name) showCardDetail(name);
+      if (name) {
+        showCardDetail(name);
+      }
     }
   };
+  // 确保点击事件绑定成功
+  grid.style.cursor = 'pointer';
 
 
   // 博物馆区域
