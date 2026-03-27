@@ -2715,34 +2715,33 @@ function renderCollection() {
     museumDiv.innerHTML = '';
   }
 
-  // Long-press for exchange code
+  // 为重复卡添加分享按钮
   grid.querySelectorAll('.mini-card').forEach(el => {
-    // 添加长按提示（仅在有多张卡时显示）
     const name = el.querySelector('.mini-name').textContent;
     const count = G.collection[name] || 0;
     if (count > 1) {
       el.style.position = 'relative';
-      const hint = document.createElement('div');
-      hint.className = 'long-press-hint';
-      hint.innerHTML = '长按分享';
-      hint.style.cssText = 'position:absolute;top:2px;left:2px;background:rgba(184,90,0,0.9);color:#fff;font-size:8px;padding:2px 4px;border-radius:3px;opacity:0;transition:opacity 0.3s;pointer-events:none;';
-      el.appendChild(hint);
-      
-      el.addEventListener('mouseenter', () => hint.style.opacity = '1');
-      el.addEventListener('mouseleave', () => hint.style.opacity = '0');
-      el.addEventListener('touchstart', () => hint.style.opacity = '1', {passive:true});
-      el.addEventListener('touchend', () => setTimeout(() => hint.style.opacity = '0', 1000), {passive:true});
-    }
-    
-    el.addEventListener('contextmenu', e => {
-      e.preventDefault();
-      const count = G.collection[name] || 0;
-      if (count > 1) {
+      // 添加分享按钮（小箭头图标）
+      const shareBtn = document.createElement('button');
+      shareBtn.innerHTML = '↗';
+      shareBtn.title = '分享多余卡牌';
+      shareBtn.style.cssText = 'position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(184,90,0,0.9);color:#fff;border:none;font-size:10px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;padding:0;opacity:0.9;transition:opacity 0.2s,transform 0.2s;';
+      shareBtn.onmouseenter = () => { shareBtn.style.opacity = '1'; shareBtn.style.transform = 'scale(1.1)'; };
+      shareBtn.onmouseleave = () => { shareBtn.style.opacity = '0.9'; shareBtn.style.transform = 'scale(1)'; };
+      shareBtn.onclick = (e) => {
+        e.stopPropagation(); // 防止触发卡牌选择
         showExchangeCode(name, count);
-      } else {
-        showToast('需要有重复卡才能生成交换码');
-      }
-    });
+      };
+      el.appendChild(shareBtn);
+      
+      // 保留长按/右键作为备选方式
+      el.addEventListener('contextmenu', e => {
+        e.preventDefault();
+        if (count > 1) {
+          showExchangeCode(name, count);
+        }
+      });
+    }
   });
 }
 
