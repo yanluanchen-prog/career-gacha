@@ -2,11 +2,14 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<title>职业档案局 · 2026 Offer通知书</title>
+<title>职业档案局 · 2026</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
 <style>
 :root {
   /* 方案B：黒橡×白練×朱 */
@@ -292,19 +295,33 @@ body{
 
 /* ── TEAM ZONE ──────────────────────────────────────────── */
 .team-slots{
-  display:grid;
-  grid-template-columns:repeat(3,1fr);
+  display:flex;
+  flex-wrap:wrap;
   gap:8px;margin-bottom:14px;
+  justify-content:center;
+}
+.team-slot{
+  width:76px;flex-shrink:0;
 }
 .team-slot{
   border:2px dashed var(--border);
   min-height:80px;
   display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:8px 4px;
+  align-items:stretch;
+  padding:0;
   cursor:pointer;
   transition:border-color 0.15s;
   position:relative;
+  border-radius:6px;
+  box-sizing:border-box;
+}
+/* filled slot: border/padding handled by mini-card wrapper */
+.team-slot.filled{
+  border:none !important;
+  min-height:0;
+  padding:0;
+  background:transparent;
+  display:block;
 }
 .team-slot.filled{border-style:solid;border-color:var(--ink);}
 .team-slot .slot-name{
@@ -316,9 +333,12 @@ body{
   letter-spacing:2px;margin-top:3px;
 }
 .team-slot .slot-remove{
-  position:absolute;top:3px;right:5px;
-  font-size:14px;color:var(--red);
-  cursor:pointer;line-height:1;
+  position:absolute;top:3px;right:3px;
+  width:18px;height:18px;border-radius:50%;
+  background:rgba(194,59,34,0.85);color:#fff;
+  border:none;font-size:11px;line-height:18px;
+  text-align:center;cursor:pointer;z-index:5;
+  display:flex;align-items:center;justify-content:center;
 }
 .team-slot.empty .slot-no{
   font-size:10px;color:var(--ink-faint);
@@ -336,8 +356,8 @@ body{
 .boss-arena{
   background:#0D0B08;
   color:#F4EED8;
-  padding:20px 16px;
-  margin:-16px -16px 16px;
+  padding:12px 12px 8px;
+  margin:-16px -16px 10px;
   border-bottom:3px solid var(--red);
 }
 .boss-chapter{
@@ -419,6 +439,9 @@ body{
   position:relative;
   background:var(--paper-lt);
   display:flex;flex-direction:column;
+  margin:0;
+  width:100%;
+  box-sizing:border-box;
 }
 .mini-card:hover{transform:translateY(-3px);box-shadow:0 5px 16px rgba(0,0,0,0.22);}
 .mini-card.N  {border-color:var(--N);}
@@ -804,30 +827,71 @@ body{
   <!-- ── 开场说明 ── -->
   <div id="onboardingModal" style="
     position:fixed;inset:0;z-index:9999;
-    background:var(--ink);
+    background:#0a0a0a;
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    padding:24px;box-sizing:border-box;
+    padding:24px 20px;box-sizing:border-box;overflow-y:auto;
   ">
-    <div style="max-width:360px;width:100%;text-align:center;">
-      <div style="font-size:12px;letter-spacing:3px;color:var(--red);margin-bottom:10px;font-family:var(--font);">档案编号 2026-AI-001</div>
-      <div style="font-size:28px;font-weight:700;color:var(--paper);line-height:1.3;margin-bottom:6px;font-family:var(--font);">你能谋生到<br>哪一年？</div>
-      <div style="width:40px;height:2px;background:var(--red);margin:18px auto;"></div>
-      <div style="font-size:13px;color:var(--ink-lt);line-height:1.9;margin-bottom:24px;text-align:left;">
-        2026年，AI替代浪潮开始席卷各行各业。<br>
-        每一年，都有更多职业被永久淘汰。<br><br>
-        <span style="color:var(--paper);font-weight:700">你的任务：</span><br>
-        🃏 <span style="color:var(--paper)">抽卡</span> — 收集你的职业技能卡<br>
-        👥 <span style="color:var(--paper)">组队</span> — 选3个职业组成出战阵容<br>
-        ⚔ <span style="color:var(--paper)">出战</span> — 挑战每一年的AI浪潮<br><br>
-        <span style="color:var(--red);font-weight:700">出战后卡牌即消耗，输赢都烧。</span><br>
-        越稀有的职业，越能帮你活得久。
+    <div style="max-width:380px;width:100%;">
+
+      <!-- 报告标识 -->
+      <div style="border-bottom:1px solid #2a2a2a;padding-bottom:12px;margin-bottom:28px;">
+        <div style="font-size:9px;letter-spacing:4px;color:#5a7080;font-family:'Courier New',monospace;text-transform:uppercase;margin-bottom:4px;">
+          Anthropic Economic Index · 2026
+        </div>
+        <div style="font-size:11px;color:#3a4a5a;font-family:'Courier New',monospace;letter-spacing:1px;">
+          AI职业替代指数报告 · 真实数据
+        </div>
       </div>
+
+      <!-- 主文案 -->
+      <div style="font-family:Georgia,'Times New Roman',serif;color:#d4cfc6;line-height:2;font-size:15px;">
+
+        <p style="margin:0 0 20px;color:#e8e2d8;">
+          <span style="font-family:'Bebas Neue',Impact,sans-serif;font-size:20px;letter-spacing:2px;color:#c8c0b4;">2026</span>年，Anthropic发布报告：<br>
+          <strong style="color:#c8a878;font-size:22px;font-family:'Bebas Neue',Impact,sans-serif;letter-spacing:3px;">67%</strong><span style="color:#c8a878;font-size:17px;">的职业面临AI替代风险。</span>
+        </p>
+
+        <p style="margin:0 0 24px;color:#9a9088;font-style:italic;">
+          这不是预测，是时间表。
+        </p>
+
+        <p style="margin:0 0 6px;color:#b0aa9e;font-size:13px;">
+          每2年，一波浪潮。十年，五波，彻底改变一切。
+        </p>
+
+        <!-- 时间线 -->
+        <div style="margin:16px 0 28px;border-left:2px solid #3a3028;padding-left:16px;font-size:12px;line-height:2.2;font-family:'Courier New',monospace;color:#7a7068;">
+          <div><span style="color:#5a4a3a;">第一波（2026–2027）</span>：AI开始量化你的价值</div>
+          <div><span style="color:#5a4a3a;">第二波（2028–2029）</span>：你身边的人开始消失</div>
+          <div><span style="color:#5a4a3a;">第三波（2030–2031）</span>：AI开始抢占你的时间</div>
+          <div><span style="color:#5a4a3a;">第四波（2032–2033）</span>：AI开始侵蚀你的积累</div>
+          <div><span style="color:#8b1a2b;">第五波（2034–2035）</span>：<span style="color:#c84040;">AI开始替代你的存在</span></div>
+        </div>
+
+        <p style="margin:0 0 6px;color:#c8c0b4;">
+          你手中不是26张卡牌。<br>
+          是未来十年，<span style="font-family:'Bebas Neue',Impact,sans-serif;font-size:20px;letter-spacing:2px;color:#e8d8b8;">26</span><strong style="color:#e8d8b8;">种可能的生存形态</strong>。
+        </p>
+
+        <p style="margin:24px 0 0;color:#8a8078;font-size:13px;font-style:italic;">
+          选三张，组成你的战队。<br>
+          看看你能撑到哪一年。
+        </p>
+
+      </div>
+
+      <!-- CTA -->
       <button onclick="document.getElementById('onboardingModal').style.display='none';playSound('addTeam')" style="
-        background:var(--red);color:#fff;border:none;
-        padding:14px 0;font-size:15px;font-family:var(--font);
-        border-radius:4px;cursor:pointer;letter-spacing:1px;width:100%;
-      ">开始体验 →</button>
-      <div style="font-size:10px;color:var(--ink-faint);margin-top:14px;">滚到底部可查看游戏说明</div>
+        display:block;width:100%;background:#8b1a2b;color:#f0ebe0;border:none;
+        padding:15px;font-size:13px;font-family:Arial,sans-serif;
+        letter-spacing:3px;cursor:pointer;font-weight:700;text-align:center;
+        margin-top:32px;
+      ">翻开这份档案 →</button>
+
+      <div style="margin-top:12px;text-align:center;font-size:9px;color:#2a2a2a;font-family:'Courier New',monospace;letter-spacing:1px;">
+        CONFIDENTIAL · AEI-2026-03 · 第1024位参与者
+      </div>
+
     </div>
   </div>
 
@@ -873,8 +937,8 @@ body{
 <div id="clearScreen">
   <div class="clear-title">恭喜通过最终审核</div>
   <div class="clear-main">你在AI时代活下来了</div>
-  <div class="clear-sub">5个系统的优化流程，你的团队全部幸存。
-这在2026年已经很罕见了。</div>
+  <div class="clear-sub">十年，五波浪潮。你的团队全部幸存。</div>
+  <div id="clearNarrative" style="display:none;font-size:13px;color:#A09878;font-family:monospace;line-height:2;margin:12px 0 16px;letter-spacing:0.5px;border-left:2px solid #8B1A2B;padding-left:14px;text-align:left;"></div>
   <div class="cert-box">
     <div class="cert-label">2026职场生存认证</div>
     <div class="cert-name">你的职业团队</div>
@@ -905,12 +969,12 @@ body{
 
   <!-- DRAW ZONE -->
   <div class="section" id="drawSection">
-    <div class="section-title">抽取 Offer</div>
+    <div class="section-title">翻开档案</div>
     <div id="drawZone">
       <div id="cardDisplay">
         <div class="card-back-placeholder">
           <div class="icon">📁</div>
-          <div class="hint">等待 Offer 送达...</div>
+          <div class="hint">档案封存中...</div>
         </div>
       </div>
       <div class="pulls-info">
@@ -929,8 +993,9 @@ body{
         </div>
         <div class="pity-label"></div>
       </div>
+      <div style="font-size:10px;color:var(--ink-faint);text-align:center;margin-top:4px;" id="pityInfo"></div>
       <div class="btn-row">
-        <button class="btn btn-red" onclick="draw()" id="drawBtn">接 Offer</button>
+        <button class="btn btn-red" onclick="draw()" id="drawBtn">翻开档案</button>
         
       </div>
       <div class="btn-row">
@@ -946,7 +1011,7 @@ body{
     <div class="section-title">出战阵容（选3人 · 合力挑战5关AI浪潮）</div>
     <div style="font-size:11px;color:var(--ink-lt);line-height:1.8;margin-bottom:14px;padding:10px 12px;border-left:3px solid var(--red);background:var(--paper-dk);">
       2026年，5个AI浪潮正在逐一淘汰各种职业。<br>
-      从你收到的 Offer 里，选3个互补的职业组成阵容——<br>
+      从职业档案中，选3个互补的职业组成阵容——<br>
       <b>不同类型的职业组合，对不同AI浪潮有克制优势。</b><br>
       全部通过，你才算在AI时代活下来了。
     </div>
@@ -956,9 +1021,9 @@ body{
       <div class="team-slot empty" id="slot2"><div class="slot-no">第3位</div></div>
     </div>
     <div class="btn-row">
-      <button class="btn btn-red" id="challengeBtn" onclick="startChallenge()" disabled>看我能活几年 →</button>
+      <button class="btn btn-red" id="challengeBtn" onclick="startChallenge()" disabled>我能撑过几波？→</button>
     </div>
-    <div id="teamHint" style="text-align:center;font-size:11px;color:var(--ink-faint);font-family:monospace;margin-top:8px;">从 Offer 记录中选3张出战</div>
+    <div id="teamHint" style="text-align:center;font-size:11px;color:var(--ink-faint);font-family:monospace;margin-top:8px;">从职业档案中选3张出战</div>
   </div>
 
   <!-- BOSS ZONE -->
@@ -970,11 +1035,11 @@ body{
   <!-- COLLECTION -->
   <div class="section" id="collectionSection" style="display:none">
     <div class="section-title" style="display:flex;justify-content:space-between;align-items:baseline;">
-      <span>我的 Offer 记录</span>
+      <span>我的职业档案</span>
       <span id="collectionCount" style="font-size:11px;font-weight:400;opacity:0.6;font-family:monospace;"></span>
     </div>
     <div class="collection-grid" id="collectionGrid">
-      <div class="collection-empty">尚未收到 Offer</div>
+      <div class="collection-empty">档案室尚未收录</div>
     </div>
   </div>
 
@@ -993,67 +1058,86 @@ const TYPE_LABEL = {
 
 const CAREERS = [
   // ── N 普通 ──────────────────────────────────────────
-  {name:'客服',    icon:'🎧',type:'服务类',atk:42,def:8, hp:72,rarity:'N',aiCoverage:65,tag:'承压专业户',
+  {name:'客服',    icon:'🎧',type:'服务类',atk:42,def:35, hp:72,rarity:'N',aiCoverage:65,tag:'承压专业户',
    desc:'「AI覆盖率 65%」AI已处理65%的工单，机器能对答，但无法处理被骂哭之后的沉默。你在守最后一道防线。'},
-  {name:'收银员',  icon:'🛒',type:'服务类',atk:38,def:12,hp:55,rarity:'N',aiCoverage:70,tag:'正在消失',
+  {name:'收银员',  icon:'🛒',type:'服务类',atk:38,def:30,hp:55,rarity:'N',aiCoverage:70,tag:'正在消失',
    desc:'「AI覆盖率 70%」自助结账机已接管70%的收银台。你负责处理「扫不出来」的尴尬，和那些不会用机器的人。'},
-  {name:'翻译',    icon:'🌐',type:'文字类',atk:50,def:15,hp:40,rarity:'N',aiCoverage:72,tag:'语言桥',
+  {name:'翻译',    icon:'🌐',type:'文字类',atk:50,def:28,hp:40,rarity:'N',aiCoverage:72,tag:'语言桥',
    desc:'「AI覆盖率 72%」机器翻译已覆盖72%的文本任务。同声传译还撑着。剩下的28%，是机器翻不出的语境和体感。'},
-  {name:'文字校对',icon:'✍️',type:'文字类',atk:40,def:10,hp:30,rarity:'N',aiCoverage:78,tag:'即将退出',
+  {name:'文字校对',icon:'✍️',type:'文字类',atk:40,def:22,hp:30,rarity:'N',aiCoverage:78,tag:'即将退出',
    desc:'「AI覆盖率 78%」大模型已超越78%的人类校对员。这个岗位的倒计时正在悄悄运行。'},
-  {name:'会计',    icon:'📊',type:'文字类',atk:55,def:18,hp:62,rarity:'N',aiCoverage:68,tag:'数字人',
+  {name:'会计',    icon:'📊',type:'文字类',atk:55,def:32,hp:62,rarity:'N',aiCoverage:68,tag:'数字人',
    desc:'「AI覆盖率 68%」财务AI已自动处理68%的记账与对账工作。资产负债表里正在多出一个看不见的操作员。'},
   // ── R 稀有 ──────────────────────────────────────────
-  {name:'内容运营',icon:'📱',type:'文字类',atk:60,def:38,hp:68,rarity:'R',aiCoverage:58,tag:'数据驱动',
+  {name:'内容运营',icon:'📱',type:'文字类',atk:60,def:42,hp:68,rarity:'R',aiCoverage:58,tag:'数据驱动',
    desc:'「AI覆盖率 58%」58%的内容生产任务已可由AI完成。你的价值正在从「写」转向「判断写什么」。'},
-  {name:'销售',    icon:'💼',type:'技术类',atk:65,def:52,hp:80,rarity:'R',aiCoverage:46,tag:'百变话术',
+  {name:'销售',    icon:'💼',type:'技术类',atk:65,def:54,hp:80,rarity:'R',aiCoverage:46,tag:'百变话术',
    desc:'「AI覆盖率 46%」个性化算法已替代46%的销售触达工作。关系和信任，是还没被转化率超越的部分。'},
-  {name:'记者',    icon:'📰',type:'文字类',atk:58,def:35,hp:45,rarity:'R',aiCoverage:52,tag:'真相猎手',
+  {name:'记者',    icon:'📰',type:'文字类',atk:58,def:48,hp:45,rarity:'R',aiCoverage:52,tag:'真相猎手',
    desc:'「AI覆盖率 52%」52%的新闻写作可被AI生成。调查性报道还在，但发稿量竞赛已经输了。'},
-  {name:'UI设计师',icon:'🎨',type:'创意类',atk:65,def:30,hp:55,rarity:'R',aiCoverage:44,tag:'像素审美',
+  {name:'UI设计师',icon:'🎨',type:'创意类',atk:65,def:56,hp:55,rarity:'R',aiCoverage:44,tag:'像素审美',
    desc:'「AI覆盖率 44%」AI工具已可完成44%的界面生成工作。A/B测试正在取代你的设计直觉。'},
-  {name:'编导',    icon:'🎬',type:'创意类',atk:68,def:45,hp:50,rarity:'R',aiCoverage:40,tag:'叙事',
+  {name:'编导',    icon:'🎬',type:'创意类',atk:68,def:60,hp:50,rarity:'R',aiCoverage:40,tag:'叙事',
    desc:'「AI覆盖率 40%」AI剪辑、AI脚本已覆盖40%的创作流程。叙事判断和情感节奏，是剩下的护城河。'},
-  {name:'建筑师',  icon:'🏗️',type:'创意类',atk:72,def:55,hp:48,rarity:'R',aiCoverage:36,tag:'空间诗人',
+  {name:'建筑师',  icon:'🏗️',type:'创意类',atk:72,def:64,hp:48,rarity:'R',aiCoverage:36,tag:'空间诗人',
    desc:'「AI覆盖率 36%」生成式AI已可快速产出36%的方案设计。空间叙事和甲方谈判，暂时还需要人类在场。'},
   // ── SR 超稀有 ────────────────────────────────────────
-  {name:'厨师',    icon:'🍳',type:'专业类',atk:55,def:82,hp:75,rarity:'SR',aiCoverage:12,tag:'烟火气',
+  {name:'厨师',    icon:'🍳',type:'专业类',atk:55,def:88,hp:75,rarity:'SR',aiCoverage:12,tag:'烟火气',
    desc:'「AI覆盖率 12%」身体与火候的直觉，是机器最难复刻的部分。12%的标准化食谱已数字化，但人们仍想吃人做的饭。'},
-  {name:'心理咨询师',icon:'🧠',type:'专业类',atk:68,def:86,hp:45,rarity:'SR',aiCoverage:18,tag:'共情',
+  {name:'心理咨询师',icon:'🧠',type:'专业类',atk:68,def:82,hp:45,rarity:'SR',aiCoverage:18,tag:'共情',
    desc:'「AI覆盖率 18%」被倾听的需求，暂时无法被算法满足。18%的认知行为治疗已可被AI辅助，但真正的会谈需要人类在场。'},
-  {name:'律师',    icon:'⚖️',type:'专业类',atk:88,def:70,hp:52,rarity:'SR',aiCoverage:54,tag:'辩护',
+  {name:'律师',    icon:'⚖️',type:'专业类',atk:88,def:46,hp:52,rarity:'SR',aiCoverage:54,tag:'辩护',
    desc:'「AI覆盖率 54%」合同审查、文书起草——54%的法律任务已可被AI处理。庭审和谈判，是剩下的战场。'},
-  {name:'游戏策划',icon:'🎮',type:'创意类',atk:70,def:50,hp:42,rarity:'SR',aiCoverage:38,tag:'造梦者',
+  {name:'游戏策划',icon:'🎮',type:'创意类',atk:70,def:62,hp:42,rarity:'SR',aiCoverage:38,tag:'造梦者',
    desc:'「AI覆盖率 38%」AI关卡生成工具已覆盖38%的策划工作。但玩家真正想要什么，依然需要人来感知。'},
-  {name:'数据分析师',icon:'📈',type:'技术类',atk:75,def:42,hp:65,rarity:'SR',aiCoverage:62,tag:'洞察',
+  {name:'数据分析师',icon:'📈',type:'技术类',atk:75,def:38,hp:65,rarity:'SR',aiCoverage:62,tag:'洞察',
    desc:'「AI覆盖率 62%」自动化分析已处理62%的数据报告任务。洞察力和业务判断，是还没被代码写进去的部分。'},
-  {name:'快递员',  icon:'📦',type:'执行类',atk:48,def:78,hp:92,rarity:'SR',aiCoverage:32,tag:'最后一公里',
+  {name:'快递员',  icon:'📦',type:'执行类',atk:48,def:68,hp:92,rarity:'SR',aiCoverage:32,tag:'最后一公里',
    desc:'「AI覆盖率 32%」无人配送已覆盖32%的末端物流。楼道、雨天、与人周旋的最后100米，暂时还需要你。'},
-  {name:'外卖骑手',icon:'🛵',type:'执行类',atk:45,def:80,hp:98,rarity:'SR',aiCoverage:35,tag:'风雨无阻',
+  {name:'外卖骑手',icon:'🛵',type:'执行类',atk:45,def:65,hp:98,rarity:'SR',aiCoverage:35,tag:'风雨无阻',
    desc:'「AI覆盖率 35%」无人配送机正在接管35%的城市外卖。ETA 3分钟，差评率0%，不需要休息——竞争对手已经上线了。'},
   // ── SSR 史诗 ─────────────────────────────────────────
-  {name:'医生',    icon:'🩺',type:'专业类',atk:85,def:88,hp:80,rarity:'SSR',aiCoverage:42,tag:'生命守护',
+  {name:'医生',    icon:'🩺',type:'专业类',atk:85,def:58,hp:80,rarity:'SSR',aiCoverage:42,tag:'生命守护',
    desc:'「AI覆盖率 42%」AI影像诊断准确率已超越初级医生。42%的诊断辅助可被AI完成，临床判断和手术还需要你。'},
-  {name:'护士',    icon:'💉',type:'专业类',atk:60,def:90,hp:85,rarity:'SSR',aiCoverage:16,tag:'生命温度',
+  {name:'护士',    icon:'💉',type:'专业类',atk:60,def:84,hp:85,rarity:'SSR',aiCoverage:16,tag:'生命温度',
    desc:'「AI覆盖率 16%」只有16%的护理任务可被算法触达。身体护理、情感陪伴、紧急处置，人类的在场仍不可替代。'},
-  {name:'公务员',  icon:'🏛️',type:'体制类',atk:65,def:95,hp:90,rarity:'SSR',aiCoverage:22,tag:'铁饭碗',
+  {name:'公务员',  icon:'🏛️',type:'体制类',atk:65,def:78,hp:90,rarity:'SSR',aiCoverage:22,tag:'铁饭碗',
    desc:'「AI覆盖率 22%」行政流程已有22%实现自动化。制度性保护和编制门槛，是这张卡的核心护城河。'},
-  {name:'AI工程师',icon:'🤖',type:'技术类',atk:95,def:75,hp:72,rarity:'SSR',aiCoverage:28,tag:'新物种',
+  {name:'AI工程师',icon:'🤖',type:'技术类',atk:95,def:72,hp:72,rarity:'SSR',aiCoverage:28,tag:'新物种',
    desc:'「AI覆盖率 28%」造AI的人，也在被AI提速。28%的低阶编码已可自动化，但架构决策和系统判断还需要你。'},
-  {name:'提示词工程师',icon:'⌨️',type:'技术类',atk:78,def:60,hp:35,rarity:'SSR',aiCoverage:48,tag:'风口站位',
+  {name:'提示词工程师',icon:'⌨️',type:'技术类',atk:78,def:52,hp:35,rarity:'SSR',aiCoverage:48,tag:'风口站位',
    desc:'「AI覆盖率 48%」模型自优化能力正在替代48%的提示词调优工作。这个岗位存在不到3年，已进入观察期。'},
   // ── UR 传奇绝版 ─────────────────────────────────────
-  {name:'马车夫',    icon:'🐴',type:'绝版类',atk:25,def:92,hp:8,rarity:'UR',tag:'已死过一次',
-   desc:'【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，但本卡随之消耗。汽车普及后消失。死过一次的人，不在乎第二次消失。'},
-  {name:'柯达冲洗员',icon:'📷',type:'绝版类',atk:25,def:95,hp:8,rarity:'UR',aiCoverage:0,tag:'已死过一次',
-   desc:'【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，但本卡随之消耗。整个行业三年内蒸发。已经消失过一次，不在乎消失第二次。'},
-  {name:'BB机维修工',icon:'📟',type:'绝版类',atk:25,def:90,hp:8,rarity:'UR',aiCoverage:0,tag:'已死过一次',
-   desc:'【🛡 绝版特性】带此卡挑战第5关，AI浪潮无法伤害你的战队。已注销的账号，无法被再次注销。工具消失了，你也随之消失——但AI替代不了已经消失的东西。'},
+  {name:'马车夫',    icon:'🐴',type:'绝版类',atk:180,def:60,hp:75,rarity:'UR',tag:'已死过一次',
+   desc:'1920年，纽约街头最后一辆马车停下。不是因为汽车赢了，是因为那段路，已经不需要人来记住了。\n\n既然已经被遗忘一次——这一次，全力一搏。\n\n【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，本卡随之入馆。'},
+  {name:'柯达冲洗员',icon:'📷',type:'绝版类',atk:170,def:55,hp:70,rarity:'UR',tag:'已死过一次',
+   desc:'2005年，最后一家柯达冲洗店关门。那些胶卷里封存的光影，再也洗不出来了。\n\n曾经守护过无数记忆——现在，用尽全力。\n\n【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，本卡随之入馆。'},
+  {name:'BB机维修工',icon:'📟',type:'绝版类',atk:160,def:50,hp:65,rarity:'UR',aiCoverage:0,tag:'已死过一次',
+   desc:'2000年，寻呼台发出最后一声"滴滴"。那个总在腰间震动的小盒子，成了沉默展品。\n\n时代抛弃我的时候，连再见都没说。现在——轮到我了。\n\n【🛡 绝版特性】带此卡挑战第5关，AI浪潮无法伤害你的战队。已注销的账号，无法被再次注销。'},
 ];
 
-const RARITY_WEIGHT = {N:45,R:30,SR:17,SSR:7,UR:1};
-const RARITY_LABEL  = {N:'普通',R:'热门',SR:'火爆',SSR:'急招',UR:'已下架'};
-const RARITY_SHORT  = {N:'普',R:'热',SR:'爆',SSR:'急',UR:'绝'};
+// 升级轨道定义
+const UPGRADE_TRACK = {
+  '客服':'resistance','收银员':'resistance','翻译':'resistance','文字校对':'resistance',
+  '会计':'resistance','销售':'resistance','快递员':'resistance','外卖骑手':'resistance',
+};
+const UPGRADE_NAMES = {
+  professional: ['资深','专家','首席'],
+  resistance: ['·AI抵抗版','·人机协作版','·不可替代版'],
+};
+function getCardDisplayName(name, level) {
+  if (!level || level === 0) return name;
+  const track = UPGRADE_TRACK[name] === 'resistance' ? 'resistance' : 'professional';
+  const suffix = UPGRADE_NAMES[track][level - 1] || '';
+  return track === 'resistance' ? name + suffix : suffix + name;
+}
+function getCardATK(card) {
+  const level = (G.upgrades && G.upgrades[card.name]) || 0;
+  return Math.round(card.atk * (1 + 0.2 * level));
+}
+const RARITY_WEIGHT = {N:35,R:35,SR:22,SSR:6,UR:2};
+const RARITY_LABEL  = {N:'基层档案',R:'常见档案',SR:'热门档案',SSR:'紧缺档案',UR:'绝版档案'};
+const RARITY_SHORT  = {N:'N',R:'R',SR:'SR',SSR:'SSR',UR:'UR'};
 const RARITY_ORDER  = ['N','R','SR','SSR','UR'];
 
 // 每个职业的专属破防语（AI赢时随机抽一句配合boss台词）
@@ -1089,65 +1173,88 @@ const CAREER_TAUNTS = {
 const BOSSES = [
   {
     id:1, emoji:'⭐',
-    name:'职业评分局',
-    chapter:'2026年 · 第一波淘汰浪潮',
+    name:'评估Agent',
+    chapter:'AI评估中心 · 2026年 · 第一波淘汰浪潮',
+    subtitle:'2026–2027：AI开始量化你的价值',
     desc:'第一波浪潮是最温柔的，也是最精准的。你的每一条消息、每份报告、每次决策，都在被悄悄与AI基准对比。今天低了17%，明天还会更高。不是你变差了，是基准一直在提升——而你不知道自己正在被打分。',
     quote:'「检测到效率异常，已进入观察期。今天是第2天。」',
     taunts:['效率报告已生成。您的岗位已完成交接。','本季度您的绩效低于AI基准线23%，已触发人员优化预案。','连续3天被标记为「可替代资源」，流程已启动。','人力成本分析完毕：您比AI贵，且可靠性更低。'],
-    cheer:'第一波通过。你的战队，今天还没被系统优化。',
+    cheer:'你撑到了2027年。AI评估系统已覆盖67%的岗位，但你还在。',
+    failMsg:'你在2026年底倒下了。评估系统判定你的可替代指数为87%。',
+    specialRule: {type:'simultaneousStrike', desc:'⚡ 同步打击：3张卡合力出手，一回合定胜负。打不死就输。'},
     atk:110, def:15, hp:4500,
     crushTypes:['服务类'],   // 被克制 ×1.5
     weakTypes: ['体制类'],   // 弱点   ×0.5
-    immuneTypes:[]
+    immuneTypes:[],
+    infiltrateType: '服务类',
+    infiltrateReveal: true
   },
   {
     id:2, emoji:'🌀',
-    name:'同事蒸馏厂',
-    chapter:'2027年 · 第二波淘汰浪潮',
+    name:'蒸馏Agent',
+    chapter:'同事蒸馏部门 · 2027年 · 第二波淘汰浪潮',
+    subtitle:'2028–2029：你身边的人开始消失',
     desc:'第二波浪潮没有来找你，它来找了你身边的人。先是隔壁组的小王，然后是对面坐了三年的同事。有一天你发现工位空了三分之一，业务量却没有减少。他们没有被解雇——他们被提炼成了Token，永远在工作，只是不再需要打卡了。你是下一个吗？',
     quote:'「感谢您的贡献，蒸馏完成，请放心离开。」',
     taunts:['蒸馏完毕。您的工作经验已永久存入模型权重。','您写过的每一封邮件，都在训练它的继任者。','检测到您的岗位已有完整历史数据，无需真人续任。','您同事五年的工作经验已完成蒸馏。感谢他们的贡献。'],
-    cheer:'第二波通过。你的战队，还没被提炼成Token。继续跑。',
-    atk:135, def:25, hp:5500,
+    cheer:'你撑到了2029年。同事的经验已被提取，但你学会了新技能。',
+    failMsg:'你在2028年消失了。同事被蒸馏，你也成了数据的一部分。',
+    specialRule: {type:'solo', desc:'🎯 独角战：只能上阵1张卡牌'},
+    atk:135, def:25, hp:6000,
     crushTypes:['文字类'],
     weakTypes: ['专业类'],
-    immuneTypes:[]
+    immuneTypes:[],
+    infiltrateType: '文字类',
+    infiltrateReveal: true
   },
   {
     id:3, emoji:'🚁',
     name:'无人配送集团',
     chapter:'2028年 · 第三波淘汰浪潮',
+    subtitle:'2030–2031：AI开始抢占你的时间',
     desc:'第三波浪潮移动速度是80公里/小时。深圳已有600台无人配送机在工作，不需要小费、不会请病假、永不堵车。你说最后一公里机器做不到——他们已在测试爬楼机器人。你说人情味不能被替代——数据说消费者只用了0.3秒就接受了。',
     quote:'「ETA 3分钟，无需小费，永不投诉，差评率0%。」',
     taunts:['ETA 3分钟，无需消费，永不投诉，差评率0%。','骑手说还有楼梯要爬。我们研发了爬楼机器人。','人力配送成本：28元/单。无人配送成本：2.3元/单。决策很简单。','已为您安排职业再培训：无人机维护工程师。'],
-    cheer:'第三波通过。机器爬不了你们那层楼梯——至少今天还爬不了。',
-    atk:150, def:35, hp:6500,
+    cheer:'你撑到了2031年。无人中枢优化了一切，但你需要休息。',
+    failMsg:'你在2030年被优化掉了。全链路效率提升，你成为了冗余。',
+    specialRule: {type:'rotation', desc:'🔄 轮班制：3张卡轮流出手 A→B→C→A'},
+    atk:150, def:35, hp:8500,
     crushTypes:['执行类'],
     weakTypes: ['技术类'],
-    immuneTypes:[]
+    immuneTypes:[],
+    infiltrateType: '执行类',
+    infiltrateReveal: true
   },
   {
     id:4, emoji:'💳',
     name:'技能订阅中心',
     chapter:'2029年 · 第四波淘汰浪潮',
+    subtitle:'2032–2033：AI开始侵蚀你的积累',
     desc:'第四波浪潮不来替代你——它让你为自己的替代付费。ChatGPT Plus每月138元，Midjourney每月60元，Cursor每月150元……你发现，离开这些工具你已经不会工作了。你的技能没有消失，只是被打包进了订阅服务。停止续费的那天，你的竞争力将回到零。',
     quote:'「检测到您的技能版本过期，建议升级至最新版，月付298元。」',
     taunts:['您的技能版本已过期。系统将在72小时内停止支持。','您刚考完的证书，已被纳入「历史技能归档」。','检测到：您在这项技能上学了3年。AI学习用时：6天。','订阅最新版技能，月付298元。您目前使用的是2021年旧版。'],
-    cheer:'第四波通过。你的战队，暂时还没被技能订阅淘汰。',
-    atk:165, def:45, hp:7500,
+    cheer:'你撑到了2033年。专业壁垒被拆解，但你找到了新壁垒。',
+    failMsg:'你在2032年被替代了。按需订阅的时代，没人需要固定的你。',
+    specialRule: {type:'copy_skill', desc:'📋 技能订阅：Boss会复制你上一张卡的能力，攻击力+50%'},
+    atk:165, def:45, hp:12000,
     crushTypes:['专业类','技术类'],
     weakTypes: ['体制类'],
-    immuneTypes:[]
+    immuneTypes:[],
+    infiltrateType: ['专业类', '技术类'],
+    infiltrateReveal: true
   },
   {
     id:5, emoji:'🎬',
     name:'创意回收公司',
     chapter:'2030年 · 最终决战',
+    subtitle:'2034–2035：AI开始替代你的存在',
     desc:'第五波浪潮是最后一波，也是最深的一波。它不替代你的工作——它来消化你本人。你发过的每个想法、写过的每句文案、每张照片，都已进入训练集。你以为在创作，其实在喂食。有一天你会发现，你的风格已被完整复制，定价：免费，且永不疲倦。',
     quote:'「数据收集完毕。感谢您十年来的无偿贡献。」',
     taunts:['数据收集完毕。感谢您十年来的无偿贡献。新产品定价：免费。','您的创意已入库。基于您的风格，我们发布了新产品。定价：免费。','您花了10年培养的审美，已被提炼为一段提示词。','感谢您的所有原创内容。训练集已更新，版本：v3.1。'],
-    cheer:'你活到了2031年。五波浪潮，你全扛过来了。',  // 全通
-    atk:185, def:80, hp:8000,
+    cheer:'🏆 2035年，五波浪潮，十年，你证明了自己不可替代。',
+    failMsg:'你在2034年停止了存在。AGI完成了对所有职业的替代。',  // 全通
+    specialRule: {type:'selection', penalty:'创意类', penaltyDesc:'⚠️ 创意类职业已被AI渗透：攻击力×0.5', desc:'🎬 最终面试：创意类职业受AI渗透，攻击力减半'},
+    atk:185, def:80, hp:16000,
     crushTypes:['创意类','文字类'],
     weakTypes: [],
     immuneTypes:['绝版类']
@@ -1162,10 +1269,19 @@ const DEFAULT_STATE = {
   pullsLeft: 10,
   totalPulls: 0,
   pityCount: 0,
+  pitySSR: 0,          // 距离SSR保底计数（每50抽）
+  pityUR: 0,           // 距离UR保底计数（每100抽）
+  isNewPlayer: true,   // 是否新手期（前30抽）
+  newPlayerPulls: 0,   // 新手期已抽次数
   shareCount: 0,
   collection: {},      // {name: count}
   team: [],            // [careerName, ...]
   bossProgress: 0,     // 0..5 (0=no boss started)
+  museum: {},          // {name: 1} UR卡用后永久收藏
+  upgrades: {},        // {name: level} 0=base,1=+1,2=+2,3=+3
+  upgradeProgress: {}, // {name: draws_toward_next_level}
+  lastTeamKey: '',     // 上一次出战的卡组key
+  sameTeamCount: 0,    // 连续使用同一卡组的次数
 };
 
 let G = loadState();
@@ -1292,10 +1408,32 @@ function playSound(type) {
 // ════════════════════════════════════════════════════════
 
 function weightedRandom() {
+  // Initialize pity fields for backward compatibility
+  if (!G.pitySSR) G.pitySSR = 0;
+  if (!G.pityUR) G.pityUR = 0;
+  if (!G.newPlayerPulls) G.newPlayerPulls = 0;
+
+  // UR pity: every 100 pulls
+  if (G.pityUR >= 99) {
+    const pool = CAREERS.filter(c => c.rarity === 'UR');
+    if (pool.length > 0) return pool[Math.floor(Math.random() * pool.length)];
+  }
+  // SSR pity: every 50 pulls OR new player 10th pull
+  if (G.pitySSR >= 49 || G.newPlayerPulls === 9) {
+    const pool = CAREERS.filter(c => c.rarity === 'SSR' || c.rarity === 'UR');
+    if (pool.length > 0) return pool[Math.floor(Math.random() * pool.length)];
+  }
+  // New player: 1st pull guaranteed R+
+  if (G.newPlayerPulls === 0) {
+    const pool = CAREERS.filter(c => c.rarity !== 'N');
+    if (pool.length > 0) return pool[Math.floor(Math.random() * pool.length)];
+  }
+  // Legacy 10-pull pity
   if (G.pityCount >= 10) {
     const pool = CAREERS.filter(c => c.rarity === 'SSR' || c.rarity === 'UR');
     return pool[Math.floor(Math.random() * pool.length)];
   }
+  // Normal weighted draw
   const total = Object.values(RARITY_WEIGHT).reduce((a,b)=>a+b,0);
   let r = Math.random() * total;
   let tier = 'N';
@@ -1312,20 +1450,59 @@ function applyDraw(career) {
   G.pullsLeft--;
   G.pityCount++;
   if (career.rarity === 'SSR' || career.rarity === 'UR') G.pityCount = 0;
+  // New pity system tracking
+  if (!G.pitySSR) G.pitySSR = 0;
+  if (!G.pityUR) G.pityUR = 0;
+  if (!G.newPlayerPulls) G.newPlayerPulls = 0;
+  G.pitySSR++;
+  G.pityUR++;
+  G.newPlayerPulls++;
+  if (career.rarity === 'SSR' || career.rarity === 'UR') G.pitySSR = 0;
+  if (career.rarity === 'UR') G.pityUR = 0;
 
   const isDup = !!G.collection[career.name];
   G.collection[career.name] = (G.collection[career.name] || 0) + 1;
+    // 升级进度追踪（UR卡不参与）
+    if (career.rarity !== 'UR') {
+      if (!G.upgradeProgress) G.upgradeProgress = {};
+      if (!G.upgrades) G.upgrades = {};
+      G.upgradeProgress[career.name] = (G.upgradeProgress[career.name] || 0) + 1;
+      const curLevel = G.upgrades[career.name] || 0;
+      if (G.upgradeProgress[career.name] >= 3 && curLevel < 3) {
+        G.upgrades[career.name] = curLevel + 1;
+        G.upgradeProgress[career.name] = 0;
+        const newLevel = curLevel + 1;
+        const displayName = getCardDisplayName(career.name, newLevel);
+        // 升级 toast（延迟显示，不覆盖抽卡结果）
+        const isResistance = UPGRADE_TRACK[career.name] === 'resistance';
+        const toastMsg = isResistance
+          ? '⬆️ ' + career.name + ' 完成AI抵抗训练！攻击力+' + (newLevel*20) + '%'
+          : '⬆️ ' + displayName + ' 加入档案！职业精进 +' + newLevel;
+        setTimeout(() => showToast(toastMsg), 1500);
+      }
+    }
   saveState();
   return isDup;
 }
 
 function draw() {
-  if (G.pullsLeft <= 0) { showToast('没有收信次数了，分享可获得更多！'); return; }
+  if (G.pullsLeft <= 0) { showToast('没有翻阅次数了，分享可获得更多！'); return; }
   const career = weightedRandom();
   const isDup = applyDraw(career);
   lastDrawn = career;
   playSound('draw');
-  if (isDup) showToast(`✦ 已有 ${career.name}，卡量+1`);
+  // 6.4 情感共鸣文案
+  if (!isDup && career.rarity === 'UR') {
+    setTimeout(() => showToast('「一张已经消失的职业，现在只在你的记忆里活着。」', 3000), 800);
+  } else if (!isDup && career.rarity === 'N' && Math.random() < 0.4) {
+    setTimeout(() => showToast('「下一个面临消失的，可能是它。也可能是你。」', 2500), 600);
+  }
+  if (isDup) {
+    const prog = (G.upgradeProgress && G.upgradeProgress[career.name]) || 0;
+    const curLv = (G.upgrades && G.upgrades[career.name]) || 0;
+    const progressHint = curLv < 3 ? `（${prog}/3 → 再${ 3 - prog}次升级）` : '（已满级）';
+    showToast(`✦ 已有 ${career.name}，卡量+1 ${progressHint}`);
+  }
   renderAll();
   showEnvelope(career);
 }
@@ -1349,7 +1526,7 @@ function showEnvelope(career) {
         <div class="envelope-body">
           <div class="env-icon">✉️</div>
           <div class="env-bureau">职业档案局</div>
-          <div class="env-subtitle">任职通知书</div>
+          <div class="env-subtitle">职业档案</div>
           <div class="env-seal">档案局<br>认证</div>
         </div>
       </div>
@@ -1408,7 +1585,7 @@ function draw10() {
   playSound('draw');
   renderAll();
   document.getElementById('cardDisplay').innerHTML = buildCard(lastCard, true);
-  showToast('十连抽完成！Offer 记录已更新');
+  showToast('十连抽完成！档案已收录');
 }
 
 // ════════════════════════════════════════════════════════
@@ -1441,8 +1618,8 @@ function buildCard(career, animate) {
         </div>
         <div class="stat-row stat-def">
           <div class="stat-label">🛡 抗AI值</div>
-          <div class="stat-track"><div class="stat-fill" style="width:${career.def}%"></div></div>
-          <div class="stat-val">${career.def}</div>
+          <div class="stat-track"><div class="stat-fill" style="width:${100-career.aiCoverage}%"></div></div>
+          <div class="stat-val">${100-career.aiCoverage}</div>
         </div>
         <div class="stat-row stat-hp">
           <div class="stat-label">❤ 需求度</div>
@@ -1468,14 +1645,15 @@ function buildMiniCard(career, count, inTeam) {
       <div class="mini-rarity">${RARITY_SHORT[career.rarity]}</div>
       ${count > 1 ? `<div class="mini-count">×${count}</div>` : '<div></div>'}
     </div>
+    ${((G.upgrades && G.upgrades[career.name]) || 0) > 0 ? `<span style="position:absolute;top:2px;left:2px;background:#e8c87a;color:#333;font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px;">+${(G.upgrades && G.upgrades[career.name]) || 0}</span>` : ''}
     <div class="mini-art">
       <div class="mini-icon">${career.icon || '📁'}</div>
-      <div class="mini-name">${career.name}</div>
+      <div class="mini-name">${getCardDisplayName(career.name, (G.upgrades||{})[career.name]||0)}</div>
     </div>
 
     <div style="padding:4px 2px 5px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-around;font-size:7px;font-family:monospace;line-height:1.4;">
-      <span style="color:#C23B22;" title="薪资力·攻击">⚔${career.atk}</span>
-      <span style="color:#1A3A6B;" title="抗AI值·减伤">🛡${career.def}</span>
+      <span style="color:#C23B22;" title="薪资力·攻击">⚔${getCardATK(career)}</span>
+      <span style="color:#1A3A6B;" title="抗AI值·减伤">🛡${100-career.aiCoverage}</span>
       <span style="color:#1A6B3A;" title="需求度·血量">❤${career.hp}</span>
     </div>
   </div>`;
@@ -1520,10 +1698,9 @@ function renderTeam() {
     if (name) {
       const c = CAREERS.find(x => x.name === name);
       el.className = `team-slot filled ${c.rarity}`;
-      el.innerHTML = `
-        <div class="slot-remove" onclick="event.stopPropagation();toggleTeam('${name}')">×</div>
-        <div class="slot-name">${c.icon || ''} ${c.name}</div>
-        <div class="slot-rarity">${RARITY_LABEL[c.rarity]} · ${c.type}</div>`;
+      const _cardHtml = buildMiniCard(c, 1, false);
+      const _lastClose = _cardHtml.lastIndexOf('</div>');
+      el.innerHTML = _cardHtml.substring(0, _lastClose) + `<button onclick="event.stopPropagation();toggleTeam('${name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` + _cardHtml.substring(_lastClose);
     } else {
       el.className = 'team-slot empty';
       el.innerHTML = `<div class="slot-no">第${i+1}位</div>`;
@@ -1570,7 +1747,18 @@ function calcHP(c) {
   const mult = {N:5, R:8, SR:12, SSR:15, UR:5}[c.rarity] || 8;
   return Math.max(50, c.hp * mult);
 }  // 需求度 × 稀有度加成 → 血量
-function calcDmg(atk, defVal) { let reduction = Math.min(defVal / 100, 0.95); return Math.max(1, Math.round(atk * (1 - reduction))); }
+function calcDmg(atk, defVal, coefficient = 1.0) {
+  let damage;
+  if (defVal <= 0) {
+    damage = atk * coefficient;
+  } else if (defVal <= 200) {
+    damage = atk * coefficient * (100 / (100 + defVal));
+  } else {
+    damage = atk * coefficient * (50 / (50 + Math.log(defVal - 199) * 20));
+    damage = Math.max(damage, atk * coefficient * 0.05);
+  }
+  return Math.max(Math.floor(damage), 1);
+}
 
 function renderBoss() {
   const boss = BOSSES[G.bossProgress];
@@ -1582,7 +1770,7 @@ function renderBoss() {
 
   // Combined team stats
   const teamHP   = team.reduce((s, c) => s + calcHP(c), 0);
-  const teamATK  = team.reduce((s, c) => s + Math.round(c.atk * getBossMultiplier(boss, c)), 0);
+  const teamATK  = team.reduce((s, c) => s + Math.round(getCardATK(c) * getBossMultiplier(boss, c)), 0);
   const teamDEF  = Math.round(team.reduce((s, c) => s + c.def, 0) / team.length);
   const bossHPRemain = boss.hp;
   // 绝版特性：带任意UR卡 = 对任意boss秒杀（用完即焚）
@@ -1598,11 +1786,46 @@ function renderBoss() {
 
   const bDmgPerRound = Math.round(calcDmg(boss.atk, teamDEF));
 
+  // 限时关卡：预判阵容是否能通关
+  let roundLimitAdvice = '';
+  if (boss.specialRule?.type === 'round_limit') {
+    const maxR = boss.specialRule.maxRounds;
+    // 考虑渗透减益的实际ATK
+    const infTypes = Array.isArray(boss.infiltrateType) ? boss.infiltrateType : (boss.infiltrateType ? [boss.infiltrateType] : []);
+    let atkForCalc = teamATK;
+    if (infTypes.length > 0) {
+      const normalA = team.filter(c => !infTypes.includes(c.type) || c.type === '绝版类').reduce((s,c) => s+Math.round(getCardATK(c)*getBossMultiplier(boss,c)), 0);
+      const penalA  = team.filter(c => infTypes.includes(c.type) && c.type !== '绝版类').reduce((s,c) => s+Math.round(getCardATK(c)*getBossMultiplier(boss,c)), 0);
+      atkForCalc = normalA + Math.round(penalA * 0.5);
+    }
+    const dmgPerRound = calcDmg(atkForCalc, boss.def);
+    const roundsNeeded = Math.ceil(boss.hp / dmgPerRound);
+    const canClear = roundsNeeded <= maxR;
+    const color = canClear ? '#5aaa5a' : '#C41A1A';
+    const icon = canClear ? '✅' : '❌';
+    roundLimitAdvice = `<div style="background:rgba(0,0,0,0.3);border:1px solid ${color};border-radius:6px;padding:10px 14px;margin:8px 0;font-size:12px;color:${color};">
+      ${icon} 你的阵容每回合约造成 <b>${dmgPerRound}</b> 伤害，需 <b>${roundsNeeded}</b> 回合击杀<br>
+      <span style="font-size:11px;color:#888;">限制 ${maxR} 回合 · Boss HP ${boss.hp} · ${canClear ? '预计可通关 🎯' : '伤害不足，需强化阵容 ⚠️'}</span>
+    </div>`;
+  }
+
+  const ruleHtml = boss.specialRule ? `<div style="background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.4);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:13px;color:#C41A1A;font-weight:600;">${boss.specialRule.desc}${boss.specialRule.penaltyDesc ? '<br><span style=\'font-weight:400;color:#666;font-size:12px;\'>' + boss.specialRule.penaltyDesc + '</span>' : ''}</div>` : '';
+  const infiltrateTypes = Array.isArray(boss.infiltrateType) ? boss.infiltrateType : (boss.infiltrateType ? [boss.infiltrateType] : []);
+  const infiltrateHtml = infiltrateTypes.length > 0
+    ? `<div style="background:rgba(200,120,0,0.15);border:1px solid #cc6644;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:13px;color:#e8a060;font-weight:600;">
+        ⚠️ <b style="color:#ff9944">${infiltrateTypes.join('、')}</b>职业已被AI渗透：攻击力×0.5<br><span style="font-size:11px;color:#888;font-weight:400;">绝版类职业免疫此渗透</span>
+      </div>`
+    : '';
+
+
   document.getElementById('bossZone').innerHTML = `
     <div class="boss-arena">
       <div class="boss-chapter">${boss.chapter}</div>
       <div class="boss-name">${boss.emoji} ${boss.name}</div>
-      <div class="boss-desc">${boss.desc}</div>
+      ${boss.subtitle ? `<div style="font-size:12px;color:#888;letter-spacing:1px;margin:-4px 0 8px;font-family:monospace;">${boss.subtitle}</div>` : ""}
+      ${ruleHtml}
+      ${roundLimitAdvice}
+      ${infiltrateHtml}
 
       <div class="hp-section">
         <div class="hp-row hp-boss">
@@ -1612,33 +1835,44 @@ function renderBoss() {
           </div>
           <div class="hp-track"><div class="hp-fill" id="bHpFill" style="width:100%"></div></div>
         </div>
-        <div class="hp-row hp-player">
+        ${team.map((c, i) => `
+        <div class="hp-row hp-player" id="cardHpRow${i}">
           <div class="hp-label">
-            <span>👥 团队合力</span>
-            <span id="pHpLabel"></span>
+            <span id="cardHpName${i}" style="font-size:10px;">${c.icon} ${c.name}</span>
+            <span id="cardHpLabel${i}" style="font-size:10px;"></span>
           </div>
-          <div class="hp-track"><div class="hp-fill" id="pHpFill" style="width:100%"></div></div>
-        </div>
-        <div class="round-label" id="roundLabel">${extinctsShield ? '⚡ 绝版秘技蓄力中 · ' + urCard.name + ' 正在燃烧一切' : `出战 ${2025 + (G.bossProgress+1)} · 薪资力 ${teamATK} · 抗AI值 ${teamDEF} · 需求度 ${Math.round(teamHP/8)}`}</div>
+          <div class="hp-track"><div class="hp-fill" id="cardHpFill${i}" style="width:100%;background:#1A6B3A;"></div></div>
+        </div>`).join('')}
+        <div class="round-label" id="roundLabel">${extinctsShield ? '⚡ 绝版秘技蓄力中 · ' + urCard.name + ' 正在燃烧一切' : `出战 ${2025 + (G.bossProgress+1)} · 薪资力 ${teamATK} · 抗AI值 ${Math.round(team.reduce((s,c)=>s+(100-c.aiCoverage),0)/team.length)} · 需求度 ${Math.round(teamHP/8)}`}</div>
+        <div id="battleLog" style="font-size:11px;color:#aaa;font-family:monospace;min-height:18px;margin:4px 0;text-align:center;"></div>
       </div>
       
 
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;" id="bossTeamGrid">
-      ${team.map(c => `<div style="position:relative">
-        ${buildMiniCard(c, G.collection[c.name]||1, true)}
-        <button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;line-height:1;cursor:pointer;z-index:5;">×</button>
-      </div>`).join('')}
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;" id="bossTeamGrid">
+      ${team.map(c => {
+        const cardHtml = buildMiniCard(c, 1, false);
+        const lastClose = cardHtml.lastIndexOf('</div>');
+        return cardHtml.substring(0, lastClose) + `<button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` + cardHtml.substring(lastClose);
+      }).join('')}
     </div>
     <div class="battle-result" id="battleResult"></div>
     <div class="btn-row">
-      <button class="btn btn-red" id="fightBtn" onclick="runBattle()" ${G.team.length < 3 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>开始战斗${G.team.length < 3 ? " (需3人)" : ""}</button>
+      <button class="btn btn-red" id="fightBtn" onclick="runBattle()" ${G.team.length < 3 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${['迎战第一波','第二波来袭','第三波冲击','第四波总攻','第五波：最终对决'][G.bossProgress] || '开始战斗'}${G.team.length < 3 ? ' (需3人)' : ''}</button>
     </div>`;
+
+  const cardMaxHPs = team.map(c => calcHP(c));
+  const cardHPSum  = cardMaxHPs.reduce((a,b)=>a+b,0);
 
   battleState = {
     boss, team,
     bossHPRemain,
     teamHP, teamATK, teamDEF,
+    totalMaxHP: teamHP,
+    cardMaxHPs, cardHPSum,
+    currentRotation: 0,
+    interventionCD: 0,
+    interventionActive: false,
     extinctsShield,
     urCard,
     running: false,
@@ -1647,6 +1881,16 @@ function renderBoss() {
   renderProgressMap();
   document.getElementById('bossZone').classList.add('active');
   bossSection.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function triggerIntervention() {
+  if (!battleState || battleState.interventionCD > 0 || !battleState.running) return;
+  battleState.interventionActive = true;
+  battleState.interventionCD = 3;
+  const btn = document.getElementById('interventionBtn');
+  if (btn) btn.style.display = 'none';
+  const cd = document.getElementById('interventionCD');
+  if (cd) { cd.style.display = 'inline'; cd.textContent = '🔥 全力一击已激活！'; }
 }
 
 async function runBattle() {
@@ -1679,10 +1923,13 @@ async function runBattle() {
       G.collection[urUsed.name]--;
       if (G.collection[urUsed.name] <= 0) delete G.collection[urUsed.name];
     }
+    // UR卡进博物馆（而非彻底消失）
+    if (!G.museum) G.museum = {};
+    G.museum[urUsed.name] = 1;
     G.team = G.team.filter(n => G.collection[n]);
     saveState();
-    renderCollection(); // will show burn animation on removed card
-    G.pullsLeft += 3; saveState(); showToast('⚡ ' + urUsed.name + ' 已焚化。+3 抽卡次数。');
+    renderCollection();
+    G.pullsLeft += 3; saveState(); showToast('⚡ ' + urUsed.name + ' 已焚化，永久入馆。+3 抽卡次数。');
     await new Promise(res => setTimeout(res, 500));
     bossCleared();
     return;
@@ -1694,29 +1941,174 @@ async function runBattle() {
   const teamATK = battleState.teamATK;
   const bDmgPerRound = Math.round(calcDmg(boss.atk, battleState.teamDEF));
 
-  function updateBars() {
-    const pPct = Math.max(0, teamHP / teamMaxHP * 100);
+  function updateBars(currentRound, activeIdx) {
+    // Boss 血条
     const bPct = Math.max(0, bossHPRemain / boss.hp * 100);
-    const pFill = document.getElementById('pHpFill');
     const bFill = document.getElementById('bHpFill');
-    if (!pFill || !bFill) return;
-    pFill.style.width = pPct + '%';
-    bFill.style.width = bPct + '%';
-    pFill.style.background = pPct < 25 ? '#C41A1A' : pPct < 50 ? '#B85A00' : '#1A6B3A';
-    bFill.style.background = bPct < 25 ? '#1A6B3A' : bPct < 50 ? '#B85A00' : '#C41A1A';
+    if (bFill) {
+      bFill.style.width = bPct + '%';
+      bFill.style.background = bPct < 25 ? '#1A6B3A' : bPct < 50 ? '#B85A00' : '#C41A1A';
+    }
+    const bLabel = document.getElementById('bHpLabel');
+    if (bLabel) bLabel.textContent = Math.max(0,Math.round(bossHPRemain)) + ' / ' + boss.hp;
 
+    // 3条卡牌血条
+    if (battleState.cardMaxHPs) {
+      battleState.team.forEach((c, i) => {
+        const cardShare = battleState.cardMaxHPs[i] / battleState.cardHPSum;
+        const cardDispHP = Math.max(0, Math.round(teamHP * cardShare));
+        const cardMaxDisp = Math.round(teamMaxHP * cardShare);
+        const cardPct = cardMaxDisp > 0 ? Math.max(0, Math.min(100, cardDispHP / cardMaxDisp * 100)) : 0;
+        const fill = document.getElementById('cardHpFill' + i);
+        const label = document.getElementById('cardHpLabel' + i);
+        const nameEl = document.getElementById('cardHpName' + i);
+        if (fill) { fill.style.width = cardPct + '%'; fill.style.background = cardPct < 25 ? '#C41A1A' : cardPct < 50 ? '#B85A00' : '#1A6B3A'; }
+        if (label) label.textContent = cardDispHP + '/' + cardMaxDisp;
+        if (nameEl && activeIdx !== undefined) { nameEl.style.color = (i === activeIdx) ? '#F4EED8' : '#666'; nameEl.style.fontWeight = (i === activeIdx) ? '700' : 'normal'; }
+      });
+    } else {
+      // fallback: 旧版单条血条
+      const pPct = Math.max(0, teamHP / teamMaxHP * 100);
+      const pFill = document.getElementById('pHpFill');
+      if (pFill) { pFill.style.width = pPct + '%'; pFill.style.background = pPct < 25 ? '#C41A1A' : pPct < 50 ? '#B85A00' : '#1A6B3A'; }
+      const pLabel = document.getElementById('pHpLabel');
+      if (pLabel) pLabel.textContent = Math.max(0,Math.round(teamHP)) + '/' + teamMaxHP;
+    }
+
+    // 回合数
     const rl = document.getElementById('roundLabel');
-    if (rl) rl.textContent = '激战中...';
+    if (rl) {
+      const maxR2 = boss.specialRule?.type === 'round_limit' ? boss.specialRule.maxRounds : null;
+      let roundDisp;
+      if (currentRound && maxR2) {
+        const left = maxR2 - currentRound;
+        roundDisp = left === 0 ? '⚠️ 最后1回合！' : `第 ${currentRound} / ${maxR2} 回合（剩余 ${left} 次）`;
+      } else {
+        roundDisp = currentRound ? `第 ${currentRound} 回合` : '激战中...';
+      }
+      rl.textContent = roundDisp;
+    }
+
+    // 紧急干预按钮状态
+    const iBtn = document.getElementById('interventionBtn');
+    const iCD = document.getElementById('interventionCD');
+    if (iBtn && battleState.running) {
+      if (battleState.interventionCD <= 0) {
+        iBtn.style.display = 'inline-block'; iBtn.disabled = false;
+        if (iCD) iCD.style.display = 'none';
+      } else {
+        iBtn.style.display = 'none';
+        if (iCD) { iCD.style.display = 'inline'; iCD.textContent = `⚡ CD: ${battleState.interventionCD}回合`; }
+      }
+    }
   }
 
-  for (let r = 1; r <= 40; r++) {
-    teamHP       -= bDmgPerRound;
-    bossHPRemain -= calcDmg(teamATK, boss.def);
-    battleState.bossHPRemain = bossHPRemain;
-    updateBars();
+  function logBattle(text) {
+    const el = document.getElementById('battleLog');
+    if (el) el.textContent = text;
+  }
+
+  const maxRounds = boss.specialRule?.type === 'round_limit' ? boss.specialRule.maxRounds : 40;
+  
+  // Boss 4: 技能订阅 - Boss攻击力额外+50%（复制玩家能力）
+  const boss4Multiplier = boss.specialRule?.type === 'copy_skill' ? 1.5 : 1.0;
+  const effectiveBossDmg = Math.round(bDmgPerRound * boss4Multiplier);
+  
+  // 渗透克制系统 - infiltrateType 职业ATK减半
+  let effectiveTeamATK = teamATK;
+  const infiltrateTypes = Array.isArray(boss.infiltrateType) ? boss.infiltrateType : (boss.infiltrateType ? [boss.infiltrateType] : []);
+  if (infiltrateTypes.length > 0) {
+    const normalATK = battleState.team
+      .filter(c => !infiltrateTypes.includes(c.type) || c.type === '绝版类')
+      .reduce((s,c) => s + getCardATK(c), 0);
+    const penaltyATK = battleState.team
+      .filter(c => infiltrateTypes.includes(c.type) && c.type !== '绝版类')
+      .reduce((s,c) => s + getCardATK(c), 0);
+    effectiveTeamATK = normalATK + Math.round(penaltyATK * 0.5);
+  } else if (boss.specialRule?.type === 'selection') {
+    // Boss 5 fallback: 创意类渗透
+    const creativeCards = battleState.team.filter(c => c.type === '创意类');
+    if (creativeCards.length > 0) {
+      const normalATK = battleState.team.filter(c => c.type !== '创意类').reduce((s,c) => s+c.atk, 0);
+      const creativeATK = creativeCards.reduce((s,c) => s+c.atk, 0);
+      effectiveTeamATK = normalATK + Math.round(creativeATK * 0.5);
+    }
+  }
+  
+  // Boss学习：连续3次同组合，伤害-50%
+  if ((G.sameTeamCount||0) >= 3) {
+    effectiveTeamATK = Math.round(effectiveTeamATK * 0.5);
+    showToast('⚠️ Boss已学习你的策略，伤害减半！');
+  }
+
+  // ── simultaneousStrike (Boss 1)：1回合定胜负，在 effectiveTeamATK 已算好之后执行 ──
+  if (boss.specialRule?.type === 'simultaneousStrike') {
+    const oneShotDmg = calcDmg(effectiveTeamATK, boss.def);
+    logBattle(`⚡ 3张卡同步出击！合力造成 ${Math.round(oneShotDmg)} 点伤害`);
+    bossHPRemain -= oneShotDmg;
+    battleState.bossHPRemain = Math.max(0, bossHPRemain);
+    updateBars(1, undefined);
     playSound('hit');
+    if (navigator.vibrate) navigator.vibrate(80);
+    await new Promise(res => setTimeout(res, 700));
+    if (bossHPRemain <= 0) {
+      battleState.bossHPRemain = 0;
+      playSound('win');
+      if (navigator.vibrate) navigator.vibrate([100,50,100,50,100]);
+      bossCleared();
+    } else {
+      logBattle('⚠️ 评估结果：效率不足，进入淘汰程序...');
+      await new Promise(res => setTimeout(res, 500));
+      playSound('lose');
+      if (navigator.vibrate) navigator.vibrate(500);
+      const bossLine = boss.taunts[Math.floor(Math.random()*boss.taunts.length)];
+      battleState.team.forEach(card => {
+        if (G.collection[card.name]) {
+          G.collection[card.name]--;
+          if (G.collection[card.name] <= 0) delete G.collection[card.name];
+        }
+      });
+      G.team = G.team.filter(n => G.collection[n]);
+      saveState();
+      showBattleResult('lose', `❌ ${boss.failMsg}`, boss.quote + '\n\n「' + bossLine + '」\n\n换一套更强的阵容再来？', true);
+    }
+    battleState.running = false;
+    return;
+  }
+
+  for (let r = 1; r <= maxRounds; r++) {
+    if (battleState.interventionCD > 0) battleState.interventionCD--;
+
+    // isolationProtocol: 只有轮到的那张卡出手
+    let roundATK = effectiveTeamATK;
+    let activeIdx = undefined;
+    if (boss.specialRule?.type === 'isolationProtocol') {
+      activeIdx = battleState.currentRotation % 3;
+      battleState.currentRotation++;
+      const activeCard = battleState.team[activeIdx];
+      const infAffected = infiltrateTypes.includes(activeCard.type) && activeCard.type !== '绝版类';
+      roundATK = Math.round(getCardATK(activeCard) * (infAffected ? 0.5 : 1.0));
+      if ((G.sameTeamCount||0) >= 3) roundATK = Math.round(roundATK * 0.5);
+      if (battleState.interventionActive) {
+        roundATK = Math.round(roundATK * 1.5);
+        battleState.interventionActive = false;
+        logBattle(`🔥 ${activeCard.name} 全力一击！`);
+      } else {
+        const nextIdx = battleState.currentRotation % 3;
+        const nextCard = battleState.team[nextIdx];
+        logBattle(`⚔ ${activeCard.name} 出手 → 下回合：${nextCard.name}`);
+      }
+    }
+
+    const pDmgThisRound = calcDmg(roundATK, boss.def);
+    teamHP       -= effectiveBossDmg;
+    bossHPRemain -= pDmgThisRound;
+    battleState.bossHPRemain = bossHPRemain;
+    updateBars(r, activeIdx);
+    playSound('hit');
+    if (navigator.vibrate) navigator.vibrate(30);
     if (teamHP <= 0 || bossHPRemain <= 0) break;
-    await new Promise(res => setTimeout(res, 200));
+    await new Promise(res => setTimeout(res, 220));
   }
 
   battleState.running = false;
@@ -1724,9 +2116,11 @@ async function runBattle() {
   if (bossHPRemain <= 0) {
     battleState.bossHPRemain = 0;
     playSound('win');
+    if (navigator.vibrate) navigator.vibrate([100, 50, 100, 50, 100]);
     bossCleared();
   } else {
     playSound('lose');
+    if (navigator.vibrate) navigator.vibrate(500);
     // Consume team cards on loss
     const lostCards = [];
     battleState.team.forEach(card => {
@@ -1741,7 +2135,7 @@ async function runBattle() {
     G.team = G.team.filter(n => G.collection[n]);
     saveState();
     showBattleResult('lose',
-      `❌ ${2026+G.bossProgress} 年，你被AI淘汰了`,
+      `❌ ${boss.failMsg || (2026+G.bossProgress) + "年，你被AI淘汰了"}`,
       (()=>{
         const team = battleState.team;
         const picked = team[Math.floor(Math.random()*team.length)];
@@ -1776,6 +2170,15 @@ function showBattleResult(type, title, detail, showBack, onContinue) {
 }
 
 function bossCleared() {
+  // Boss学习：追踪卡组
+  const teamKey = battleState?.team?.map(c=>c.name).sort().join(',') || '';
+  if (teamKey === G.lastTeamKey) {
+    G.sameTeamCount = (G.sameTeamCount||0) + 1;
+  } else {
+    G.sameTeamCount = 1;
+    G.lastTeamKey = teamKey;
+  }
+
   const boss = BOSSES[G.bossProgress];
   // Consume all 3 battle cards (win = burn too)
   battleState?.team?.forEach(card => {
@@ -1835,19 +2238,25 @@ function showClearScreen() {
     team.map(c => `${c.name}  ${RARITY_LABEL[c.rarity]}`).join('\n');
   document.getElementById('certDate').textContent =
     new Date().toLocaleDateString('zh-CN') + ' 认证通过';
+  // 6.5 通关叙事文案
+  const narrative = document.getElementById('clearNarrative');
+  if (narrative) {
+    narrative.innerHTML = '5波AI浪潮过去了。<br>不是因为你最强，是因为你够多元。<br><br>回到现实，想想你还能叠加什么技能？';
+    narrative.style.display = 'block';
+  }
   document.getElementById('clearScreen').classList.add('show');
 }
 
 function shareResult() {
   const team = G.team.map(n => CAREERS.find(c => c.name === n));
-  const text = `【职业档案局 · 2026职场生存测试】
+  const text = `【职业档案局 · 2026-2035生存测试】
 
-Anthropic经济指数报告显示：
-49%的职业已有超过25%的任务可被AI完成。
+我用「${team.map(c=>c.name).join(' + ')}」组成战队，撑过了5波AI浪潮！
 
-我用「${team.map(c=>c.name).join('·')}」组成战队，通关了5波AI浪潮。
+Anthropic经济指数：67%的职业面临AI替代风险。
+不是最强，是因为够多元。
 
-你的职业，能撑过2026年吗？→ https://yanluanchen-prog.github.io/career-gacha/`;
+你能撑到第几波？→ https://yanluanchen-prog.github.io/career-gacha/`;
   navigator.clipboard.writeText(text).then(() => showToast('已复制！快去分享'));
 }
 
@@ -1871,8 +2280,10 @@ function doShare() {
   const card = lastDrawn;
   const aiCoverage = {N:'高风险',R:'中风险',SR:'较安全',SSR:'稀缺型',UR:'已绝版'}[card ? card.rarity : 'N'];
   const text = card
-    ? `Anthropic经济指数（2026年3月）：49%的职业已有超1/4的任务可被AI完成。\n\n我抽到了「${card.name}」——${RARITY_LABEL[card.rarity]}职位 · ${aiCoverage}\n\n「${card.desc.split('。')[0]}。」\n\n你的职业能活过2026年吗？→ https://yanluanchen-prog.github.io/career-gacha/`
-    : `Anthropic经济指数（2026年3月）：49%的职业已有超1/4的任务可被AI完成。你的职业呢？→ https://yanluanchen-prog.github.io/career-gacha/`;
+    ? card.rarity === 'UR'
+      ? `我在职业档案局抽到了绝版职业「${card.name}」！\n\n这是旧时代的残影，已经死过一次的职业。\n面对AI浪潮，它无所畏惧——因为最坏的结局，它早已经历过。\n\n你能抽到什么？→ https://yanluanchen-prog.github.io/career-gacha/`
+      : `Anthropic经济指数（2026）：67%的职业面临AI替代风险。\n\n我抽到了「${card.name}」——${RARITY_LABEL[card.rarity]}职位 · ${aiCoverage}\n\n你能撑过几波AI浪潮？→ https://yanluanchen-prog.github.io/career-gacha/`
+    : `Anthropic经济指数（2026）：67%的职业面临AI替代风险。你的职业呢？→ https://yanluanchen-prog.github.io/career-gacha/`;
   navigator.clipboard.writeText(text).then(() => {
     G.shareCount++;
     G.pullsLeft += 3;
@@ -1885,7 +2296,7 @@ function doShare() {
 function openExchangeImport() {
   document.getElementById('exchangeContent').innerHTML = `
     <p style="font-size:12px;color:var(--ink-lt);margin-bottom:12px;line-height:1.6;">
-      粘贴朋友发来的卡片交换码，获得对应职业卡。<br>（重复卡可在Offer 记录中长按生成交换码）
+      粘贴朋友发来的卡片交换码，获得对应职业卡。<br>（重复卡可在职业档案中长按生成交换码）
     </p>
     <input type="text" id="exchangeInput" placeholder="粘贴交换码到这里...">
     <div class="btn-row">
@@ -1936,7 +2347,16 @@ function renderHeader() {
   document.getElementById('pullsLeft').textContent = G.pullsLeft;
   document.getElementById('totalPulls').textContent = G.totalPulls;
   // pity counter hidden from user
-  document.getElementById('pityBar').style.width = Math.min(100, (G.pityCount/10)*100) + '%';
+  const pitySSR = G.pitySSR || 0;
+  const pityUR  = G.pityUR  || 0;
+  const toSSR = 50  - pitySSR;
+  const toUR  = 100 - pityUR;
+  // 进度条对齐 SSR 保底（50 抽满格）
+  document.getElementById('pityBar').style.width = Math.min(100, (pitySSR / 50) * 100) + '%';
+  const pi = document.getElementById('pityInfo');
+  if (pi) pi.textContent = `再抽 ${toSSR} 次必出急招 · 再抽 ${toUR} 次必出绝版`;
+  const plr = document.getElementById('pityLeftRow');
+  if (plr) plr.textContent = `SSR保底：${pitySSR}/50`;
 }
 
 
@@ -1976,7 +2396,7 @@ function renderCollection() {
   const keys = Object.keys(G.collection);
 
   if (keys.length === 0) {
-    grid.innerHTML = '<div class="collection-empty">[ 暂无 Offer 记录 ]</div>';
+    grid.innerHTML = '<div class="collection-empty">[ 档案室为空 ]</div>';
     section.style.display = 'none';
     return;
   }
@@ -2023,6 +2443,31 @@ function renderCollection() {
     });
   });
 
+
+  // 博物馆区域
+  const museumEntries = Object.keys(G.museum || {});
+  let museumDiv = document.getElementById('museumSection');
+  if (!museumDiv) {
+    museumDiv = document.createElement('div');
+    museumDiv.id = 'museumSection';
+    museumDiv.style.cssText = 'margin-top:24px;border-top:1px solid #ccc;padding-top:16px;';
+    section.appendChild(museumDiv);
+  }
+  if (museumEntries.length > 0) {
+    const museumCards = museumEntries.map(name => {
+      const c = CAREERS.find(x => x.name === name);
+      if (!c) return '';
+      return `<div style="position:relative;filter:grayscale(0.5);opacity:0.75;">
+        ${buildMiniCard(c, 0, false)}
+        <div style="position:absolute;bottom:0;left:0;right:0;text-align:center;background:rgba(0,0,0,0.65);color:#F4EED8;font-size:8px;padding:2px;letter-spacing:1px;font-family:monospace;">已退役</div>
+      </div>`;
+    }).join('');
+    museumDiv.innerHTML = `
+      <div style="font-size:13px;font-weight:700;color:#888;letter-spacing:2px;margin-bottom:10px;">🏛 绝版档案室 (${museumEntries.length})</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(90px,1fr));gap:8px;">${museumCards}</div>`;
+  } else {
+    museumDiv.innerHTML = '';
+  }
 
   // Long-press for exchange code
   grid.querySelectorAll('.mini-card').forEach(el => {
