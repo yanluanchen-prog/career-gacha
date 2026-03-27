@@ -2705,6 +2705,7 @@ function renderCollection() {
   const sorted = keys.map(n => CAREERS.find(c => c.name === n)).filter(Boolean)
     .sort((a,b) => rarityRank[a.rarity] - rarityRank[b.rarity]);
 
+  // 使用事件委托而不是给每个卡片绑定事件
   grid.innerHTML = sorted.map(career => {
     const count = G.collection[career.name] || 0;
     const inTeam = G.team.includes(career.name);
@@ -2714,15 +2715,16 @@ function renderCollection() {
   const unique = keys.filter(n => CAREERS.find(c => c.name === n)).length;
   const total  = CAREERS.length;
   const countEl = document.getElementById('collectionCount');
-  if (countEl) countEl.textContent = `已收集 ${unique} / ${total}`;
-  // 点击 = 打开卡牌详情弹窗
-  grid.querySelectorAll('.mini-card[data-name]').forEach(el => {
-    el.addEventListener('click', function() {
-      const name = this.getAttribute('data-name');
-      if (!name) return;
-      showCardDetail(name);
-    });
-  });
+  if (countEl) countEl.textContent = '已收集 ' + unique + ' / ' + total;
+  
+  // 使用事件委托绑定点击事件
+  grid.onclick = function(e) {
+    const card = e.target.closest('.mini-card[data-name]');
+    if (card) {
+      const name = card.getAttribute('data-name');
+      if (name) showCardDetail(name);
+    }
+  };
 
 
   // 博物馆区域
