@@ -2578,13 +2578,26 @@ function renderAll() {
 function renderHeader() {
   document.getElementById('pullsLeft').textContent = G.pullsLeft;
   document.getElementById('totalPulls').textContent = G.totalPulls;
-  // pity counter hidden from user
+  
+  // 进度条显示剩余抽卡次数（10次为满格）
+  const maxPulls = 10; // 最大抽卡次数
+  const currentPulls = Math.min(G.pullsLeft, maxPulls);
+  const progressPercent = (currentPulls / maxPulls) * 100;
+  document.getElementById('pityBar').style.width = progressPercent + '%';
+  
+  // 进度条颜色根据剩余次数变化
+  const bar = document.getElementById('pityBar');
+  if (bar) {
+    if (currentPulls <= 2) bar.style.background = 'var(--red)';      // 红色警告
+    else if (currentPulls <= 5) bar.style.background = 'var(--orange)'; // 橙色提醒
+    else bar.style.background = 'var(--green)';                      // 绿色充足
+  }
+  
+  // 保底信息显示
   const pitySSR = G.pitySSR || 0;
   const pityUR  = G.pityUR  || 0;
   const toSSR = 50  - pitySSR;
   const toUR  = 100 - pityUR;
-  // 进度条对齐 SSR 保底（50 抽满格）
-  document.getElementById('pityBar').style.width = Math.min(100, (pitySSR / 50) * 100) + '%';
   const pi = document.getElementById('pityInfo');
   if (pi) pi.textContent = `再抽 ${toSSR} 次必出急招 · 再抽 ${toUR} 次必出绝版`;
   const plr = document.getElementById('pityLeftRow');
