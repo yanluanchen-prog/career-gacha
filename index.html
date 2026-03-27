@@ -711,6 +711,51 @@ body{
 }
 .toast.show{opacity:1;}
 
+/* ── DAMAGE NUMBER ANIMATION ─────────────────────────────── */
+.damage-number{
+  position:absolute;
+  font-size:20px;
+  font-weight:900;
+  font-family:'Bebas Neue', sans-serif;
+  pointer-events:none;
+  z-index:200;
+  animation:damageFloat 1s ease-out forwards;
+  text-shadow:2px 2px 0 rgba(0,0,0,0.5);
+}
+.damage-number.player{color:#C41A1A;}  /* 玩家受伤 - 红色 */
+.damage-number.boss{color:#1A6B3A;}    /* Boss受伤 - 绿色 */
+.damage-number.crit{color:#FFD700;transform:scale(1.3);} /* 暴击 - 金色 */
+
+@keyframes damageFloat{
+  0%{transform:translateY(0) scale(1);opacity:1;}
+  50%{transform:translateY(-30px) scale(1.1);opacity:0.9;}
+  100%{transform:translateY(-60px) scale(0.8);opacity:0;}
+}
+
+/* ── CARD FATIGUE WARNING ───────────────────────────────── */
+.fatigue-warning{
+  display:inline-block;
+  font-size:9px;
+  color:#C41A1A;
+  margin-left:4px;
+  animation:pulse 1.5s infinite;
+}
+@keyframes pulse{
+  0%,100%{opacity:1;}
+  50%{opacity:0.5;}
+}
+
+/* ── BOSS ADAPTATION HINT ───────────────────────────────── */
+.adaptation-hint{
+  background:rgba(196,26,26,0.1);
+  border:1px dashed var(--red);
+  border-radius:4px;
+  padding:4px 8px;
+  font-size:10px;
+  color:var(--red);
+  margin-top:4px;
+}
+
 /* ── RESPONSIVE ─────────────────────────────────────────── */
 @media(min-width:768px){
   .container{padding:24px;}
@@ -1282,6 +1327,8 @@ const DEFAULT_STATE = {
   upgradeProgress: {}, // {name: draws_toward_next_level}
   lastTeamKey: '',     // 上一次出战的卡组key
   sameTeamCount: 0,    // 连续使用同一卡组的次数
+  cardUsage: {},       // 卡组疲劳：{name: count} 每张卡连续使用次数
+  bossAdaptation: {},  // Boss学习：{bossId: {type: 克制类型}}
 };
 
 let G = loadState();
@@ -1730,10 +1777,58 @@ function startChallenge() {
 }
 
 function getBossMultiplier(boss, career) {
+  // Boss学习机制：根据玩家历史卡组调整克制关系
+  const adaptation = G.bossAdaptation?.[boss.id];
+  if (adaptation && adaptation.type === career.type) {
+    // Boss已学习如何应对此类型，伤害降低
+    return 0.7;
+  }
+  
   if (boss.immuneTypes.includes(career.type)) return 0;
   if (boss.crushTypes.includes(career.type)) return 1.5;
   if (boss.weakTypes.includes(career.type)) return 0.5;
   return 1.0;
+}
+
+// 卡组疲劳系统：计算单张卡的疲劳系数
+function getCardFatigueMultiplier(cardName) {
+  const usage = G.cardUsage?.[cardName] || 0;
+  // 连续使用1次：100%，2次：90%，3次：80%，4次及以上：70%
+  if (usage <= 1) return 1.0;
+  if (usage === 2) return 0.9;
+  if (usage === 3) return 0.8;
+  return 0.7;
+}
+
+// 更新卡组疲劳计数
+function updateCardUsage(team) {
+  if (!G.cardUsage) G.cardUsage = {};
+  // 重置未使用卡牌的计数
+  Object.keys(G.cardUsage).forEach(name => {
+    if (!team.find(c => c.name === name)) {
+      G.cardUsage[name] = 0; // 休息后恢复
+    }
+  });
+  // 增加当前卡组计数
+  team.forEach(c => {
+    G.cardUsage[c.name] = (G.cardUsage[c.name] || 0) + 1;
+  });
+  saveState();
+}
+
+// Boss学习：记录玩家卡组偏好
+function updateBossAdaptation(bossId, team) {
+  if (!G.bossAdaptation) G.bossAdaptation = {};
+  // 统计卡组中最多的类型
+  const typeCount = {};
+  team.forEach(c => {
+    typeCount[c.type] = (typeCount[c.type] || 0) + 1;
+  });
+  const dominantType = Object.entries(typeCount).sort((a,b) => b[1]-a[1])[0]?.[0];
+  if (dominantType) {
+    G.bossAdaptation[bossId] = { type: dominantType, count: (G.bossAdaptation[bossId]?.count || 0) + 1 };
+  }
+  saveState();
 }
 
 function getClashLabel(boss, career) {
@@ -1741,6 +1836,24 @@ function getClashLabel(boss, career) {
   if (boss.crushTypes.includes(career.type)) return {cls:'resist', text:'⚠️ 被克制！AI浪潮伤害×1.5'};
   if (boss.weakTypes.includes(career.type)) return {cls:'weakness', text:'✦ 克制！AI浪潮伤害减半'};
   return null;
+}
+
+// 获取卡组疲劳提示
+function getCardFatigueHint(cardName) {
+  const usage = G.cardUsage?.[cardName] || 0;
+  if (usage >= 4) return '<span class="fatigue-warning">😫 极度疲劳（攻击力×0.7）</span>';
+  if (usage === 3) return '<span class="fatigue-warning">😔 疲劳（攻击力×0.8）</span>';
+  if (usage === 2) return '<span style="font-size:9px;color:#888;">😕 略累（攻击力×0.9）</span>';
+  return '';
+}
+
+// 获取Boss学习提示
+function getBossAdaptationHint(bossId) {
+  const adaptation = G.bossAdaptation?.[bossId];
+  if (adaptation && adaptation.count >= 2) {
+    return `<div class="adaptation-hint">🧠 Boss已学习你的策略：${adaptation.type}职业效果降低</div>`;
+  }
+  return '';
 }
 
 function calcHP(c) {
@@ -1768,20 +1881,26 @@ function renderBoss() {
 
   const team = G.team.map(n => CAREERS.find(c => c.name === n));
 
-  // Combined team stats
+  // 更新卡组疲劳和Boss学习记录
+  updateCardUsage(team);
+  updateBossAdaptation(boss.id, team);
+  
+  // Combined team stats（加入卡组疲劳影响）
   const teamHP   = team.reduce((s, c) => s + calcHP(c), 0);
-  const teamATK  = team.reduce((s, c) => s + Math.round(getCardATK(c) * getBossMultiplier(boss, c)), 0);
+  const teamATK  = team.reduce((s, c) => s + Math.round(getCardATK(c) * getBossMultiplier(boss, c) * getCardFatigueMultiplier(c.name)), 0);
   const teamDEF  = Math.round(team.reduce((s, c) => s + c.def, 0) / team.length);
   const bossHPRemain = boss.hp;
   // 绝版特性：带任意UR卡 = 对任意boss秒杀（用完即焚）
   const urCard = team.find(c => c.rarity === 'UR');
   const extinctsShield = !!urCard;
 
-  // Type tags for each team member
+  // Type tags for each team member（加入卡组疲劳提示）
   const typeTags = team.map(c => {
     const clash = getClashLabel(boss, c);
-    if (!clash) return '';
-    return `<span class="clash-tag ${clash.cls}" style="font-size:9px;padding:2px 6px;margin:2px;">${c.name} ${clash.text.split('！')[0]}！</span>`;
+    const fatigue = getCardFatigueHint(c.name);
+    if (!clash && !fatigue) return '';
+    const clashHtml = clash ? `<span class="clash-tag ${clash.cls}" style="font-size:9px;padding:2px 6px;margin:2px;">${c.name} ${clash.text.split('！')[0]}！</span>` : '';
+    return clashHtml + fatigue;
   }).join('');
 
   const bDmgPerRound = Math.round(calcDmg(boss.atk, teamDEF));
@@ -1810,6 +1929,7 @@ function renderBoss() {
   }
 
   const ruleHtml = boss.specialRule ? `<div style="background:rgba(200,50,50,0.1);border:1px solid rgba(200,50,50,0.4);border-radius:6px;padding:10px 14px;margin:10px 0;font-size:13px;color:#C41A1A;font-weight:600;">${boss.specialRule.desc}${boss.specialRule.penaltyDesc ? '<br><span style=\'font-weight:400;color:#666;font-size:12px;\'>' + boss.specialRule.penaltyDesc + '</span>' : ''}</div>` : '';
+  const adaptationHtml = getBossAdaptationHint(boss.id); // Boss学习提示
   const infiltrateTypes = Array.isArray(boss.infiltrateType) ? boss.infiltrateType : (boss.infiltrateType ? [boss.infiltrateType] : []);
   const infiltrateHtml = infiltrateTypes.length > 0
     ? `<div style="background:rgba(200,120,0,0.15);border:1px solid #cc6644;border-radius:6px;padding:10px 14px;margin:8px 0;font-size:13px;color:#e8a060;font-weight:600;">
@@ -1824,6 +1944,7 @@ function renderBoss() {
       <div class="boss-name">${boss.emoji} ${boss.name}</div>
       ${boss.subtitle ? `<div style="font-size:12px;color:#888;letter-spacing:1px;margin:-4px 0 8px;font-family:monospace;">${boss.subtitle}</div>` : ""}
       ${ruleHtml}
+      ${adaptationHtml}
       ${roundLimitAdvice}
       ${infiltrateHtml}
 
@@ -1941,6 +2062,24 @@ async function runBattle() {
   const teamATK = battleState.teamATK;
   const bDmgPerRound = Math.round(calcDmg(boss.atk, battleState.teamDEF));
 
+  // 战斗可视化：显示伤害数字
+  function showDamageNumber(damage, isBoss, isCrit) {
+    const num = document.createElement('div');
+    num.className = 'damage-number ' + (isBoss ? 'boss' : 'player') + (isCrit ? ' crit' : '');
+    num.textContent = isCrit ? '⚡' + damage : damage;
+    
+    // 随机位置偏移
+    const offsetX = (Math.random() - 0.5) * 60;
+    const startY = isBoss ? 200 : 350;
+    const startX = window.innerWidth / 2 + offsetX;
+    
+    num.style.left = startX + 'px';
+    num.style.top = startY + 'px';
+    
+    document.body.appendChild(num);
+    setTimeout(() => num.remove(), 1000);
+  }
+
   function updateBars(currentRound, activeIdx) {
     // Boss 血条
     const bPct = Math.max(0, bossHPRemain / boss.hp * 100);
@@ -2047,6 +2186,7 @@ async function runBattle() {
     logBattle(`⚡ 3张卡同步出击！合力造成 ${Math.round(oneShotDmg)} 点伤害`);
     bossHPRemain -= oneShotDmg;
     battleState.bossHPRemain = Math.max(0, bossHPRemain);
+    showDamageNumber(Math.round(oneShotDmg), true, oneShotDmg > effectiveTeamATK * 0.8); // 显示伤害数字
     updateBars(1, undefined);
     playSound('hit');
     if (navigator.vibrate) navigator.vibrate(80);
@@ -2070,7 +2210,7 @@ async function runBattle() {
       });
       G.team = G.team.filter(n => G.collection[n]);
       saveState();
-      showBattleResult('lose', `❌ ${boss.failMsg}`, boss.quote + '\n\n「' + bossLine + '」\n\n换一套更强的阵容再来？', true);
+      showBattleResult('lose', `❌ ${boss.failMsg}`, boss.quote + '\n\n「' + bossLine + '」\n\n💀 战斗失败：失去「' + lostCards[0] + '」+ ' + penaltyPulls + '次抽卡机会', true);
     }
     battleState.running = false;
     return;
@@ -2104,6 +2244,9 @@ async function runBattle() {
     teamHP       -= effectiveBossDmg;
     bossHPRemain -= pDmgThisRound;
     battleState.bossHPRemain = bossHPRemain;
+    // 战斗可视化：显示双方伤害数字
+    showDamageNumber(Math.round(effectiveBossDmg), false, effectiveBossDmg > bDmgPerRound * 1.2);
+    setTimeout(() => showDamageNumber(Math.round(pDmgThisRound), true, pDmgThisRound > roundATK * 0.8), 200);
     updateBars(r, activeIdx);
     playSound('hit');
     if (navigator.vibrate) navigator.vibrate(30);
@@ -2121,19 +2264,29 @@ async function runBattle() {
   } else {
     playSound('lose');
     if (navigator.vibrate) navigator.vibrate(500);
-    // Consume team cards on loss
+    // P1修复：失败惩罚改为只消耗1张卡+抽卡次数惩罚
     const lostCards = [];
-    battleState.team.forEach(card => {
-      if (G.collection[card.name]) {
-        G.collection[card.name]--;
-        if (G.collection[card.name] <= 0) {
-          delete G.collection[card.name];
-          lostCards.push(card.name);
-        }
+    // 选择血量贡献最低的那张卡作为损失
+    const team = battleState.team;
+    const cardHPs = team.map((c, i) => ({ card: c, hp: battleState.cardMaxHPs[i], idx: i }));
+    cardHPs.sort((a, b) => a.hp - b.hp); // 按血量排序
+    const lostCard = cardHPs[0].card; // 损失血量最低的卡
+    
+    if (G.collection[lostCard.name]) {
+      G.collection[lostCard.name]--;
+      if (G.collection[lostCard.name] <= 0) {
+        delete G.collection[lostCard.name];
       }
-    });
+      lostCards.push(lostCard.name);
+    }
+    
+    // 额外惩罚：扣除2次抽卡次数（但不低于0）
+    const penaltyPulls = Math.min(2, G.pullsLeft);
+    G.pullsLeft -= penaltyPulls;
+    
     G.team = G.team.filter(n => G.collection[n]);
     saveState();
+    const penaltyPulls2 = Math.min(2, G.pullsLeft + 2); // 计算惩罚前的值用于显示
     showBattleResult('lose',
       `❌ ${boss.failMsg || (2026+G.bossProgress) + "年，你被AI淘汰了"}`,
       (()=>{
@@ -2143,7 +2296,7 @@ async function runBattle() {
         const careerLine = ct ? ct[Math.floor(Math.random()*ct.length)] : '';
         const bossLine = boss.taunts[Math.floor(Math.random()*boss.taunts.length)];
         return (careerLine ? careerLine.replace(/。/g,'。\n') + '\n\n' : '') + boss.quote + '\n\n' + '「' + bossLine + '」';
-      })() + '\n\n换一套更强的阵容再来？',
+      })() + '\n\n💀 战斗失败：失去「' + lostCards.join('、') + '」+ ' + penaltyPulls2 + '次抽卡机会\n换一套更强的阵容再来？',
       true
     );
   }
