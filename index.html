@@ -2000,48 +2000,94 @@ function renderBoss() {
     : '';
 
 
-  document.getElementById('bossZone').innerHTML = `
-    <div class="boss-arena">
-      <div class="boss-chapter">${boss.chapter}</div>
-      <div class="boss-name">${boss.emoji} ${boss.name}</div>
-      ${boss.subtitle ? `<div style="font-size:12px;color:#888;letter-spacing:1px;margin:-4px 0 8px;font-family:monospace;">${boss.subtitle}</div>` : ""}
-      ${ruleHtml}
-      ${adaptationHtml}
-      ${roundLimitAdvice}
-      ${infiltrateHtml}
-
-      <div class="hp-section">
-        <div class="hp-row hp-boss">
-          <div class="hp-label" style="color:#F4EED8">
-            <span>AI浪潮</span>
-            <span id="bHpLabel"></span>
-          </div>
-          <div class="hp-track"><div class="hp-fill" id="bHpFill" style="width:100%"></div></div>
-        </div>
-        ${team.map((c, i) => `
-        <div class="hp-row hp-player" id="cardHpRow${i}">
-          <div class="hp-label">
-            <span id="cardHpName${i}" style="font-size:10px;">${c.icon} ${c.name}</span>
-            <span id="cardHpLabel${i}" style="font-size:10px;"></span>
-          </div>
-          <div class="hp-track"><div class="hp-fill" id="cardHpFill${i}" style="width:100%;background:#1A6B3A;"></div></div>
-        </div>`).join('')}
-        <div class="round-label" id="roundLabel">${extinctsShield ? '⚡ 绝版秘技蓄力中 · ' + urCard.name + ' 正在燃烧一切' : `出战 ${2025 + (G.bossProgress+1)} · 薪资力 ${teamATK} · 抗AI值 ${Math.round(team.reduce((s,c)=>s+(100-c.aiCoverage),0)/team.length)} · 需求度 ${Math.round(teamHP/8)}`}</div>
-        <div id="battleLog" style="font-size:11px;color:#aaa;font-family:monospace;min-height:18px;margin:4px 0;text-align:center;"></div>
+  // 克制关系可视化
+  const typeCounterHtml = `
+    <div style="background:var(--paper-dk);border:1px solid var(--border);border-radius:6px;padding:12px;margin:10px 0;">
+      <div style="font-size:11px;color:var(--ink-lt);margin-bottom:8px;font-weight:700;">🎯 本关克制关系</div>
+      <div style="display:flex;flex-wrap:wrap;gap:6px;font-size:10px;">
+        ${boss.weakTypes.map(t => `<span style="background:rgba(26,107,58,0.15);color:var(--green);padding:3px 8px;border-radius:4px;border:1px solid var(--green);">✦ ${t} 伤害×2</span>`).join('')}
+        ${boss.crushTypes.map(t => `<span style="background:rgba(194,59,34,0.15);color:var(--red);padding:3px 8px;border-radius:4px;border:1px solid var(--red);">⚠️ ${t} 被克制</span>`).join('')}
+        ${boss.immuneTypes.map(t => `<span style="background:rgba(120,120,120,0.15);color:#666;padding:3px 8px;border-radius:4px;border:1px solid #888;">🛡 ${t} 免疫</span>`).join('')}
       </div>
-      
+    </div>
+  `;
 
+  document.getElementById('bossZone').innerHTML = `
+    <!-- 任务目标提示 -->
+    <div style="background:linear-gradient(135deg, var(--red) 0%, #8B1A2B 100%);color:#fff;padding:14px 16px;border-radius:6px;margin-bottom:12px;">
+      <div style="font-size:13px;font-weight:700;margin-bottom:6px;">🎯 本关任务：击败 ${boss.name}</div>
+      <div style="font-size:11px;opacity:0.9;line-height:1.6;">
+        ${boss.desc}<br>
+        <span style="color:#ffccaa;">${boss.quote}</span>
+      </div>
     </div>
-    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px;" id="bossTeamGrid">
-      ${team.map(c => {
-        const cardHtml = buildMiniCard(c, 1, false);
-        const lastClose = cardHtml.lastIndexOf('</div>');
-        return cardHtml.substring(0, lastClose) + `<button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` + cardHtml.substring(lastClose);
-      }).join('')}
+
+    <!-- Boss威胁等级 -->
+    <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px;padding:10px 12px;background:rgba(194,59,34,0.08);border-left:4px solid var(--red);">
+      <span style="font-size:32px;">${boss.emoji}</span>
+      <div style="flex:1;">
+        <div style="font-size:16px;font-weight:900;color:var(--red);">${boss.name}</div>
+        <div style="font-size:11px;color:var(--ink-lt);">${boss.chapter} · 攻击力 ${boss.atk} · 防御力 ${boss.def}</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:10px;color:var(--ink-lt);">威胁等级</div>
+        <div style="font-size:18px;color:var(--red);font-weight:900;">${'🔥'.repeat(Math.min(5, Math.ceil(boss.atk / 150)))}</div>
+      </div>
     </div>
+
+    <!-- 克制关系 -->
+    ${typeCounterHtml}
+
+    <!-- 特殊规则 -->
+    ${ruleHtml}
+    ${adaptationHtml}
+    ${roundLimitAdvice}
+    ${infiltrateHtml}
+
+    <!-- HP区域 -->
+    <div class="hp-section" style="margin:14px 0;">
+      <div class="hp-row hp-boss">
+        <div class="hp-label" style="color:#F4EED8">
+          <span>AI浪潮剩余HP</span>
+          <span id="bHpLabel">${boss.hp}/${boss.hp}</span>
+        </div>
+        <div class="hp-track"><div class="hp-fill" id="bHpFill" style="width:100%"></div></div>
+      </div>
+      <div style="font-size:10px;color:var(--ink-faint);margin-top:6px;text-align:center;">
+        你的战队：薪资力 ${teamATK} · 抗AI值 ${Math.round(team.reduce((s,c)=>s+(100-c.aiCoverage),0)/team.length)}
+      </div>
+    </div>
+
+    <!-- 出战队伍 -->
+    <div style="margin:14px 0;">
+      <div style="font-size:11px;color:var(--ink-lt);margin-bottom:8px;display:flex;align-items:center;gap:6px;">
+        <span>⚔️ 出战阵容</span>
+        <span style="font-size:10px;color:var(--ink-faint);">(${G.team.length}/3)</span>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;" id="bossTeamGrid">
+        ${team.map(c => {
+          const cardHtml = buildMiniCard(c, 1, false);
+          const lastClose = cardHtml.lastIndexOf('</div>');
+          return cardHtml.substring(0, lastClose) + `<button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;padding:0;">×</button>` + cardHtml.substring(lastClose);
+        }).join('')}
+      </div>
+    </div>
+
+    <!-- 战斗结果 -->
     <div class="battle-result" id="battleResult"></div>
+
+    <!-- 操作按钮 -->
     <div class="btn-row">
       <button class="btn btn-red" id="fightBtn" onclick="runBattle()" ${G.team.length < 3 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>${['迎战第一波','第二波来袭','第三波冲击','第四波总攻','第五波：最终对决'][G.bossProgress] || '开始战斗'}${G.team.length < 3 ? ' (需3人)' : ''}</button>
+    </div>
+
+    <!-- 新手引导提示 -->
+    <div style="margin-top:12px;padding:10px 12px;background:var(--paper-dk);border-radius:6px;font-size:11px;color:var(--ink-lt);line-height:1.7;">
+      <b>💡 战斗提示：</b><br>
+      • 点击卡片右上角的 × 可以更换队员<br>
+      • <span style="color:var(--green);">绿色标签</span> = 克制Boss，伤害加倍<br>
+      • <span style="color:var(--red);">红色标签</span> = 被Boss克制，伤害减半<br>
+      • 绝版卡(UR)可无视克制关系，一击必杀
     </div>`;
 
   const cardMaxHPs = team.map(c => calcHP(c));
