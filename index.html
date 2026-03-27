@@ -1,0 +1,2144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>职业档案局 · 2026 Offer通知书</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  /* 方案B：黒橡×白練×朱 */
+  --paper:      #F5F0E8;
+  --paper-dk:   #E8E0D0;
+  --paper-lt:   #FAF6EE;
+  --ink:        #1E1C18;
+  --ink-lt:     #5A5248;
+  --ink-faint:  #A09888;
+  --red:        #C23B22;
+  --green:      #1A6B3A;
+  --blue:       #1A3A6B;
+  --orange:     #B85A00;
+  --border:     #B8A878;
+  --N:          #888070;
+  --R:          #1A3A6B;
+  --SR:         #B85A00;
+  --SSR:        #C23B22;
+  --UR:         #1E1C18;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{height:100%;}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Noto Serif SC','Songti SC','STSong','SimSun',Georgia,serif;
+  min-height:100vh;
+  padding-bottom:calc(40px + env(safe-area-inset-bottom));
+}
+
+/* ── HEADER ─────────────────────────────────────────────── */
+.header{
+  background:var(--ink);
+  color:var(--paper);
+  padding:16px 20px 12px;
+  padding-top:calc(16px + env(safe-area-inset-top));
+  text-align:center;
+  position:relative;
+  border-bottom:4px solid var(--red);
+}
+.header-classify{
+  font-size:10px;letter-spacing:4px;
+  color:var(--red);font-family:monospace;
+  margin-bottom:6px;
+}
+.header h1{
+  font-size:24px;font-weight:900;letter-spacing:3px;
+  line-height:1.1;
+}
+.header p{
+  font-size:11px;color:#A09878;
+  margin-top:4px;letter-spacing:2px;
+}
+.header-stamp{
+  position:absolute;top:12px;right:16px;
+  width:52px;height:52px;
+  border:3px solid var(--red);border-radius:50%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  color:var(--red);font-size:8px;font-weight:700;letter-spacing:1px;text-align:center;
+  line-height:1.2;
+  transform:rotate(12deg);
+  opacity:0.8;
+}
+
+/* ── LAYOUT ─────────────────────────────────────────────── */
+.container{max-width:680px;margin:0 auto;padding:16px;}
+.section{
+  background:var(--paper-lt);
+  border:1px solid var(--border);
+  border-radius:0;
+  padding:16px;
+  margin-bottom:16px;
+  position:relative;
+}
+.section::before{
+  content:'';position:absolute;
+  top:4px;left:4px;right:4px;bottom:4px;
+  border:1px solid var(--border);
+  pointer-events:none;opacity:0.5;
+}
+.section-title{
+  font-size:10px;letter-spacing:4px;
+  color:var(--ink-lt);text-transform:uppercase;
+  border-bottom:1px solid var(--border);
+  padding-bottom:8px;margin-bottom:14px;
+  font-family:monospace;
+}
+
+/* ── PULLS COUNTER ──────────────────────────────────────── */
+.pulls-info{
+  display:flex;align-items:center;justify-content:space-between;
+  padding:5px 0 8px;
+  font-size:12px;color:var(--ink-lt);
+  font-family:monospace;
+}
+.pulls-count{
+  font-size:18px;font-weight:900;color:var(--red);
+  font-family:monospace;
+}
+.pity-wrap{margin-top:3px;}
+.pity-track{
+  width:100%;height:5px;
+  background:var(--paper-dk);
+  border:1px solid var(--border);
+  border-radius:0;overflow:hidden;
+}
+.pity-bar{
+  height:100%;background:var(--red);
+  transition:width 0.3s;
+}
+.pity-label{
+  font-size:10px;color:var(--ink-faint);
+  margin-top:3px;font-family:monospace;
+  text-align:right;
+}
+
+/* ── CARD ───────────────────────────────────────────────── */
+.card{
+  width:100%;max-width:300px;
+  background:var(--paper-lt);
+  border:3px solid var(--border);
+  border-radius:8px;
+  overflow:hidden;
+  position:relative;
+  margin:0 auto;
+  box-shadow:4px 6px 20px rgba(0,0,0,0.18);
+}
+.card.N  {border-color:var(--N);}
+.card.R  {border-color:var(--R);box-shadow:4px 6px 24px rgba(26,58,107,0.25);}
+.card.SR {border-color:var(--SR);box-shadow:4px 6px 28px rgba(184,90,0,0.3);}
+.card.SSR{border-color:var(--SSR);box-shadow:4px 6px 32px rgba(194,59,34,0.35);}
+.card.UR {border-color:var(--UR);box-shadow:4px 6px 36px rgba(28,26,20,0.5);}
+
+/* Card header band */
+.card-header{
+  padding:10px 14px 8px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.N  .card-header{background:var(--N);color:#fff;}
+.R  .card-header{background:var(--R);color:#fff;}
+.SR .card-header{background:var(--SR);color:#fff;}
+.SSR .card-header{background:var(--SSR);color:#fff;}
+.UR .card-header{background:var(--UR);color:var(--paper);}
+
+.card-file-no{
+  font-size:9px;color:rgba(255,255,255,0.75);
+  font-family:monospace;letter-spacing:2px;
+}
+.card-rarity-stamp{
+  font-size:9px;font-weight:700;letter-spacing:2px;
+  padding:2px 8px;
+  border:1.5px solid rgba(255,255,255,0.6);
+  font-family:monospace;
+  color:#fff;
+}
+
+/* Card art zone */
+.card-art{
+  padding:20px 14px 14px;
+  text-align:center;
+  background:var(--paper);
+  border-bottom:1px solid var(--border);
+  position:relative;
+}
+.card-art-icon{
+  font-size:64px;line-height:1;
+  display:block;margin-bottom:10px;
+}
+.card-name{
+  font-size:28px;font-weight:900;
+  line-height:1;letter-spacing:1px;
+  color:var(--ink);
+}
+.card-tag{
+  font-size:10px;color:var(--ink-faint);
+  letter-spacing:3px;margin-top:4px;
+  font-family:monospace;
+}
+
+/* Card body */
+.card-body{padding:12px 14px 10px;}
+.card-type-badge{
+  display:inline-block;
+  font-size:9px;padding:2px 8px;
+  border:1px solid var(--border);
+  color:var(--ink-lt);
+  font-family:monospace;letter-spacing:1px;
+  margin-bottom:10px;background:var(--paper-dk);
+}
+.card-desc{
+  font-size:11px;color:var(--ink-lt);
+  line-height:1.7;margin-bottom:14px;
+  font-style:italic;
+}
+.stats{display:flex;flex-direction:column;gap:7px;}
+.stat-row{display:flex;align-items:center;gap:8px;}
+.stat-label{
+  font-size:9px;color:var(--ink-faint);
+  width:62px;flex-shrink:0;font-family:monospace;letter-spacing:0;
+  white-space:nowrap;
+}
+.stat-track{
+  flex:1;height:4px;
+  background:var(--paper-dk);
+  border-radius:2px;
+}
+.stat-fill{height:100%;border-radius:2px;transition:width 0.4s;}
+.stat-atk .stat-fill{background:#C23B22;}
+.stat-def .stat-fill{background:#1A3A6B;}
+.stat-hp  .stat-fill{background:#1A6B3A;}
+.stat-val{
+  font-size:10px;font-weight:700;
+  width:24px;text-align:right;
+  font-family:monospace;
+}
+.stat-atk .stat-val{color:#C23B22;}
+.stat-def .stat-val{color:#1A3A6B;}
+.stat-hp  .stat-val{color:#1A6B3A;}
+
+/* Card footer */
+.card-footer{
+  display:flex;justify-content:space-between;
+  padding:8px 14px;
+  border-top:1px solid var(--border);
+  font-size:8px;color:var(--ink-faint);
+  font-family:monospace;background:var(--paper-dk);
+}
+.card-extinct{
+  position:absolute;top:50%;left:50%;
+  transform:translate(-50%,-50%) rotate(-15deg);
+  font-size:24px;font-weight:900;
+  color:var(--red);border:4px solid var(--red);
+  padding:4px 12px;opacity:0.65;
+  pointer-events:none;letter-spacing:4px;
+  background:rgba(245,240,232,0.6);
+}
+
+/* ── CARD BACK ──────────────────────────────────────────── */
+.card-back-placeholder{
+  width:100%;max-width:320px;height:130px;
+  border:2px dashed var(--border);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  gap:8px;color:var(--ink-faint);
+  margin:0 auto;
+  font-family:monospace;
+  background:repeating-linear-gradient(
+    45deg,
+    transparent,transparent 10px,
+    rgba(0,0,0,0.02) 10px,rgba(0,0,0,0.02) 20px
+  );
+}
+.card-back-placeholder .icon{font-size:40px;opacity:0.4;}
+.card-back-placeholder .hint{font-size:11px;letter-spacing:2px;opacity:0.6;}
+
+/* ── BUTTONS ────────────────────────────────────────────── */
+.btn{
+  padding:13px 24px;border:2px solid var(--ink);
+  background:var(--ink);color:var(--paper);
+  font-size:14px;font-weight:700;letter-spacing:3px;
+  cursor:pointer;font-family:monospace;
+  transition:all 0.15s;
+  -webkit-tap-highlight-color:transparent;
+}
+.btn:hover{background:transparent;color:var(--ink);}
+.btn:active{transform:scale(0.97);}
+.btn-red{border-color:var(--red);background:var(--red);}
+.btn-red:hover{background:transparent;color:var(--red);}
+.btn-outline{background:transparent;color:var(--ink);}
+.btn-outline:hover{background:var(--ink);color:var(--paper);}
+.btn-sm{padding:8px 16px;font-size:11px;letter-spacing:2px;}
+.btn-row{
+  display:flex;gap:8px;
+  justify-content:center;flex-wrap:wrap;
+  margin-top:10px;
+}
+.btn:disabled{opacity:0.35;cursor:not-allowed;transform:none;}
+
+/* ── DRAW ZONE ──────────────────────────────────────────── */
+#drawZone{text-align:center;}
+
+#cardDisplay{margin-bottom:8px;}
+
+/* ── TEAM ZONE ──────────────────────────────────────────── */
+.team-slots{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:8px;margin-bottom:14px;
+}
+.team-slot{
+  border:2px dashed var(--border);
+  min-height:80px;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:8px 4px;
+  cursor:pointer;
+  transition:border-color 0.15s;
+  position:relative;
+}
+.team-slot.filled{border-style:solid;border-color:var(--ink);}
+.team-slot .slot-name{
+  font-size:15px;font-weight:900;
+  text-align:center;line-height:1.1;
+}
+.team-slot .slot-rarity{
+  font-size:9px;font-family:monospace;
+  letter-spacing:2px;margin-top:3px;
+}
+.team-slot .slot-remove{
+  position:absolute;top:3px;right:5px;
+  font-size:14px;color:var(--red);
+  cursor:pointer;line-height:1;
+}
+.team-slot.empty .slot-no{
+  font-size:10px;color:var(--ink-faint);
+  letter-spacing:2px;font-family:monospace;
+}
+.team-slot.N  .slot-rarity{color:var(--N);}
+.team-slot.R  .slot-rarity{color:var(--R);}
+.team-slot.SR .slot-rarity{color:var(--SR);}
+.team-slot.SSR.slot-rarity{color:var(--SSR);}
+.team-slot.UR .slot-rarity{color:var(--UR);}
+
+/* ── BOSS ZONE ──────────────────────────────────────────── */
+#bossZone{display:none;}
+#bossZone.active{display:block;}
+.boss-arena{
+  background:#0D0B08;
+  color:#F4EED8;
+  padding:20px 16px;
+  margin:-16px -16px 16px;
+  border-bottom:3px solid var(--red);
+}
+.boss-chapter{
+  font-size:10px;color:#666;
+  letter-spacing:4px;font-family:monospace;
+  margin-bottom:8px;
+}
+.boss-name{
+  font-size:28px;font-weight:900;
+  letter-spacing:2px;margin-bottom:6px;
+}
+.boss-desc{
+  font-size:12px;color:#A09878;
+  line-height:1.65;font-style:italic;
+  margin-bottom:14px;
+}
+.boss-quote{
+  font-size:11px;color:var(--red);
+  font-family:monospace;letter-spacing:1px;
+  border-left:3px solid var(--red);
+  padding-left:10px;
+  margin-bottom:14px;
+}
+.hp-section{margin-bottom:16px;}
+.hp-row{margin-bottom:10px;}
+.hp-label{
+  display:flex;justify-content:space-between;
+  font-size:11px;font-family:monospace;
+  margin-bottom:4px;
+}
+.hp-track{
+  height:10px;
+  background:#1C1A14;
+  border:1px solid #333;
+  overflow:hidden;
+}
+.hp-fill{
+  height:100%;transition:width 0.4s,background 0.4s;
+}
+.hp-player .hp-fill{background:#1A6B3A;}
+.hp-boss   .hp-fill{background:#C41A1A;}
+.round-label{
+  text-align:center;font-size:11px;
+  color:var(--ink-faint);font-family:monospace;
+  margin-bottom:12px;
+}
+.clash-tag{
+  display:inline-block;
+  font-size:10px;font-family:monospace;
+  letter-spacing:2px;padding:2px 10px;
+  margin-bottom:8px;font-weight:700;
+}
+.clash-tag.weakness{background:var(--green);color:#fff;}
+.clash-tag.resist  {background:var(--red);color:#fff;}
+.clash-tag.immune  {background:#1C1A14;color:var(--paper);}
+
+.battle-result{
+  padding:16px;text-align:center;
+  border:2px solid;margin-top:16px;
+  display:none;
+}
+.battle-result.win {border-color:var(--green);background:rgba(26,107,58,0.08);}
+.battle-result.lose{border-color:var(--red);background:rgba(196,26,26,0.08);}
+.battle-result .res-title{font-size:22px;font-weight:900;letter-spacing:2px;margin-bottom:6px;}
+.battle-result .res-detail{font-size:12px;color:var(--ink-lt);line-height:1.65;}
+
+/* ── COLLECTION ─────────────────────────────────────────── */
+.collection-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(76px,1fr));
+  gap:8px;
+}
+.mini-card{
+  border:2px solid;
+  border-radius:6px;
+  overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.15s,box-shadow 0.15s;
+  position:relative;
+  background:var(--paper-lt);
+  display:flex;flex-direction:column;
+}
+.mini-card:hover{transform:translateY(-3px);box-shadow:0 5px 16px rgba(0,0,0,0.22);}
+.mini-card.N  {border-color:var(--N);}
+.mini-card.R  {border-color:var(--R);box-shadow:0 2px 8px rgba(26,58,107,0.15);}
+.mini-card.SR {border-color:var(--SR);box-shadow:0 2px 10px rgba(184,90,0,0.18);}
+.mini-card.SSR{border-color:var(--SSR);box-shadow:0 2px 12px rgba(194,59,34,0.22);}
+.mini-card.UR {border-color:var(--UR);box-shadow:0 2px 14px rgba(28,26,20,0.3);}
+
+/* mini header band */
+.mini-header{
+  padding:4px 6px;
+  display:flex;justify-content:space-between;align-items:center;
+}
+.mini-card.N   .mini-header{background:var(--N);}
+.mini-card.R   .mini-header{background:var(--R);}
+.mini-card.SR  .mini-header{background:var(--SR);}
+.mini-card.SSR .mini-header{background:var(--SSR);}
+.mini-card.UR  .mini-header{background:var(--UR);}
+.mini-rarity{font-size:7px;font-family:monospace;letter-spacing:1px;color:#fff;font-weight:700;}
+
+/* mini art */
+.mini-art{
+  padding:10px 4px 6px;
+  text-align:center;
+  flex:1;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+}
+.mini-icon{font-size:24px;line-height:1;margin-bottom:4px;}
+.mini-name{font-size:11px;font-weight:900;line-height:1.2;color:var(--ink);}
+
+.mini-count{
+  font-size:7px;font-weight:700;
+  color:#fff;font-family:monospace;
+  background:rgba(0,0,0,0.3);
+  padding:1px 4px;border-radius:2px;
+}
+.mini-card.in-team::after{
+  content:'出战';
+  position:absolute;bottom:0;left:0;right:0;
+  background:rgba(28,26,20,0.82);color:var(--paper);
+  font-size:8px;letter-spacing:1px;padding:3px 0;
+  text-align:center;font-family:monospace;
+}
+.mini-card.duplicate-glow{animation:dupGlow 1s ease-out;}
+@keyframes dupGlow{
+  0%{box-shadow:0 0 0 3px var(--red);}
+  100%{box-shadow:none;}
+}
+
+/* ── ENVELOPE ───────────────────────────────────────────── */
+.envelope-wrap{
+  width:100%;max-width:300px;
+  margin:0 auto;
+  cursor:pointer;
+  perspective:800px;
+}
+.envelope{
+  position:relative;
+  width:100%;
+  background:var(--paper-lt);
+  border:2px solid var(--border);
+  border-radius:4px;
+  overflow:hidden;
+  box-shadow:4px 6px 20px rgba(0,0,0,0.15);
+}
+.envelope-flap-wrap{
+  position:absolute;
+  top:0;left:0;right:0;
+  height:52%;
+  transform-origin:top center;
+  transition:transform 0.55s ease, opacity 0.4s ease;
+  z-index:3;
+  overflow:hidden;
+}
+.envelope-flap-wrap.opened{
+  transform:translateY(-100%);
+  opacity:0;
+}
+.envelope-flap{
+  width:100%;height:100%;
+  clip-path:polygon(0 0, 100% 0, 50% 88%);
+  background:var(--paper-dk);
+  border-bottom:1px solid var(--border);
+}
+.envelope-body{
+  padding:32px 20px 28px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:6px;
+  position:relative;z-index:1;
+}
+.env-icon{font-size:36px;line-height:1;}
+.env-bureau{
+  font-size:13px;font-weight:900;letter-spacing:3px;
+  color:var(--ink);margin-top:4px;
+}
+.env-subtitle{
+  font-size:10px;color:var(--ink-faint);
+  letter-spacing:2px;font-family:monospace;
+}
+.env-seal{
+  margin-top:8px;
+  width:52px;height:52px;
+  border-radius:50%;
+  border:3px solid var(--red);
+  display:flex;align-items:center;justify-content:center;
+  flex-direction:column;
+  font-size:8px;font-weight:900;
+  color:var(--red);letter-spacing:1px;
+  line-height:1.3;text-align:center;
+  font-family:monospace;
+  transform:rotate(-12deg);
+}
+.env-tap-hint{
+  font-size:10px;color:var(--ink-faint);
+  letter-spacing:2px;font-family:monospace;
+  margin-top:6px;
+  animation:blink 1.2s infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* card slide-up reveal */
+@keyframes slideUp{
+  from{opacity:0;transform:translateY(24px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.card-reveal{animation:slideUp 0.45s ease;}
+
+/* ── COLLECTION EMPTY ────────────────────────────────────── */
+.collection-empty{
+  text-align:center;padding:20px;
+  color:var(--ink-faint);font-size:12px;
+  font-family:monospace;letter-spacing:2px;
+}
+
+/* ── PROGRESS MAP ───────────────────────────────────────── */
+.boss-progress{
+  display:flex;gap:6px;
+  justify-content:center;
+  margin-bottom:16px;
+}
+.boss-dot{
+  width:32px;height:32px;
+  border:2px solid var(--border);
+  display:flex;align-items:center;justify-content:center;
+  font-size:14px;
+  font-family:monospace;
+  position:relative;
+}
+.boss-dot.cleared{
+  border-color:var(--green);
+  background:rgba(26,107,58,0.1);
+}
+.boss-dot.cleared::after{
+  content:'✓';
+  position:absolute;
+  font-size:10px;color:var(--green);
+  bottom:-14px;left:50%;transform:translateX(-50%);
+}
+.boss-dot.current{
+  border-color:var(--red);
+  animation:dotPulse 1.5s infinite;
+}
+@keyframes dotPulse{
+  50%{box-shadow:0 0 8px var(--red);}
+}
+
+/* ── SHARE ZONE ─────────────────────────────────────────── */
+.share-info{
+  font-size:11px;color:var(--ink-lt);
+  font-family:monospace;letter-spacing:1px;
+  text-align:center;margin-top:8px;
+}
+
+/* ── MODAL ──────────────────────────────────────────────── */
+.modal-overlay{
+  display:none;position:fixed;inset:0;
+  background:rgba(28,26,20,0.75);
+  z-index:100;
+  align-items:center;justify-content:center;
+  padding:16px;
+}
+.modal-overlay.open{display:flex;}
+.modal{
+  background:var(--paper-lt);
+  border:2px solid var(--ink);
+  padding:24px;
+  width:100%;max-width:380px;
+  position:relative;
+}
+.modal-title{
+  font-size:16px;font-weight:900;
+  letter-spacing:2px;margin-bottom:12px;
+  border-bottom:1px solid var(--border);
+  padding-bottom:10px;
+}
+.modal-close{
+  position:absolute;top:12px;right:14px;
+  font-size:18px;cursor:pointer;
+  color:var(--ink-lt);
+  background:none;border:none;
+  font-family:serif;
+}
+.modal input{
+  width:100%;padding:10px;
+  border:2px solid var(--border);
+  background:var(--paper);
+  font-size:13px;font-family:monospace;
+  letter-spacing:1px;
+  margin:8px 0;
+  outline:none;
+}
+.modal input:focus{border-color:var(--ink);}
+.exchange-code-box{
+  background:var(--paper-dk);
+  border:1px solid var(--border);
+  padding:10px;
+  font-size:11px;font-family:monospace;
+  word-break:break-all;
+  line-height:1.5;
+  color:var(--ink-lt);
+  margin:8px 0;
+  min-height:60px;
+}
+
+/* ── CLEAR SCREEN ───────────────────────────────────────── */
+#clearScreen{
+  display:none;
+  background:var(--ink);
+  color:var(--paper);
+  text-align:center;
+  padding:40px 20px;
+  position:fixed;inset:0;z-index:200;
+  overflow-y:auto;
+}
+#clearScreen.show{display:flex;flex-direction:column;align-items:center;justify-content:center;}
+.clear-title{
+  font-size:11px;letter-spacing:6px;color:var(--red);
+  margin-bottom:16px;font-family:monospace;
+}
+.clear-main{font-size:28px;font-weight:900;letter-spacing:2px;margin-bottom:12px;line-height:1.3;}
+.clear-sub{font-size:13px;color:#A09878;line-height:1.65;margin-bottom:24px;max-width:300px;}
+.cert-box{
+  border:3px solid var(--red);
+  padding:20px 24px;
+  text-align:center;
+  margin:0 auto 24px;
+  max-width:280px;
+  position:relative;
+}
+.cert-box::before{
+  content:'';position:absolute;
+  inset:6px;border:1px solid rgba(196,26,26,0.3);
+}
+.cert-label{font-size:10px;letter-spacing:4px;color:var(--red);font-family:monospace;margin-bottom:8px;}
+.cert-name{font-size:18px;font-weight:900;margin-bottom:6px;}
+.cert-date{font-size:10px;color:#666;font-family:monospace;}
+
+/* ── TOAST ──────────────────────────────────────────────── */
+.toast{
+  position:fixed;bottom:24px;left:50%;transform:translateX(-50%);
+  background:var(--ink);color:var(--paper);
+  padding:10px 20px;font-size:12px;
+  font-family:monospace;letter-spacing:1px;
+  z-index:300;pointer-events:none;
+  opacity:0;transition:opacity 0.3s;
+}
+.toast.show{opacity:1;}
+
+/* ── RESPONSIVE ─────────────────────────────────────────── */
+@media(min-width:768px){
+  .container{padding:24px;}
+  .header h1{font-size:30px;}
+  .card{max-width:360px;}
+  .collection-grid{grid-template-columns:repeat(auto-fill,minmax(86px,1fr));}
+  .team-slots{gap:12px;}
+  .team-slot{min-height:90px;}
+}
+@media(min-width:1024px){
+  .boss-battle-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:16px;
+  }
+  .collection-grid{grid-template-columns:repeat(auto-fill,minmax:96px,1fr));}
+}
+
+/* ── UR 卡仪式 ─────────────────────────────────────── */
+.card.UR .card-art {
+  background: linear-gradient(135deg, #1a1200 0%, #3d2b00 50%, #1a1200 100%);
+  position: relative;
+  overflow: hidden;
+}
+.card.UR .card-art::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(255,200,50,0.15) 50%, transparent 60%);
+  animation: urShine 3s ease-in-out infinite;
+}
+@keyframes urShine {
+  0%,100%{transform:translateX(-100%)} 50%{transform:translateX(200%)}
+}
+.card.UR {
+  box-shadow: 0 0 0 1px #c8952a, 0 0 20px rgba(200,149,42,0.4), 0 4px 24px rgba(0,0,0,0.5);
+  animation: urPulse 2.5s ease-in-out infinite;
+}
+@keyframes urPulse {
+  0%,100%{box-shadow:0 0 0 1px #c8952a, 0 0 16px rgba(200,149,42,0.3)}
+  50%{box-shadow:0 0 0 2px #f5c842, 0 0 36px rgba(245,200,66,0.6)}
+}
+/* 揭示时闪光 */
+@keyframes urReveal {
+  0%{opacity:0;transform:translateY(60px) scale(0.85)}
+  20%{opacity:1;filter:brightness(3)}
+  40%{filter:brightness(1.5)}
+  100%{opacity:1;transform:translateY(0) scale(1);filter:brightness(1)}
+}
+.card.UR.just-revealed {
+  animation: urReveal 0.9s cubic-bezier(0.22,1,0.36,1) forwards, urPulse 2.5s 0.9s ease-in-out infinite;
+}
+/* 全屏黑幕 */
+#urOverlay {
+  position:fixed;inset:0;background:#000;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+  opacity:0;pointer-events:none;transition:opacity 0.3s;
+}
+#urOverlay.show{opacity:1;pointer-events:all;}
+#urOverlay .ur-icon{font-size:72px;animation:urIconPulse 0.6s ease-out;}
+#urOverlay .ur-name{font-size:28px;font-weight:900;color:#f5c842;letter-spacing:4px;
+  font-family:'Noto Serif SC',serif;text-shadow:0 0 20px rgba(245,200,66,0.8);}
+#urOverlay .ur-sub{font-size:13px;color:rgba(255,255,255,0.5);letter-spacing:2px;}
+@keyframes urIconPulse{0%{transform:scale(0.5);opacity:0}60%{transform:scale(1.3)}100%{transform:scale(1);opacity:1}}
+/* 焚化消失 */
+@keyframes urBurn {
+  0%{opacity:1;filter:brightness(1)}
+  30%{filter:brightness(2) sepia(1) hue-rotate(20deg)}
+  70%{opacity:0.3;transform:scale(0.9);filter:brightness(3) blur(2px)}
+  100%{opacity:0;transform:scale(0.7);filter:blur(4px)}
+}
+.burning { animation: urBurn 0.8s ease-out forwards; }
+
+/* ── 卡牌详情底部弹窗 ──────────────────────────────────── */
+#cardDetailModal {
+  position:fixed;inset:0;background:rgba(0,0,0,0.65);
+  z-index:8500;display:flex;align-items:flex-end;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity 0.25s;
+}
+#cardDetailModal.open { opacity:1;pointer-events:all; }
+#cardDetailInner {
+  background:var(--paper);border-radius:16px 16px 0 0;
+  padding:16px 16px 32px;width:100%;max-width:400px;
+  max-height:82vh;overflow-y:auto;
+  transform:translateY(100%);
+  transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+}
+#cardDetailModal.open #cardDetailInner { transform:translateY(0); }
+#cardDetailInner .card { width:140px; max-width:170px; }
+.card-detail-actions { display:flex;gap:10px;width:100%;max-width:260px; }
+.card-detail-actions .btn { flex:1;font-size:13px;padding:10px 0; }
+
+/* ── 抽卡结果覆盖层 ──────────────────────────────────────── */
+#drawRevealOverlay {
+  position:fixed;inset:0;background:rgba(0,0,0,0.75);
+  z-index:8800;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:16px;
+  opacity:0;pointer-events:none;
+  transition:opacity 0.3s;
+}
+#drawRevealOverlay.open { opacity:1;pointer-events:all; }
+#drawRevealOverlay .card { max-width:260px;width:84vw;max-height:75vh;overflow-y:auto; }
+#revealHint {
+  font-size:11px;color:rgba(255,255,255,0.5);
+  letter-spacing:2px;font-family:monospace;
+  animation:hintBlink 1.2s ease-in-out infinite;
+}
+@keyframes hintBlink { 0%,100%{opacity:0.5} 50%{opacity:1} }
+#revealEnvelope { width:100%;max-width:320px; }
+</style>
+</head>
+<body>
+  <!-- ── 开场说明 ── -->
+  <div id="onboardingModal" style="
+    position:fixed;inset:0;z-index:9999;
+    background:var(--ink);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;
+    padding:24px;box-sizing:border-box;
+  ">
+    <div style="max-width:360px;width:100%;text-align:center;">
+      <div style="font-size:12px;letter-spacing:3px;color:var(--red);margin-bottom:10px;font-family:var(--font);">档案编号 2026-AI-001</div>
+      <div style="font-size:28px;font-weight:700;color:var(--paper);line-height:1.3;margin-bottom:6px;font-family:var(--font);">你能谋生到<br>哪一年？</div>
+      <div style="width:40px;height:2px;background:var(--red);margin:18px auto;"></div>
+      <div style="font-size:13px;color:var(--ink-lt);line-height:1.9;margin-bottom:24px;text-align:left;">
+        2026年，AI替代浪潮开始席卷各行各业。<br>
+        每一年，都有更多职业被永久淘汰。<br><br>
+        <span style="color:var(--paper);font-weight:700">你的任务：</span><br>
+        🃏 <span style="color:var(--paper)">抽卡</span> — 收集你的职业技能卡<br>
+        👥 <span style="color:var(--paper)">组队</span> — 选3个职业组成出战阵容<br>
+        ⚔ <span style="color:var(--paper)">出战</span> — 挑战每一年的AI浪潮<br><br>
+        <span style="color:var(--red);font-weight:700">出战后卡牌即消耗，输赢都烧。</span><br>
+        越稀有的职业，越能帮你活得久。
+      </div>
+      <button onclick="document.getElementById('onboardingModal').style.display='none';playSound('addTeam')" style="
+        background:var(--red);color:#fff;border:none;
+        padding:14px 0;font-size:15px;font-family:var(--font);
+        border-radius:4px;cursor:pointer;letter-spacing:1px;width:100%;
+      ">开始体验 →</button>
+      <div style="font-size:10px;color:var(--ink-faint);margin-top:14px;">滚到底部可查看游戏说明</div>
+    </div>
+  </div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-classify">〔职业档案局〕</div>
+  <h1>职业抽卡</h1>
+  <p>2026，你的职业，还能撑多久？</p>
+  <p style="font-size:9px;color:var(--ink-faint);opacity:0.55;letter-spacing:1px;margin-top:4px;font-style:italic;">数据来源：Anthropic经济指数报告 · 2026</p>
+  <div class="header-stamp">档案局<br>认证</div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast"></div>
+
+<!-- CLEAR SCREEN -->
+
+<!-- CARD DETAIL MODAL -->
+
+<!-- DRAW REVEAL OVERLAY -->
+<div id="drawRevealOverlay" onclick="closeDrawReveal()">
+  <div id="revealEnvelope"></div>
+  <div id="revealCard" style="display:none"></div>
+  <div id="revealHint" style="display:none">点击任意处继续</div>
+</div>
+
+<div id="cardDetailModal" onclick="closeCardDetail(event)">
+  <div id="cardDetailInner">
+    <div style="display:flex;width:100%;max-width:260px;justify-content:space-between;align-items:center;margin-bottom:4px;">
+      <div style="width:40px;height:4px;background:rgba(0,0,0,0.15);border-radius:2px;"></div>
+      <button onclick="document.getElementById('cardDetailModal').classList.remove('open')" style="background:none;border:none;font-size:18px;cursor:pointer;color:var(--ink-lt);padding:0 4px;">✕</button>
+    </div>
+    <div id="cardDetailFace"></div>
+    <div class="card-detail-actions" id="cardDetailActions"></div>
+  </div>
+</div>
+
+<div id="urOverlay">
+  <div class="ur-icon" id="urOverlayIcon">⚡</div>
+  <div class="ur-name" id="urOverlayName"></div>
+  <div class="ur-sub">以最后的牌局，终结这一切</div>
+</div>
+<div id="clearScreen">
+  <div class="clear-title">恭喜通过最终审核</div>
+  <div class="clear-main">你在AI时代活下来了</div>
+  <div class="clear-sub">5个系统的优化流程，你的团队全部幸存。
+这在2026年已经很罕见了。</div>
+  <div class="cert-box">
+    <div class="cert-label">2026职场生存认证</div>
+    <div class="cert-name">你的职业团队</div>
+    <div id="certTeam" style="font-size:13px;color:#A09878;margin:8px 0;line-height:1.8;"></div>
+    <div class="cert-date" id="certDate"></div>
+  </div>
+  <button class="btn btn-red" onclick="shareResult()" style="margin-bottom:12px;letter-spacing:2px;">复制认证文案</button>
+  <button class="btn btn-outline" onclick="restartGame()" style="color:var(--paper);border-color:var(--paper);">重新挑战</button>
+</div>
+
+<!-- MODAL: EXCHANGE -->
+<div class="modal-overlay" id="exchangeModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal('exchangeModal')">✕</button>
+    <div class="modal-title">卡片交换</div>
+    <div id="exchangeContent"></div>
+  </div>
+</div>
+
+<div class="container">
+
+  <!-- BOSS PROGRESS -->
+  <div class="section" id="progressSection" style="display:none">
+    <div class="section-title">AI浪潮进度</div>
+    <div class="boss-progress" id="bossProgress"></div>
+    <div style="height:16px"></div>
+  </div>
+
+  <!-- DRAW ZONE -->
+  <div class="section" id="drawSection">
+    <div class="section-title">抽取 Offer</div>
+    <div id="drawZone">
+      <div id="cardDisplay">
+        <div class="card-back-placeholder">
+          <div class="icon">📁</div>
+          <div class="hint">等待 Offer 送达...</div>
+        </div>
+      </div>
+      <div class="pulls-info">
+        <div>
+          <div style="font-size:10px;letter-spacing:2px;margin-bottom:2px;">剩余次数</div>
+          <div class="pulls-count" id="pullsLeft">10</div>
+        </div>
+        <div style="text-align:right">
+          <div style="font-size:10px;letter-spacing:2px;margin-bottom:2px;">已抽 <span id="totalPulls">0</span> 次</div>
+          <div style="font-size:10px;color:var(--ink-faint);" id="pityLeftRow"></div>
+        </div>
+      </div>
+      <div class="pity-wrap">
+        <div class="pity-track">
+          <div class="pity-bar" id="pityBar" style="width:0%"></div>
+        </div>
+        <div class="pity-label"></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-red" onclick="draw()" id="drawBtn">接 Offer</button>
+        
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-outline btn-sm" onclick="doShare()">📤 分享 +3次机会</button>
+        <button class="btn btn-outline btn-sm" onclick="openExchangeImport()">🔄 输入交换码</button>
+      </div>
+      <div class="share-info" id="shareInfo"></div>
+    </div>
+  </div>
+
+  <!-- TEAM ZONE -->
+  <div class="section" id="teamSection">
+    <div class="section-title">出战阵容（选3人 · 合力挑战5关AI浪潮）</div>
+    <div style="font-size:11px;color:var(--ink-lt);line-height:1.8;margin-bottom:14px;padding:10px 12px;border-left:3px solid var(--red);background:var(--paper-dk);">
+      2026年，5个AI浪潮正在逐一淘汰各种职业。<br>
+      从你收到的 Offer 里，选3个互补的职业组成阵容——<br>
+      <b>不同类型的职业组合，对不同AI浪潮有克制优势。</b><br>
+      全部通过，你才算在AI时代活下来了。
+    </div>
+    <div class="team-slots" id="teamSlots">
+      <div class="team-slot empty" id="slot0"><div class="slot-no">第1位</div></div>
+      <div class="team-slot empty" id="slot1"><div class="slot-no">第2位</div></div>
+      <div class="team-slot empty" id="slot2"><div class="slot-no">第3位</div></div>
+    </div>
+    <div class="btn-row">
+      <button class="btn btn-red" id="challengeBtn" onclick="startChallenge()" disabled>看我能活几年 →</button>
+    </div>
+    <div id="teamHint" style="text-align:center;font-size:11px;color:var(--ink-faint);font-family:monospace;margin-top:8px;">从 Offer 记录中选3张出战</div>
+  </div>
+
+  <!-- BOSS ZONE -->
+  <div class="section" id="bossSection" style="display:none">
+    <div class="section-title" id="bossSectionTitle">AI浪潮</div>
+    <div id="bossZone"></div>
+  </div>
+
+  <!-- COLLECTION -->
+  <div class="section" id="collectionSection" style="display:none">
+    <div class="section-title" style="display:flex;justify-content:space-between;align-items:baseline;">
+      <span>我的 Offer 记录</span>
+      <span id="collectionCount" style="font-size:11px;font-weight:400;opacity:0.6;font-family:monospace;"></span>
+    </div>
+    <div class="collection-grid" id="collectionGrid">
+      <div class="collection-empty">尚未收到 Offer</div>
+    </div>
+  </div>
+
+</div><!-- /container -->
+
+<script>
+// ════════════════════════════════════════════════════════
+// DATA
+// ════════════════════════════════════════════════════════
+
+const TYPE_LABEL = {
+  '服务类':'服务类','文字类':'文字类','创意类':'创意类',
+  '执行类':'执行类','专业类':'专业类','技术类':'技术类',
+  '体制类':'体制类','绝版类':'绝版类'
+};
+
+const CAREERS = [
+  // ── N 普通 ──────────────────────────────────────────
+  {name:'客服',    icon:'🎧',type:'服务类',atk:42,def:8, hp:72,rarity:'N',aiCoverage:65,tag:'承压专业户',
+   desc:'「AI覆盖率 65%」AI已处理65%的工单，机器能对答，但无法处理被骂哭之后的沉默。你在守最后一道防线。'},
+  {name:'收银员',  icon:'🛒',type:'服务类',atk:38,def:12,hp:55,rarity:'N',aiCoverage:70,tag:'正在消失',
+   desc:'「AI覆盖率 70%」自助结账机已接管70%的收银台。你负责处理「扫不出来」的尴尬，和那些不会用机器的人。'},
+  {name:'翻译',    icon:'🌐',type:'文字类',atk:50,def:15,hp:40,rarity:'N',aiCoverage:72,tag:'语言桥',
+   desc:'「AI覆盖率 72%」机器翻译已覆盖72%的文本任务。同声传译还撑着。剩下的28%，是机器翻不出的语境和体感。'},
+  {name:'文字校对',icon:'✍️',type:'文字类',atk:40,def:10,hp:30,rarity:'N',aiCoverage:78,tag:'即将退出',
+   desc:'「AI覆盖率 78%」大模型已超越78%的人类校对员。这个岗位的倒计时正在悄悄运行。'},
+  {name:'会计',    icon:'📊',type:'文字类',atk:55,def:18,hp:62,rarity:'N',aiCoverage:68,tag:'数字人',
+   desc:'「AI覆盖率 68%」财务AI已自动处理68%的记账与对账工作。资产负债表里正在多出一个看不见的操作员。'},
+  // ── R 稀有 ──────────────────────────────────────────
+  {name:'内容运营',icon:'📱',type:'文字类',atk:60,def:38,hp:68,rarity:'R',aiCoverage:58,tag:'数据驱动',
+   desc:'「AI覆盖率 58%」58%的内容生产任务已可由AI完成。你的价值正在从「写」转向「判断写什么」。'},
+  {name:'销售',    icon:'💼',type:'技术类',atk:65,def:52,hp:80,rarity:'R',aiCoverage:46,tag:'百变话术',
+   desc:'「AI覆盖率 46%」个性化算法已替代46%的销售触达工作。关系和信任，是还没被转化率超越的部分。'},
+  {name:'记者',    icon:'📰',type:'文字类',atk:58,def:35,hp:45,rarity:'R',aiCoverage:52,tag:'真相猎手',
+   desc:'「AI覆盖率 52%」52%的新闻写作可被AI生成。调查性报道还在，但发稿量竞赛已经输了。'},
+  {name:'UI设计师',icon:'🎨',type:'创意类',atk:65,def:30,hp:55,rarity:'R',aiCoverage:44,tag:'像素审美',
+   desc:'「AI覆盖率 44%」AI工具已可完成44%的界面生成工作。A/B测试正在取代你的设计直觉。'},
+  {name:'编导',    icon:'🎬',type:'创意类',atk:68,def:45,hp:50,rarity:'R',aiCoverage:40,tag:'叙事',
+   desc:'「AI覆盖率 40%」AI剪辑、AI脚本已覆盖40%的创作流程。叙事判断和情感节奏，是剩下的护城河。'},
+  {name:'建筑师',  icon:'🏗️',type:'创意类',atk:72,def:55,hp:48,rarity:'R',aiCoverage:36,tag:'空间诗人',
+   desc:'「AI覆盖率 36%」生成式AI已可快速产出36%的方案设计。空间叙事和甲方谈判，暂时还需要人类在场。'},
+  // ── SR 超稀有 ────────────────────────────────────────
+  {name:'厨师',    icon:'🍳',type:'专业类',atk:55,def:82,hp:75,rarity:'SR',aiCoverage:12,tag:'烟火气',
+   desc:'「AI覆盖率 12%」身体与火候的直觉，是机器最难复刻的部分。12%的标准化食谱已数字化，但人们仍想吃人做的饭。'},
+  {name:'心理咨询师',icon:'🧠',type:'专业类',atk:68,def:86,hp:45,rarity:'SR',aiCoverage:18,tag:'共情',
+   desc:'「AI覆盖率 18%」被倾听的需求，暂时无法被算法满足。18%的认知行为治疗已可被AI辅助，但真正的会谈需要人类在场。'},
+  {name:'律师',    icon:'⚖️',type:'专业类',atk:88,def:70,hp:52,rarity:'SR',aiCoverage:54,tag:'辩护',
+   desc:'「AI覆盖率 54%」合同审查、文书起草——54%的法律任务已可被AI处理。庭审和谈判，是剩下的战场。'},
+  {name:'游戏策划',icon:'🎮',type:'创意类',atk:70,def:50,hp:42,rarity:'SR',aiCoverage:38,tag:'造梦者',
+   desc:'「AI覆盖率 38%」AI关卡生成工具已覆盖38%的策划工作。但玩家真正想要什么，依然需要人来感知。'},
+  {name:'数据分析师',icon:'📈',type:'技术类',atk:75,def:42,hp:65,rarity:'SR',aiCoverage:62,tag:'洞察',
+   desc:'「AI覆盖率 62%」自动化分析已处理62%的数据报告任务。洞察力和业务判断，是还没被代码写进去的部分。'},
+  {name:'快递员',  icon:'📦',type:'执行类',atk:48,def:78,hp:92,rarity:'SR',aiCoverage:32,tag:'最后一公里',
+   desc:'「AI覆盖率 32%」无人配送已覆盖32%的末端物流。楼道、雨天、与人周旋的最后100米，暂时还需要你。'},
+  {name:'外卖骑手',icon:'🛵',type:'执行类',atk:45,def:80,hp:98,rarity:'SR',aiCoverage:35,tag:'风雨无阻',
+   desc:'「AI覆盖率 35%」无人配送机正在接管35%的城市外卖。ETA 3分钟，差评率0%，不需要休息——竞争对手已经上线了。'},
+  // ── SSR 史诗 ─────────────────────────────────────────
+  {name:'医生',    icon:'🩺',type:'专业类',atk:85,def:88,hp:80,rarity:'SSR',aiCoverage:42,tag:'生命守护',
+   desc:'「AI覆盖率 42%」AI影像诊断准确率已超越初级医生。42%的诊断辅助可被AI完成，临床判断和手术还需要你。'},
+  {name:'护士',    icon:'💉',type:'专业类',atk:60,def:90,hp:85,rarity:'SSR',aiCoverage:16,tag:'生命温度',
+   desc:'「AI覆盖率 16%」只有16%的护理任务可被算法触达。身体护理、情感陪伴、紧急处置，人类的在场仍不可替代。'},
+  {name:'公务员',  icon:'🏛️',type:'体制类',atk:65,def:95,hp:90,rarity:'SSR',aiCoverage:22,tag:'铁饭碗',
+   desc:'「AI覆盖率 22%」行政流程已有22%实现自动化。制度性保护和编制门槛，是这张卡的核心护城河。'},
+  {name:'AI工程师',icon:'🤖',type:'技术类',atk:95,def:75,hp:72,rarity:'SSR',aiCoverage:28,tag:'新物种',
+   desc:'「AI覆盖率 28%」造AI的人，也在被AI提速。28%的低阶编码已可自动化，但架构决策和系统判断还需要你。'},
+  {name:'提示词工程师',icon:'⌨️',type:'技术类',atk:78,def:60,hp:35,rarity:'SSR',aiCoverage:48,tag:'风口站位',
+   desc:'「AI覆盖率 48%」模型自优化能力正在替代48%的提示词调优工作。这个岗位存在不到3年，已进入观察期。'},
+  // ── UR 传奇绝版 ─────────────────────────────────────
+  {name:'马车夫',    icon:'🐴',type:'绝版类',atk:25,def:92,hp:8,rarity:'UR',tag:'已死过一次',
+   desc:'【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，但本卡随之消耗。汽车普及后消失。死过一次的人，不在乎第二次消失。'},
+  {name:'柯达冲洗员',icon:'📷',type:'绝版类',atk:25,def:95,hp:8,rarity:'UR',aiCoverage:0,tag:'已死过一次',
+   desc:'【⚡ 绝版秘技 · 用完即焚】出战即秒杀当前AI浪潮，但本卡随之消耗。整个行业三年内蒸发。已经消失过一次，不在乎消失第二次。'},
+  {name:'BB机维修工',icon:'📟',type:'绝版类',atk:25,def:90,hp:8,rarity:'UR',aiCoverage:0,tag:'已死过一次',
+   desc:'【🛡 绝版特性】带此卡挑战第5关，AI浪潮无法伤害你的战队。已注销的账号，无法被再次注销。工具消失了，你也随之消失——但AI替代不了已经消失的东西。'},
+];
+
+const RARITY_WEIGHT = {N:45,R:30,SR:17,SSR:7,UR:1};
+const RARITY_LABEL  = {N:'普通',R:'热门',SR:'火爆',SSR:'急招',UR:'已下架'};
+const RARITY_SHORT  = {N:'普',R:'热',SR:'爆',SSR:'急',UR:'绝'};
+const RARITY_ORDER  = ['N','R','SR','SSR','UR'];
+
+// 每个职业的专属破防语（AI赢时随机抽一句配合boss台词）
+const CAREER_TAUNTS = {
+  '客服':       ['AI客服已上线，7×24不间断，0差评，0情绪问题。您的班次已不再需要排班。','检测到人工客服响应速度慢于AI 4.7秒。优化方案已启动。'],
+  '收银员':     ['自助结账机本月完成交易额：您年薪的213倍。','感谢您多年服务。自助柜台不需要培训，也不需要五险一金。'],
+  '翻译':       ['实时翻译准确率98.7%，响应0.3秒，无需加班费，不用签证。','您翻译一页文档需要40分钟。AI需要0.8秒。客户已做出选择。'],
+  '文字校对':   ['大模型语言能力已超越99%人类校对员。该岗位已归档。','您发现的错误，AI早在第一轮就标注了。'],
+  '会计':       ['财务AI本季度完成全部对账，用时4分钟。您的Excel技能已列入过时技能库。','审计报告已自动生成。人工复核环节已取消。'],
+  '内容运营':   ['您今天发的内容，有6篇是AI代写的。您发现了吗？','用户日均内容消费量：800篇。人工产能：3篇。差距已无法追赶。'],
+  '销售':       ['个性化推荐算法转化率已超越顶级销售员，且不需要提成和报销。','您上个月的业绩，AI用一个下午就复制了。'],
+  '记者':       ['实时新闻生成系统已上线，产出速度：3000篇/小时。','您花3天调查的稿子，AI用2小时整合了同类信息并发布了。'],
+  'UI设计师':   ['基于用户行为自动生成的界面，转化率比人工设计高17%。','您调整了3天的按钮颜色，A/B测试系统0.1秒就选出了最优解。'],
+  '编导':       ['AI剪辑完成率：4分钟/集，人工剪辑：4小时/集。成本差距：97%。','您的剪辑直觉，已被用户点击数据精确量化并自动化了。'],
+  '建筑师':     ['建筑生成AI已完成3000套户型方案，已申请专利。','您的甲方说：AI出的方案改起来更快，也更便宜。'],
+  '厨师':       ['预制菜中央厨房+配送机器人，运营成本降低63%。口味差异在用户测评中已无法被识别。','米其林厨师说机器做不出灵魂。连锁餐饮说够用就行。'],
+  '心理咨询师': ['用户反馈：AI倾听比真人更有耐心，且不评判，不迟到，不涨价。','您今天的来访者，昨晚已经先问过AI了。'],
+  '律师':       ['合同审查AI本季度处理87%的法律文件，准确率99.2%。','您花3年学的法条，AI联网检索只需0.2秒。'],
+  '游戏策划':   ['AI生成的游戏关卡，玩家完成率比人工设计高12%。','您设计的彩蛋被玩家忽略了。AI分析出了玩家真正想要什么。'],
+  '数据分析师': ['本报告由AI自动生成，用时14秒。人工分析版本已不再需要。','您做了两天的数据看板，AI用一个API调用就实现了。'],
+  '快递员':     ['无人快递柜城市覆盖率91%，投诉率：0，雨天出勤率：100%。','您说最后一公里机器做不到。他们研发了最后100米机器人。'],
+  '外卖骑手':   ['ETA 3分钟，无需消费，永不投诉，差评率0%。','您说楼梯机器爬不了。他们研发了爬楼机器人。'],
+  '医生':       ['AI影像诊断准确率已超越初级医生，且无需排班，无需规培。','您的临床经验需要10年积累。AI的训练数据包含了1000万份病例。'],
+  '护士':       ['护理机器人完成病房巡查，用时12分钟，无疲劳，无情绪波动。','您说护理需要温度。他们说大多数操作只需要精准。'],
+  '公务员':     ['行政事项在线处理率87%，有效降低人力需求。','您的岗位在编制里，在AI面前只是另一个工种。'],
+  'AI工程师':   ['下一个版本的AI，将不再需要您来手动调参。','您训练的模型，正在学习如何替代您的下一份工作。'],
+  '提示词工程师':['最新模型已能自动优化提示词。该岗位正式进入观察期。','您花两个月学会的技巧，在下一个版本里成了默认功能。'],
+  '马车夫':     ['马车夫说：汽车还得有人开。然后发明了自动驾驶。','您的职业在历史上消失过一次了。这次只是重演。'],
+  '柯达冲洗员': ['柯达说数字只是补充，不会取代胶片。柯达破产了。','您冲洗的每张底片，都在加速消亡的倒计时。'],
+  'BB机维修工': ['BB机工程师说：手机只是补充，不会完全替代BP机。','您掌握的技术，在博物馆里有一个展区。'],
+};
+
+const BOSSES = [
+  {
+    id:1, emoji:'⭐',
+    name:'职业评分局',
+    chapter:'2026年 · 第一波淘汰浪潮',
+    desc:'第一波浪潮是最温柔的，也是最精准的。你的每一条消息、每份报告、每次决策，都在被悄悄与AI基准对比。今天低了17%，明天还会更高。不是你变差了，是基准一直在提升——而你不知道自己正在被打分。',
+    quote:'「检测到效率异常，已进入观察期。今天是第2天。」',
+    taunts:['效率报告已生成。您的岗位已完成交接。','本季度您的绩效低于AI基准线23%，已触发人员优化预案。','连续3天被标记为「可替代资源」，流程已启动。','人力成本分析完毕：您比AI贵，且可靠性更低。'],
+    cheer:'第一波通过。你的战队，今天还没被系统优化。',
+    atk:110, def:15, hp:4500,
+    crushTypes:['服务类'],   // 被克制 ×1.5
+    weakTypes: ['体制类'],   // 弱点   ×0.5
+    immuneTypes:[]
+  },
+  {
+    id:2, emoji:'🌀',
+    name:'同事蒸馏厂',
+    chapter:'2027年 · 第二波淘汰浪潮',
+    desc:'第二波浪潮没有来找你，它来找了你身边的人。先是隔壁组的小王，然后是对面坐了三年的同事。有一天你发现工位空了三分之一，业务量却没有减少。他们没有被解雇——他们被提炼成了Token，永远在工作，只是不再需要打卡了。你是下一个吗？',
+    quote:'「感谢您的贡献，蒸馏完成，请放心离开。」',
+    taunts:['蒸馏完毕。您的工作经验已永久存入模型权重。','您写过的每一封邮件，都在训练它的继任者。','检测到您的岗位已有完整历史数据，无需真人续任。','您同事五年的工作经验已完成蒸馏。感谢他们的贡献。'],
+    cheer:'第二波通过。你的战队，还没被提炼成Token。继续跑。',
+    atk:135, def:25, hp:5500,
+    crushTypes:['文字类'],
+    weakTypes: ['专业类'],
+    immuneTypes:[]
+  },
+  {
+    id:3, emoji:'🚁',
+    name:'无人配送集团',
+    chapter:'2028年 · 第三波淘汰浪潮',
+    desc:'第三波浪潮移动速度是80公里/小时。深圳已有600台无人配送机在工作，不需要小费、不会请病假、永不堵车。你说最后一公里机器做不到——他们已在测试爬楼机器人。你说人情味不能被替代——数据说消费者只用了0.3秒就接受了。',
+    quote:'「ETA 3分钟，无需小费，永不投诉，差评率0%。」',
+    taunts:['ETA 3分钟，无需消费，永不投诉，差评率0%。','骑手说还有楼梯要爬。我们研发了爬楼机器人。','人力配送成本：28元/单。无人配送成本：2.3元/单。决策很简单。','已为您安排职业再培训：无人机维护工程师。'],
+    cheer:'第三波通过。机器爬不了你们那层楼梯——至少今天还爬不了。',
+    atk:150, def:35, hp:6500,
+    crushTypes:['执行类'],
+    weakTypes: ['技术类'],
+    immuneTypes:[]
+  },
+  {
+    id:4, emoji:'💳',
+    name:'技能订阅中心',
+    chapter:'2029年 · 第四波淘汰浪潮',
+    desc:'第四波浪潮不来替代你——它让你为自己的替代付费。ChatGPT Plus每月138元，Midjourney每月60元，Cursor每月150元……你发现，离开这些工具你已经不会工作了。你的技能没有消失，只是被打包进了订阅服务。停止续费的那天，你的竞争力将回到零。',
+    quote:'「检测到您的技能版本过期，建议升级至最新版，月付298元。」',
+    taunts:['您的技能版本已过期。系统将在72小时内停止支持。','您刚考完的证书，已被纳入「历史技能归档」。','检测到：您在这项技能上学了3年。AI学习用时：6天。','订阅最新版技能，月付298元。您目前使用的是2021年旧版。'],
+    cheer:'第四波通过。你的战队，暂时还没被技能订阅淘汰。',
+    atk:165, def:45, hp:7500,
+    crushTypes:['专业类','技术类'],
+    weakTypes: ['体制类'],
+    immuneTypes:[]
+  },
+  {
+    id:5, emoji:'🎬',
+    name:'创意回收公司',
+    chapter:'2030年 · 最终决战',
+    desc:'第五波浪潮是最后一波，也是最深的一波。它不替代你的工作——它来消化你本人。你发过的每个想法、写过的每句文案、每张照片，都已进入训练集。你以为在创作，其实在喂食。有一天你会发现，你的风格已被完整复制，定价：免费，且永不疲倦。',
+    quote:'「数据收集完毕。感谢您十年来的无偿贡献。」',
+    taunts:['数据收集完毕。感谢您十年来的无偿贡献。新产品定价：免费。','您的创意已入库。基于您的风格，我们发布了新产品。定价：免费。','您花了10年培养的审美，已被提炼为一段提示词。','感谢您的所有原创内容。训练集已更新，版本：v3.1。'],
+    cheer:'你活到了2031年。五波浪潮，你全扛过来了。',  // 全通
+    atk:185, def:80, hp:8000,
+    crushTypes:['创意类','文字类'],
+    weakTypes: [],
+    immuneTypes:['绝版类']
+  },
+];
+
+// ════════════════════════════════════════════════════════
+// STATE
+// ════════════════════════════════════════════════════════
+
+const DEFAULT_STATE = {
+  pullsLeft: 10,
+  totalPulls: 0,
+  pityCount: 0,
+  shareCount: 0,
+  collection: {},      // {name: count}
+  team: [],            // [careerName, ...]
+  bossProgress: 0,     // 0..5 (0=no boss started)
+};
+
+let G = loadState();
+let lastDrawn = null;
+let battleState = null;
+
+function loadState() {
+  try {
+    const s = localStorage.getItem('career_gacha_v2');
+    if (s) return {...DEFAULT_STATE, ...JSON.parse(s)};
+  } catch(e){}
+  return {...DEFAULT_STATE};
+}
+function saveState() {
+  localStorage.setItem('career_gacha_v2', JSON.stringify(G));
+}
+
+// ════════════════════════════════════════════════════════
+// AUDIO
+// ════════════════════════════════════════════════════════
+
+const AC = new (window.AudioContext || window.webkitAudioContext)();
+
+function tone(freq, dur, vol=0.15, type='sine', delay=0) {
+  try {
+    const o = AC.createOscillator();
+    const g = AC.createGain();
+    o.type = type;
+    o.connect(g); g.connect(AC.destination);
+    o.frequency.value = freq;
+    g.gain.setValueAtTime(vol, AC.currentTime + delay);
+    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + delay + dur);
+    o.start(AC.currentTime + delay);
+    o.stop(AC.currentTime + delay + dur);
+  } catch(e) {}
+}
+
+function playSound(type) {
+  try {
+    if (AC.state === 'suspended') AC.resume();
+    const t = AC.currentTime;
+    if (type === 'draw') {
+      // 纸质摩擦感：低频噪声 + 短促扫频
+      const buf = AC.createBuffer(1, AC.sampleRate * 0.15, AC.sampleRate);
+      const d = buf.getChannelData(0);
+      for (let i = 0; i < d.length; i++) d[i] = (Math.random()*2-1) * (1 - i/d.length);
+      const src = AC.createBufferSource();
+      const g = AC.createGain();
+      src.buffer = buf;
+      const f = AC.createBiquadFilter();
+      f.type = 'bandpass'; f.frequency.value = 1200; f.Q.value = 2;
+      src.connect(f); f.connect(g); g.connect(AC.destination);
+      g.gain.value = 0.3;
+      src.start(t); src.stop(t + 0.15);
+      tone(220, 0.1, 0.08, 'sine', 0);
+      tone(440, 0.08, 0.06, 'sine', 0.05);
+    } else if (type === 'reveal_N') {
+      tone(330, 0.15, 0.12, 'sine');
+      tone(440, 0.1, 0.08, 'sine', 0.1);
+    } else if (type === 'reveal_R') {
+      tone(440, 0.12, 0.14, 'triangle');
+      tone(550, 0.12, 0.1, 'triangle', 0.08);
+      tone(660, 0.15, 0.08, 'triangle', 0.16);
+    } else if (type === 'reveal_SR') {
+      // 上行三连音，明亮
+      [523, 659, 784].forEach((f, i) => tone(f, 0.18, 0.13, 'triangle', i*0.08));
+      tone(1047, 0.3, 0.09, 'sine', 0.28);
+    } else if (type === 'reveal_SSR') {
+      // 戏剧性五音阶 + 余响
+      [392, 523, 659, 784, 1047].forEach((f, i) => tone(f, 0.22, 0.14, 'sine', i*0.07));
+      tone(1568, 0.5, 0.1, 'triangle', 0.42);
+      tone(784, 0.5, 0.06, 'sine', 0.45);
+    } else if (type === 'reveal_UR') {
+      // 全频震撼：低沉轰鸣 + 高频亮片
+      tone(80, 0.6, 0.25, 'sawtooth');
+      tone(160, 0.5, 0.2, 'sawtooth', 0.05);
+      [523,659,784,1047,1568,2093].forEach((f,i) => tone(f, 0.35, 0.12, 'sine', i*0.06));
+      tone(3136, 0.8, 0.08, 'sine', 0.5);
+    } else if (type === 'addTeam') {
+      tone(392, 0.08, 0.12, 'sine');
+      tone(523, 0.1, 0.1, 'sine', 0.06);
+    } else if (type === 'removeTeam') {
+      tone(330, 0.08, 0.1, 'sine');
+      tone(247, 0.12, 0.08, 'sine', 0.06);
+    } else if (type === 'hit') {
+      const o = AC.createOscillator();
+      const g = AC.createGain();
+      o.type = 'sawtooth';
+      o.connect(g); g.connect(AC.destination);
+      o.frequency.setValueAtTime(180, t);
+      o.frequency.exponentialRampToValueAtTime(50, t + 0.12);
+      g.gain.setValueAtTime(0.22, t);
+      g.gain.exponentialRampToValueAtTime(0.001, t + 0.18);
+      o.start(t); o.stop(t + 0.18);
+    } else if (type === 'battleStart') {
+      // 低频鼓点 + 警报扫频
+      tone(80, 0.25, 0.2, 'sawtooth');
+      tone(100, 0.2, 0.15, 'sawtooth', 0.25);
+      tone(120, 0.2, 0.12, 'sawtooth', 0.45);
+      const o2 = AC.createOscillator();
+      const g2 = AC.createGain();
+      o2.connect(g2); g2.connect(AC.destination);
+      o2.frequency.setValueAtTime(220, t + 0.1);
+      o2.frequency.linearRampToValueAtTime(440, t + 0.6);
+      g2.gain.setValueAtTime(0.08, t + 0.1);
+      g2.gain.exponentialRampToValueAtTime(0.001, t + 0.7);
+      o2.start(t + 0.1); o2.stop(t + 0.7);
+    } else if (type === 'win') {
+      [523, 659, 784, 1047, 1319].forEach((f, i) =>
+        tone(f, 0.28, 0.14, 'sine', i*0.1));
+      tone(1568, 0.6, 0.12, 'triangle', 0.55);
+    } else if (type === 'lose') {
+      [300, 220, 160, 110].forEach((f, i) =>
+        tone(f, 0.25, 0.15, 'sawtooth', i*0.15));
+    } else if (type === 'toast') {
+      tone(880, 0.08, 0.06, 'sine');
+      tone(1100, 0.1, 0.04, 'sine', 0.06);
+    }
+  } catch(e) {}
+}
+
+// ════════════════════════════════════════════════════════
+// DRAW
+// ════════════════════════════════════════════════════════
+
+function weightedRandom() {
+  if (G.pityCount >= 10) {
+    const pool = CAREERS.filter(c => c.rarity === 'SSR' || c.rarity === 'UR');
+    return pool[Math.floor(Math.random() * pool.length)];
+  }
+  const total = Object.values(RARITY_WEIGHT).reduce((a,b)=>a+b,0);
+  let r = Math.random() * total;
+  let tier = 'N';
+  for (const [k,v] of Object.entries(RARITY_WEIGHT)) {
+    r -= v;
+    if (r <= 0) { tier = k; break; }
+  }
+  const pool = CAREERS.filter(c => c.rarity === tier);
+  return pool[Math.floor(Math.random() * pool.length)];
+}
+
+function applyDraw(career) {
+  G.totalPulls++;
+  G.pullsLeft--;
+  G.pityCount++;
+  if (career.rarity === 'SSR' || career.rarity === 'UR') G.pityCount = 0;
+
+  const isDup = !!G.collection[career.name];
+  G.collection[career.name] = (G.collection[career.name] || 0) + 1;
+  saveState();
+  return isDup;
+}
+
+function draw() {
+  if (G.pullsLeft <= 0) { showToast('没有收信次数了，分享可获得更多！'); return; }
+  const career = weightedRandom();
+  const isDup = applyDraw(career);
+  lastDrawn = career;
+  playSound('draw');
+  if (isDup) showToast(`✦ 已有 ${career.name}，卡量+1`);
+  renderAll();
+  showEnvelope(career);
+}
+
+function showEnvelope(career) {
+  window._pendingCareer = career;
+  const rarityColors = {N:'var(--N)',R:'var(--R)',SR:'var(--SR)',SSR:'var(--SSR)',UR:'var(--UR)'};
+  const col = rarityColors[career.rarity];
+  // Show envelope in overlay
+  const overlay = document.getElementById('drawRevealOverlay');
+  document.getElementById('revealCard').style.display = 'none';
+  document.getElementById('revealHint').style.display = 'none';
+  const envContainer = document.getElementById('revealEnvelope');
+  envContainer.style.display = 'block';
+  envContainer.innerHTML = `
+    <div class="envelope-wrap" id="envelopeWrap">
+      <div class="envelope">
+        <div class="envelope-flap-wrap" id="envFlap">
+          <div class="envelope-flap" style="background:${col};opacity:0.18;"></div>
+        </div>
+        <div class="envelope-body">
+          <div class="env-icon">✉️</div>
+          <div class="env-bureau">职业档案局</div>
+          <div class="env-subtitle">任职通知书</div>
+          <div class="env-seal">档案局<br>认证</div>
+        </div>
+      </div>
+    </div>`;
+  overlay.classList.add('open');
+  // Auto-open after brief pause so player sees the envelope
+  setTimeout(openEnvelope, 420);
+}
+
+function openEnvelope() {
+  const wrap = document.getElementById('envelopeWrap');
+  const flap = document.getElementById('envFlap');
+  if (!wrap || !flap || wrap.dataset.opened) return;
+  wrap.dataset.opened = '1';
+  flap.classList.add('opened');
+  playSound('draw');
+  setTimeout(() => {
+    const career = window._pendingCareer;
+    if (!career) return;
+    // Show card in overlay (centered), restore draw zone placeholder
+    const overlay = document.getElementById('drawRevealOverlay');
+    document.getElementById('revealEnvelope').style.display = 'none';
+    const rc = document.getElementById('revealCard');
+    rc.innerHTML = buildCard(career, true);
+    if (career.rarity === 'UR') rc.querySelector('.card')?.classList.add('just-revealed');
+    rc.style.display = 'block';
+    document.getElementById('revealHint').style.display = 'block';
+    // 按稀有度播放开卡音效
+    const _rsm = {N:'reveal_N',R:'reveal_R',SR:'reveal_SR',SSR:'reveal_SSR',UR:'reveal_UR'};
+    playSound(_rsm[career.rarity] || 'reveal_N');
+    overlay.classList.add('open');
+    // Restore draw zone to placeholder
+    document.getElementById('cardDisplay').innerHTML = `
+      <div class="card-back-placeholder">
+        <div class="icon">${career.icon || '📁'}</div>
+        <div class="hint">已收到 ${career.name}</div>
+      </div>`;
+  }, 680);
+}
+function closeDrawReveal() {
+  document.getElementById('drawRevealOverlay').classList.remove('open');
+}
+
+function draw10() {
+  if (G.pullsLeft < 10) {
+    showToast(`次数不足，还剩 ${G.pullsLeft} 次`);
+    return;
+  }
+  let lastCard = null;
+  for (let i = 0; i < 10; i++) {
+    const career = weightedRandom();
+    applyDraw(career);
+    lastCard = career;
+  }
+  lastDrawn = lastCard;
+  playSound('draw');
+  renderAll();
+  document.getElementById('cardDisplay').innerHTML = buildCard(lastCard, true);
+  showToast('十连抽完成！Offer 记录已更新');
+}
+
+// ════════════════════════════════════════════════════════
+// CARD HTML
+// ════════════════════════════════════════════════════════
+
+function buildCard(career, animate) {
+  const extinct = career.hp === 0;
+  const fileNo = `FILE-${career.rarity}-${String(CAREERS.indexOf(career)+1).padStart(3,'0')}`;
+  return `
+  <div class="card ${career.rarity}" ${animate ? 'style="animation:fadeIn .35s ease"' : ''}>
+    <div class="card-header">
+      <div class="card-file-no">${fileNo}</div>
+      <div class="card-rarity-stamp">${RARITY_SHORT[career.rarity]} · ${RARITY_LABEL[career.rarity]}</div>
+    </div>
+    <div class="card-art">
+      <span class="card-art-icon">${career.icon || '📁'}</span>
+      <div class="card-name">${career.name}</div>
+      <div class="card-tag">${career.tag}</div>
+      ${career.aiCoverage !== undefined ? `<div style="margin-top:6px;font-size:9px;font-family:monospace;color:var(--ink-faint);letter-spacing:1px;">AI覆盖率 <b style="color:var(--red);font-size:11px;">${career.aiCoverage}%</b></div>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-type-badge">[ ${career.type} ]</div>
+      <div class="card-desc">${career.desc.replace(/。/g, '。<br>')}</div>
+      <div class="stats">
+        <div class="stat-row stat-atk">
+          <div class="stat-label">⚔ 薪资力</div>
+          <div class="stat-track"><div class="stat-fill" style="width:${career.atk}%"></div></div>
+          <div class="stat-val">${career.atk}</div>
+        </div>
+        <div class="stat-row stat-def">
+          <div class="stat-label">🛡 抗AI值</div>
+          <div class="stat-track"><div class="stat-fill" style="width:${career.def}%"></div></div>
+          <div class="stat-val">${career.def}</div>
+        </div>
+        <div class="stat-row stat-hp">
+          <div class="stat-label">❤ 需求度</div>
+          <div class="stat-track"><div class="stat-fill" style="width:${extinct?0:career.hp}%"></div></div>
+          <div class="stat-val">${extinct ? '—' : career.hp}</div>
+        </div>
+      </div>
+    </div>
+    <div class="card-footer">
+      <span>职业档案局 · 2026</span>
+      <span>${extinct ? '🪦 已注销' : ''}</span>
+    </div>
+    ${extinct ? '<div class="card-extinct">已注销</div>' : ''}
+  </div>`;
+}
+
+function buildMiniCard(career, count, inTeam) {
+  return `
+  <div class="mini-card ${career.rarity} ${inTeam ? 'in-team' : ''}"
+       data-name="${career.name}"
+       title="${career.desc}">
+    <div class="mini-header">
+      <div class="mini-rarity">${RARITY_SHORT[career.rarity]}</div>
+      ${count > 1 ? `<div class="mini-count">×${count}</div>` : '<div></div>'}
+    </div>
+    <div class="mini-art">
+      <div class="mini-icon">${career.icon || '📁'}</div>
+      <div class="mini-name">${career.name}</div>
+    </div>
+
+    <div style="padding:4px 2px 5px;border-top:1px solid rgba(0,0,0,0.08);display:flex;justify-content:space-around;font-size:7px;font-family:monospace;line-height:1.4;">
+      <span style="color:#C23B22;" title="薪资力·攻击">⚔${career.atk}</span>
+      <span style="color:#1A3A6B;" title="抗AI值·减伤">🛡${career.def}</span>
+      <span style="color:#1A6B3A;" title="需求度·血量">❤${career.hp}</span>
+    </div>
+  </div>`;
+}
+
+// ════════════════════════════════════════════════════════
+// TEAM
+// ════════════════════════════════════════════════════════
+
+function removeBossTeamCard(name) {
+  // Remove from team, re-render boss section
+  const idx = G.team.indexOf(name);
+  if (idx >= 0) G.team.splice(idx, 1);
+  renderTeam();
+  renderCollection();
+  renderBoss(); // refresh boss prep screen
+}
+
+function toggleTeam(name) {
+  if (G.team.includes(name)) {
+    G.team = G.team.filter(n => n !== name);
+  } else {
+    if (G.team.length >= 3) {
+      showToast('队伍已满3人，先移除一位'); return;
+    }
+    G.team.push(name);
+
+  }
+  saveState();
+  renderTeam();
+  renderCollection();
+  // If boss section is visible, refresh it
+  const bs = document.getElementById('bossSection');
+  if (bs && bs.style.display !== 'none') renderBoss();
+}
+
+function renderTeam() {
+  const slots = ['slot0','slot1','slot2'];
+  slots.forEach((id, i) => {
+    const el = document.getElementById(id);
+    const name = G.team[i];
+    if (name) {
+      const c = CAREERS.find(x => x.name === name);
+      el.className = `team-slot filled ${c.rarity}`;
+      el.innerHTML = `
+        <div class="slot-remove" onclick="event.stopPropagation();toggleTeam('${name}')">×</div>
+        <div class="slot-name">${c.icon || ''} ${c.name}</div>
+        <div class="slot-rarity">${RARITY_LABEL[c.rarity]} · ${c.type}</div>`;
+    } else {
+      el.className = 'team-slot empty';
+      el.innerHTML = `<div class="slot-no">第${i+1}位</div>`;
+    }
+  });
+  const btn = document.getElementById('challengeBtn');
+  const hint = document.getElementById('teamHint');
+  if (G.team.length === 3) {
+    btn.disabled = false;
+    hint.textContent = '队伍已就绪，可以出发了！';
+  } else {
+    btn.disabled = true;
+    hint.textContent = `还需选 ${3-G.team.length} 位成员`;
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// BOSS BATTLE
+// ════════════════════════════════════════════════════════
+
+function startChallenge() {
+  if (G.team.length < 3) return;
+  if (G.bossProgress >= 5) {
+    showClearScreen(); return;
+  }
+  renderBoss();
+}
+
+function getBossMultiplier(boss, career) {
+  if (boss.immuneTypes.includes(career.type)) return 0;
+  if (boss.crushTypes.includes(career.type)) return 1.5;
+  if (boss.weakTypes.includes(career.type)) return 0.5;
+  return 1.0;
+}
+
+function getClashLabel(boss, career) {
+  if (boss.immuneTypes.includes(career.type)) return {cls:'immune', text:'🛡 完全免疫！此类职业无视该AI浪潮伤害'};
+  if (boss.crushTypes.includes(career.type)) return {cls:'resist', text:'⚠️ 被克制！AI浪潮伤害×1.5'};
+  if (boss.weakTypes.includes(career.type)) return {cls:'weakness', text:'✦ 克制！AI浪潮伤害减半'};
+  return null;
+}
+
+function calcHP(c) {
+  const mult = {N:5, R:8, SR:12, SSR:15, UR:5}[c.rarity] || 8;
+  return Math.max(50, c.hp * mult);
+}  // 需求度 × 稀有度加成 → 血量
+function calcDmg(atk, defVal) { let reduction = Math.min(defVal / 100, 0.95); return Math.max(1, Math.round(atk * (1 - reduction))); }
+
+function renderBoss() {
+  const boss = BOSSES[G.bossProgress];
+  const bossSection = document.getElementById('bossSection');
+  bossSection.style.display = 'block';
+  document.getElementById('bossSectionTitle').textContent = `${boss.emoji} ${boss.name}`;
+
+  const team = G.team.map(n => CAREERS.find(c => c.name === n));
+
+  // Combined team stats
+  const teamHP   = team.reduce((s, c) => s + calcHP(c), 0);
+  const teamATK  = team.reduce((s, c) => s + Math.round(c.atk * getBossMultiplier(boss, c)), 0);
+  const teamDEF  = Math.round(team.reduce((s, c) => s + c.def, 0) / team.length);
+  const bossHPRemain = boss.hp;
+  // 绝版特性：带任意UR卡 = 对任意boss秒杀（用完即焚）
+  const urCard = team.find(c => c.rarity === 'UR');
+  const extinctsShield = !!urCard;
+
+  // Type tags for each team member
+  const typeTags = team.map(c => {
+    const clash = getClashLabel(boss, c);
+    if (!clash) return '';
+    return `<span class="clash-tag ${clash.cls}" style="font-size:9px;padding:2px 6px;margin:2px;">${c.name} ${clash.text.split('！')[0]}！</span>`;
+  }).join('');
+
+  const bDmgPerRound = Math.round(calcDmg(boss.atk, teamDEF));
+
+  document.getElementById('bossZone').innerHTML = `
+    <div class="boss-arena">
+      <div class="boss-chapter">${boss.chapter}</div>
+      <div class="boss-name">${boss.emoji} ${boss.name}</div>
+      <div class="boss-desc">${boss.desc}</div>
+
+      <div class="hp-section">
+        <div class="hp-row hp-boss">
+          <div class="hp-label" style="color:#F4EED8">
+            <span>AI浪潮</span>
+            <span id="bHpLabel"></span>
+          </div>
+          <div class="hp-track"><div class="hp-fill" id="bHpFill" style="width:100%"></div></div>
+        </div>
+        <div class="hp-row hp-player">
+          <div class="hp-label">
+            <span>👥 团队合力</span>
+            <span id="pHpLabel"></span>
+          </div>
+          <div class="hp-track"><div class="hp-fill" id="pHpFill" style="width:100%"></div></div>
+        </div>
+        <div class="round-label" id="roundLabel">${extinctsShield ? '⚡ 绝版秘技蓄力中 · ' + urCard.name + ' 正在燃烧一切' : `出战 ${2025 + (G.bossProgress+1)} · 薪资力 ${teamATK} · 抗AI值 ${teamDEF} · 需求度 ${Math.round(teamHP/8)}`}</div>
+      </div>
+      
+
+    </div>
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px;" id="bossTeamGrid">
+      ${team.map(c => `<div style="position:relative">
+        ${buildMiniCard(c, G.collection[c.name]||1, true)}
+        <button onclick="removeBossTeamCard('${c.name}')" style="position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(194,59,34,0.85);color:#fff;border:none;font-size:11px;line-height:1;cursor:pointer;z-index:5;">×</button>
+      </div>`).join('')}
+    </div>
+    <div class="battle-result" id="battleResult"></div>
+    <div class="btn-row">
+      <button class="btn btn-red" id="fightBtn" onclick="runBattle()" ${G.team.length < 3 ? 'disabled style="opacity:0.5;cursor:not-allowed"' : ''}>开始战斗${G.team.length < 3 ? " (需3人)" : ""}</button>
+    </div>`;
+
+  battleState = {
+    boss, team,
+    bossHPRemain,
+    teamHP, teamATK, teamDEF,
+    extinctsShield,
+    urCard,
+    running: false,
+  };
+
+  renderProgressMap();
+  document.getElementById('bossZone').classList.add('active');
+  bossSection.scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+async function runBattle() {
+  playSound('battleStart');
+  if (!battleState || battleState.running) return;
+  battleState.running = true;
+  document.getElementById('fightBtn').disabled = true;
+
+  const {boss} = battleState;
+
+  // 绝版秘技：UR卡出战 → 秒杀当前boss，用完即焚
+  if (battleState.extinctsShield) {
+    battleState.running = false;
+    const urUsed = battleState.team.find(c => c.rarity === 'UR');
+    // Dramatic overlay
+    const overlay = document.getElementById('urOverlay');
+    document.getElementById('urOverlayIcon').textContent = urUsed.icon || '⚡';
+    document.getElementById('urOverlayName').textContent = urUsed.name;
+    overlay.classList.add('show');
+    playSound('win');
+    await new Promise(res => setTimeout(res, 2200));
+    overlay.style.transition = 'opacity 0.6s';
+    overlay.style.opacity = '0';
+    await new Promise(res => setTimeout(res, 600));
+    overlay.classList.remove('show');
+    overlay.style.opacity = '';
+    overlay.style.transition = '';
+    // Consume UR card with burn animation
+    if (urUsed && G.collection[urUsed.name]) {
+      G.collection[urUsed.name]--;
+      if (G.collection[urUsed.name] <= 0) delete G.collection[urUsed.name];
+    }
+    G.team = G.team.filter(n => G.collection[n]);
+    saveState();
+    renderCollection(); // will show burn animation on removed card
+    G.pullsLeft += 3; saveState(); showToast('⚡ ' + urUsed.name + ' 已焚化。+3 抽卡次数。');
+    await new Promise(res => setTimeout(res, 500));
+    bossCleared();
+    return;
+  }
+
+  let bossHPRemain = battleState.bossHPRemain;
+  let teamHP = battleState.teamHP;
+  const teamMaxHP = teamHP;
+  const teamATK = battleState.teamATK;
+  const bDmgPerRound = Math.round(calcDmg(boss.atk, battleState.teamDEF));
+
+  function updateBars() {
+    const pPct = Math.max(0, teamHP / teamMaxHP * 100);
+    const bPct = Math.max(0, bossHPRemain / boss.hp * 100);
+    const pFill = document.getElementById('pHpFill');
+    const bFill = document.getElementById('bHpFill');
+    if (!pFill || !bFill) return;
+    pFill.style.width = pPct + '%';
+    bFill.style.width = bPct + '%';
+    pFill.style.background = pPct < 25 ? '#C41A1A' : pPct < 50 ? '#B85A00' : '#1A6B3A';
+    bFill.style.background = bPct < 25 ? '#1A6B3A' : bPct < 50 ? '#B85A00' : '#C41A1A';
+
+    const rl = document.getElementById('roundLabel');
+    if (rl) rl.textContent = '激战中...';
+  }
+
+  for (let r = 1; r <= 40; r++) {
+    teamHP       -= bDmgPerRound;
+    bossHPRemain -= calcDmg(teamATK, boss.def);
+    battleState.bossHPRemain = bossHPRemain;
+    updateBars();
+    playSound('hit');
+    if (teamHP <= 0 || bossHPRemain <= 0) break;
+    await new Promise(res => setTimeout(res, 200));
+  }
+
+  battleState.running = false;
+
+  if (bossHPRemain <= 0) {
+    battleState.bossHPRemain = 0;
+    playSound('win');
+    bossCleared();
+  } else {
+    playSound('lose');
+    // Consume team cards on loss
+    const lostCards = [];
+    battleState.team.forEach(card => {
+      if (G.collection[card.name]) {
+        G.collection[card.name]--;
+        if (G.collection[card.name] <= 0) {
+          delete G.collection[card.name];
+          lostCards.push(card.name);
+        }
+      }
+    });
+    G.team = G.team.filter(n => G.collection[n]);
+    saveState();
+    showBattleResult('lose',
+      `❌ ${2026+G.bossProgress} 年，你被AI淘汰了`,
+      (()=>{
+        const team = battleState.team;
+        const picked = team[Math.floor(Math.random()*team.length)];
+        const ct = CAREER_TAUNTS[picked.name];
+        const careerLine = ct ? ct[Math.floor(Math.random()*ct.length)] : '';
+        const bossLine = boss.taunts[Math.floor(Math.random()*boss.taunts.length)];
+        return (careerLine ? careerLine.replace(/。/g,'。\n') + '\n\n' : '') + boss.quote + '\n\n' + '「' + bossLine + '」';
+      })() + '\n\n换一套更强的阵容再来？',
+      true
+    );
+  }
+}
+
+
+function showBattleResult(type, title, detail, showBack, onContinue) {
+  const el = document.getElementById('battleResult');
+  el.className = `battle-result ${type}`;
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="res-title">${title}</div>
+    <div class="res-detail" style="white-space:pre-line">${detail}</div>
+    <div class="btn-row">
+      ${showBack ? `<button class="btn btn-outline btn-sm" onclick="resetBoss()">← 重新组队</button>` : ''}
+      ${!showBack && onContinue ? `<button class="btn btn-red btn-sm" id="continueBtn">继续战斗</button>` : ''}
+    </div>`;
+  if (!showBack && onContinue) {
+    document.getElementById('continueBtn').onclick = () => {
+      el.style.display = 'none';
+      onContinue();
+    };
+  }
+}
+
+function bossCleared() {
+  const boss = BOSSES[G.bossProgress];
+  // Consume all 3 battle cards (win = burn too)
+  battleState?.team?.forEach(card => {
+    if (G.collection[card.name]) {
+      G.collection[card.name]--;
+      if (G.collection[card.name] <= 0) delete G.collection[card.name];
+    }
+  });
+  G.team = G.team.filter(n => G.collection[n]);
+  // Win reward: +3 pull chances
+  G.pullsLeft += 3;
+  G.bossProgress++;
+  saveState();
+  playSound('win');
+  if (G.bossProgress >= 5) {
+    showToast('🎉 +3 抽卡次数'); setTimeout(showClearScreen, 800);
+    return;
+  }
+  const next = BOSSES[G.bossProgress];
+  const el = document.getElementById('battleResult');
+  el.className = 'battle-result win';
+  el.style.display = 'block';
+  el.innerHTML = `
+    <div class="res-title">✅ ${2025 + G.bossProgress} 年，你活下来了</div>
+    <div class="res-detail" style="white-space:pre-line">${boss.cheer}\n\n出战卡牌已消耗，获得 +3 抽卡次数。\n${next.emoji} 下一年：${next.name}（${2026 + G.bossProgress} 年）</div>
+    <div class="btn-row">
+      <button class="btn btn-red btn-sm" onclick="nextBoss()">继续活下去 →</button>
+    </div>`;
+  renderProgressMap();
+}
+
+function nextBoss() {
+  G.team = [];
+  saveState();
+  renderAll();
+  document.getElementById('bossSection').style.display = 'none';
+  showToast(`${2026+G.bossProgress} 年来了，重新组队！`);
+  document.getElementById('teamSection').scrollIntoView({behavior:'smooth'});
+}
+
+function resetBoss() {
+  G.team = [];
+  saveState();
+  renderAll();
+  document.getElementById('bossSection').style.display = 'none';
+  document.getElementById('bossZone').classList.remove('active');
+  showToast('已重置队伍，请重新选择');
+}
+
+// ════════════════════════════════════════════════════════
+// CLEAR
+// ════════════════════════════════════════════════════════
+
+function showClearScreen() {
+  const team = G.team.map(n => CAREERS.find(c => c.name === n));
+  document.getElementById('certTeam').textContent =
+    team.map(c => `${c.name}  ${RARITY_LABEL[c.rarity]}`).join('\n');
+  document.getElementById('certDate').textContent =
+    new Date().toLocaleDateString('zh-CN') + ' 认证通过';
+  document.getElementById('clearScreen').classList.add('show');
+}
+
+function shareResult() {
+  const team = G.team.map(n => CAREERS.find(c => c.name === n));
+  const text = `【职业档案局 · 2026职场生存测试】
+
+Anthropic经济指数报告显示：
+49%的职业已有超过25%的任务可被AI完成。
+
+我用「${team.map(c=>c.name).join('·')}」组成战队，通关了5波AI浪潮。
+
+你的职业，能撑过2026年吗？→ https://yanluanchen-prog.github.io/career-gacha/`;
+  navigator.clipboard.writeText(text).then(() => showToast('已复制！快去分享'));
+}
+
+function restartGame() {
+  G.team = [];
+  G.bossProgress = 0;
+  saveState();
+  document.getElementById('clearScreen').classList.remove('show');
+  renderAll();
+}
+
+// ════════════════════════════════════════════════════════
+// SHARE & EXCHANGE
+// ════════════════════════════════════════════════════════
+
+function doShare() {
+  if (G.shareCount >= 10) {
+    showToast('分享次数已达上限（10次）');
+    return;
+  }
+  const card = lastDrawn;
+  const aiCoverage = {N:'高风险',R:'中风险',SR:'较安全',SSR:'稀缺型',UR:'已绝版'}[card ? card.rarity : 'N'];
+  const text = card
+    ? `Anthropic经济指数（2026年3月）：49%的职业已有超1/4的任务可被AI完成。\n\n我抽到了「${card.name}」——${RARITY_LABEL[card.rarity]}职位 · ${aiCoverage}\n\n「${card.desc.split('。')[0]}。」\n\n你的职业能活过2026年吗？→ https://yanluanchen-prog.github.io/career-gacha/`
+    : `Anthropic经济指数（2026年3月）：49%的职业已有超1/4的任务可被AI完成。你的职业呢？→ https://yanluanchen-prog.github.io/career-gacha/`;
+  navigator.clipboard.writeText(text).then(() => {
+    G.shareCount++;
+    G.pullsLeft += 3;
+    saveState();
+    renderAll();
+    showToast(`已复制！获得 +3 次收信机会 🎉`);
+  });
+}
+
+function openExchangeImport() {
+  document.getElementById('exchangeContent').innerHTML = `
+    <p style="font-size:12px;color:var(--ink-lt);margin-bottom:12px;line-height:1.6;">
+      粘贴朋友发来的卡片交换码，获得对应职业卡。<br>（重复卡可在Offer 记录中长按生成交换码）
+    </p>
+    <input type="text" id="exchangeInput" placeholder="粘贴交换码到这里...">
+    <div class="btn-row">
+      <button class="btn btn-red btn-sm" onclick="importExchange()">导入卡片</button>
+    </div>`;
+  document.getElementById('exchangeModal').classList.add('open');
+}
+
+function importExchange() {
+  const code = document.getElementById('exchangeInput').value.trim();
+  try {
+    const data = JSON.parse(atob(code));
+    if (!data.name) throw new Error('invalid');
+    G.collection[data.name] = (G.collection[data.name] || 0) + 1;
+    saveState();
+    renderAll();
+    closeModal('exchangeModal');
+    showToast(`获得 ${data.name}（${data.rarity}）！`);
+  } catch(e) {
+    showToast('无效的交换码，请检查');
+  }
+}
+
+function generateExchangeCode(careerName) {
+  const c = CAREERS.find(x => x.name === careerName);
+  if (!c) return '';
+  return btoa(JSON.stringify({name:c.name, rarity:c.rarity, type:c.type}));
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+
+// ════════════════════════════════════════════════════════
+// RENDER
+// ════════════════════════════════════════════════════════
+
+function renderAll() {
+  renderHeader();
+  renderTeam();
+  renderCollection();
+  renderProgressMap();
+  updateDrawButtons();
+  updateShareInfo();
+}
+
+function renderHeader() {
+  document.getElementById('pullsLeft').textContent = G.pullsLeft;
+  document.getElementById('totalPulls').textContent = G.totalPulls;
+  // pity counter hidden from user
+  document.getElementById('pityBar').style.width = Math.min(100, (G.pityCount/10)*100) + '%';
+}
+
+
+// ── Card Detail Modal ──────────────────────────────────
+function showCardDetail(name) {
+  const career = CAREERS.find(c => c.name === name);
+  if (!career) return;
+  document.getElementById('cardDetailFace').innerHTML = renderCardFace(career);
+  const inTeam = G.team.includes(name);
+  const teamFull = G.team.length >= 3;
+  const actions = document.getElementById('cardDetailActions');
+  actions.style.flexDirection = 'column';
+  actions.style.gap = '8px';
+  if (inTeam) {
+    actions.innerHTML = `
+      <div style="font-size:11px;color:var(--ink-lt);text-align:center;letter-spacing:1px;">已在战斗队伍中</div>
+      <button class="btn btn-sm" style="width:100%" onclick="toggleTeam('${name}');closeCardDetail()">✕ 从队伍移除</button>`;
+  } else if (teamFull) {
+    actions.innerHTML = `
+      <div style="font-size:11px;color:var(--red);text-align:center;letter-spacing:1px;padding:4px 0;">队伍已满·需先移除一位成员</div>
+      <div style="display:flex;gap:8px;width:100%">${G.team.map(n=>`<button class="btn btn-sm btn-outline" style="flex:1;font-size:10px" onclick="toggleTeam('${n}');closeCardDetail();showCardDetail('${name}')">移除<br>${n}</button>`).join('')}</div>`;
+  } else {
+    actions.innerHTML = `
+      <button class="btn btn-red btn-sm" style="width:100%" onclick="toggleTeam('${name}');closeCardDetail()">加入战斗队伍 →</button>`;
+  }
+  document.getElementById('cardDetailModal').classList.add('open');
+}
+function closeCardDetail(e) {
+  if (e && e.target !== document.getElementById('cardDetailModal')) return;
+  document.getElementById('cardDetailModal').classList.remove('open');
+}
+
+
+function renderCollection() {
+  const grid = document.getElementById('collectionGrid');
+  const section = document.getElementById('collectionSection');
+  const keys = Object.keys(G.collection);
+
+  if (keys.length === 0) {
+    grid.innerHTML = '<div class="collection-empty">[ 暂无 Offer 记录 ]</div>';
+    section.style.display = 'none';
+    return;
+  }
+
+  section.style.display = 'block';
+
+  // Sort by rarity desc, then name
+  const rarityRank = {UR:0,SSR:1,SR:2,R:3,N:4};
+  const sorted = keys.map(n => CAREERS.find(c => c.name === n)).filter(Boolean)
+    .sort((a,b) => rarityRank[a.rarity] - rarityRank[b.rarity]);
+
+  grid.innerHTML = sorted.map(career => {
+    const count = G.collection[career.name] || 0;
+    const inTeam = G.team.includes(career.name);
+    return buildMiniCard(career, count, inTeam);
+  }).join('');
+
+  const unique = keys.filter(n => CAREERS.find(c => c.name === n)).length;
+  const total  = CAREERS.length;
+  const countEl = document.getElementById('collectionCount');
+  if (countEl) countEl.textContent = `已收集 ${unique} / ${total}`;
+  // 点击 = 加入/移出队伍
+  grid.querySelectorAll('.mini-card[data-name]').forEach(el => {
+    el.addEventListener('click', function() {
+      const name = this.getAttribute('data-name');
+      if (!name) return;
+      if (G.team.includes(name)) {
+        toggleTeam(name);
+        playSound('removeTeam');
+        showToast(`${name} 已移出队伍`);
+      } else if (G.team.length >= 3) {
+        showToast('队伍已满，请点 × 移除成员');
+      } else {
+        toggleTeam(name);
+        const career = CAREERS.find(x => x.name === name);
+        if (career?.rarity === 'UR') {
+          playSound('reveal_UR');
+          showToast('⚡ 绝版秘技已解锁！出战任意一关即可秒杀AI浪潮，但此卡用完即焚。');
+        } else {
+          playSound('addTeam');
+          showToast(`${name} 加入队伍！`);
+        }
+      }
+    });
+  });
+
+
+  // Long-press for exchange code
+  grid.querySelectorAll('.mini-card').forEach(el => {
+    el.addEventListener('contextmenu', e => {
+      e.preventDefault();
+      const name = el.querySelector('.mini-name').textContent;
+      const count = G.collection[name] || 0;
+      if (count > 1) {
+        showExchangeCode(name, count);
+      } else {
+        showToast('需要有重复卡才能生成交换码');
+      }
+    });
+  });
+}
+
+function showExchangeCode(name, count) {
+  const code = generateExchangeCode(name);
+  const c = CAREERS.find(x => x.name === name);
+  document.getElementById('exchangeContent').innerHTML = `
+    <p style="font-size:12px;color:var(--ink-lt);margin-bottom:8px;">
+      你有 ${count} 张「${name}」，发给朋友一张：
+    </p>
+    <div class="exchange-code-box">${code}</div>
+    <div class="btn-row">
+      <button class="btn btn-red btn-sm" onclick="copyExchangeCode('${code}')">复制交换码</button>
+    </div>
+    <p style="font-size:10px;color:var(--ink-faint);margin-top:8px;font-family:monospace;">
+      注意：复制后你的这张卡数量-1
+    </p>`;
+  document.getElementById('exchangeModal').classList.add('open');
+}
+
+function copyExchangeCode(code) {
+  // Find name from code and reduce count
+  try {
+    const data = JSON.parse(atob(code));
+    if (G.collection[data.name] > 0) {
+      G.collection[data.name]--;
+      if (G.collection[data.name] === 0) delete G.collection[data.name];
+      saveState();
+      renderAll();
+    }
+  } catch(e) {}
+  navigator.clipboard.writeText(code).then(() => {
+    closeModal('exchangeModal');
+    showToast('交换码已复制！发给朋友吧');
+  });
+}
+
+function renderProgressMap() {
+  const section = document.getElementById('progressSection');
+  if (G.bossProgress > 0 || G.team.length === 3) {
+    section.style.display = 'block';
+  }
+  const wrap = document.getElementById('bossProgress');
+  wrap.innerHTML = BOSSES.map((b, i) => {
+    let cls = '';
+    if (i < G.bossProgress) cls = 'cleared';
+    else if (i === G.bossProgress) cls = 'current';
+    return `<div class="boss-dot ${cls}" title="${b.name}">${b.emoji}</div>`;
+  }).join('');
+}
+
+function updateDrawButtons() {
+  const has = G.pullsLeft > 0;
+  document.getElementById('drawBtn').disabled = !has;
+}
+
+function updateShareInfo() {
+  const el = document.getElementById('shareInfo');
+  const remaining = 10 - G.shareCount;
+  if (remaining > 0) {
+    el.textContent = `分享可额外获得次数（还可分享 ${remaining} 次）`;
+  } else {
+    el.textContent = '分享次数已用完';
+  }
+}
+
+// ════════════════════════════════════════════════════════
+// TOAST
+// ════════════════════════════════════════════════════════
+
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => t.classList.remove('show'), 2200);
+}
+
+// ════════════════════════════════════════════════════════
+// INIT
+// ════════════════════════════════════════════════════════
+
+// CSS fadeIn
+const style = document.createElement('style');
+style.textContent = '@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}';
+document.head.appendChild(style);
+
+// Resume boss if in progress
+if (G.bossProgress > 0 && G.bossProgress < 5) {
+  document.getElementById('progressSection').style.display = 'block';
+  renderProgressMap();
+}
+if (G.bossProgress >= 5) {
+  // already cleared
+}
+
+renderAll();
+
+// Unlock AudioContext on first interaction
+document.addEventListener('click', () => {
+  if (AC.state === 'suspended') AC.resume();
+}, {once:true});
+</script>
+</body>
+</html>
