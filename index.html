@@ -2632,7 +2632,7 @@ function showCardDetail(name) {
   if (!career) return;
   
   // 显示完整卡牌（放大版）
-  document.getElementById('cardDetailFace').innerHTML = renderCardFace(career);
+  document.getElementById('cardDetailFace').innerHTML = buildCard(career, false);
   
   const inTeam = G.team.includes(name);
   const teamFull = G.team.length >= 3;
@@ -2685,8 +2685,15 @@ function handleDetailAction(name, action, param) {
 }
 
 function closeCardDetail(e) {
-  if (e && e.target !== document.getElementById('cardDetailModal')) return;
-  document.getElementById('cardDetailModal').classList.remove('open');
+  // 如果没有事件对象（直接调用），直接关闭
+  if (!e) {
+    document.getElementById('cardDetailModal').classList.remove('open');
+    return;
+  }
+  // 如果点击的是遮罩层本身（不是内部内容），则关闭
+  if (e.target === document.getElementById('cardDetailModal')) {
+    document.getElementById('cardDetailModal').classList.remove('open');
+  }
 }
 
 
