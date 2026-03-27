@@ -1079,13 +1079,10 @@ body{
         </div>
       </div>
       <div class="pity-wrap">
-        <div id="pitySegments" style="display:flex;gap:3px;justify-content:center;margin:6px 0;">
-          <div class="pity-seg" id="pitySeg0"></div><div class="pity-seg" id="pitySeg1"></div>
-          <div class="pity-seg" id="pitySeg2"></div><div class="pity-seg" id="pitySeg3"></div>
-          <div class="pity-seg" id="pitySeg4"></div><div class="pity-seg" id="pitySeg5"></div>
-          <div class="pity-seg" id="pitySeg6"></div><div class="pity-seg" id="pitySeg7"></div>
-          <div class="pity-seg" id="pitySeg8"></div><div class="pity-seg" id="pitySeg9"></div>
+        <div class="pity-track">
+          <div class="pity-bar" id="pityBar" style="width:0%"></div>
         </div>
+        <div class="pity-label"></div>
       </div>
       <div style="font-size:10px;color:var(--ink-faint);text-align:center;margin-top:4px;" id="pityInfo"></div>
       <div class="btn-row">
@@ -2644,19 +2641,25 @@ function renderHeader() {
   document.getElementById('pullsLeft').textContent = G.pullsLeft;
   document.getElementById('totalPulls').textContent = G.totalPulls;
   
+  // 进度条显示剩余抽卡次数（10次为满格）
+  const maxPulls = 10;
+  const currentPulls = Math.min(G.pullsLeft, maxPulls);
+  const progressPercent = (currentPulls / maxPulls) * 100;
+  document.getElementById('pityBar').style.width = progressPercent + '%';
+
+  // 进度条颜色根据剩余次数变化
+  const bar = document.getElementById('pityBar');
+  if (bar) {
+    if (currentPulls <= 2) bar.style.background = 'var(--red)';
+    else if (currentPulls <= 5) bar.style.background = 'var(--orange)';
+    else bar.style.background = 'var(--green)';
+  }
+
+  // 保底信息显示
   const pitySSR = G.pitySSR || 0;
   const pityUR  = G.pityUR  || 0;
   const toSSR = 50  - pitySSR;
   const toUR  = 100 - pityUR;
-
-  // 10格保底进度条（每10抽一个周期）
-  const segFilled = pitySSR % 10;
-  for (let i = 0; i < 10; i++) {
-    const seg = document.getElementById('pitySeg' + i);
-    if (!seg) continue;
-    seg.className = i < segFilled ? (toSSR <= 10 ? 'pity-seg urgent' : 'pity-seg filled') : 'pity-seg';
-  }
-
   const pi = document.getElementById('pityInfo');
   if (pi) pi.textContent = `再抽 ${toSSR} 次必出紧缺档案 · 再抽 ${toUR} 次必出绝版档案`;
   const plr = document.getElementById('pityLeftRow');
