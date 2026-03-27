@@ -1809,8 +1809,11 @@ function renderTeam() {
       const c = CAREERS.find(x => x.name === name);
       el.className = `team-slot filled ${c.rarity}`;
       // 先插入mini-card，再单独添加关闭按钮
-      el.innerHTML = buildMiniCard(c, 1, false) + 
-        `<button class="team-remove-btn" onclick="event.stopPropagation();toggleTeam('${name}')">×</button>`;
+      const _ch = buildMiniCard(c, 1, false);
+      const _lc = _ch.lastIndexOf('</div>');
+      el.innerHTML = _ch.substring(0, _lc) +
+        `<button class="team-remove-btn" onclick="event.stopPropagation();toggleTeam('${name}')">×</button>` +
+        _ch.substring(_lc);
     } else {
       el.className = 'team-slot empty';
       el.innerHTML = `<div class="slot-no">第${i+1}位</div>`;
