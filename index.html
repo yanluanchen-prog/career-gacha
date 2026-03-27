@@ -110,6 +110,14 @@ body{
   font-family:monospace;
 }
 .pity-wrap{margin-top:3px;}
+.pity-seg{
+  width:24px;height:8px;border-radius:2px;
+  background:rgba(255,255,255,0.1);
+  transition:background 0.2s;
+  border:1px solid rgba(255,255,255,0.08);
+}
+.pity-seg.filled{background:#8B1A2B;}
+.pity-seg.urgent{background:#C84040;}
 .pity-track{
   width:100%;height:5px;
   background:var(--paper-dk);
@@ -1071,10 +1079,13 @@ body{
         </div>
       </div>
       <div class="pity-wrap">
-        <div class="pity-track">
-          <div class="pity-bar" id="pityBar" style="width:0%"></div>
+        <div id="pitySegments" style="display:flex;gap:3px;justify-content:center;margin:6px 0;">
+          <div class="pity-seg" id="pitySeg0"></div><div class="pity-seg" id="pitySeg1"></div>
+          <div class="pity-seg" id="pitySeg2"></div><div class="pity-seg" id="pitySeg3"></div>
+          <div class="pity-seg" id="pitySeg4"></div><div class="pity-seg" id="pitySeg5"></div>
+          <div class="pity-seg" id="pitySeg6"></div><div class="pity-seg" id="pitySeg7"></div>
+          <div class="pity-seg" id="pitySeg8"></div><div class="pity-seg" id="pitySeg9"></div>
         </div>
-        <div class="pity-label"></div>
       </div>
       <div style="font-size:10px;color:var(--ink-faint);text-align:center;margin-top:4px;" id="pityInfo"></div>
       <div class="btn-row">
@@ -1285,7 +1296,7 @@ const BOSSES = [
     taunts:['蒸馏完毕。您的工作经验已永久存入模型权重。','您写过的每一封邮件，都在训练它的继任者。','检测到您的岗位已有完整历史数据，无需真人续任。','您同事五年的工作经验已完成蒸馏。感谢他们的贡献。'],
     cheer:'你撑到了2029年。同事的经验已被提取，但你学会了新技能。',
     failMsg:'你在2028年消失了。同事被蒸馏，你也成了数据的一部分。',
-    specialRule: {type:'solo', desc:'🎯 独角战：只能上阵1张卡牌'},
+    specialRule: {type:'isolationProtocol', desc:'🔒 隔离协议：3张卡都上场，每回合只有1张能出手（轮流 A→B→C→A）'},
     atk:135, def:25, hp:6000,
     crushTypes:['文字类'],
     weakTypes: ['专业类'],
@@ -1303,7 +1314,7 @@ const BOSSES = [
     taunts:['ETA 3分钟，无需消费，永不投诉，差评率0%。','骑手说还有楼梯要爬。我们研发了爬楼机器人。','人力配送成本：28元/单。无人配送成本：2.3元/单。决策很简单。','已为您安排职业再培训：无人机维护工程师。'],
     cheer:'你撑到了2031年。无人中枢优化了一切，但你需要休息。',
     failMsg:'你在2030年被优化掉了。全链路效率提升，你成为了冗余。',
-    specialRule: {type:'rotation', desc:'🔄 轮班制：3张卡轮流出手 A→B→C→A'},
+    specialRule: {type:'isolationProtocol', desc:'🔄 轮班制：3张卡轮流出手 A→B→C→A，每回合只有1张能出手'},
     atk:150, def:35, hp:8500,
     crushTypes:['执行类'],
     weakTypes: ['技术类'],
@@ -1707,7 +1718,7 @@ function buildCard(career, animate) {
       <span class="card-art-icon">${career.icon || '📁'}</span>
       <div class="card-name">${career.name}</div>
       <div class="card-tag">${career.tag}</div>
-      ${career.aiCoverage !== undefined ? `<div style="margin-top:6px;font-size:9px;font-family:monospace;color:var(--ink-faint);letter-spacing:1px;">AI覆盖率 <b style="color:var(--red);font-size:11px;">${career.aiCoverage}%</b></div>` : ''}
+      ${career.aiCoverage !== undefined ? `<div style="margin-top:6px;font-size:9px;font-family:monospace;color:var(--ink-faint);letter-spacing:1px;">抗AI值 <b style="color:var(--green);font-size:11px;">${100-career.aiCoverage}%</b></div>` : ''}
     </div>
     <div class="card-body">
       <div class="card-type-badge">[ ${career.type} ]</div>
@@ -1939,10 +1950,6 @@ function renderBoss() {
 
   const team = G.team.map(n => CAREERS.find(c => c.name === n));
 
-  // 更新卡组疲劳和Boss学习记录
-  updateCardUsage(team);
-  updateBossAdaptation(boss.id, team);
-  
   // Combined team stats（加入卡组疲劳影响）
   const teamHP   = team.reduce((s, c) => s + calcHP(c), 0);
   const teamATK  = team.reduce((s, c) => s + Math.round(getCardATK(c) * getBossMultiplier(boss, c) * getCardFatigueMultiplier(c.name)), 0);
@@ -2077,6 +2084,10 @@ async function runBattle() {
   if (!battleState || battleState.running) return;
   battleState.running = true;
   document.getElementById('fightBtn').disabled = true;
+
+  // 真正出战时才记录疲劳和Boss学习
+  updateCardUsage(battleState.team);
+  updateBossAdaptation(battleState.boss.id, battleState.team);
 
   const {boss} = battleState;
 
@@ -2260,15 +2271,11 @@ async function runBattle() {
       playSound('lose');
       if (navigator.vibrate) navigator.vibrate(500);
       const bossLine = boss.taunts[Math.floor(Math.random()*boss.taunts.length)];
-      battleState.team.forEach(card => {
-        if (G.collection[card.name]) {
-          G.collection[card.name]--;
-          if (G.collection[card.name] <= 0) delete G.collection[card.name];
-        }
-      });
-      G.team = G.team.filter(n => G.collection[n]);
+      // Boss1 失败：只扣1次抽卡，不扣卡牌（新手保护）
+      const ssPenalty = Math.min(1, G.pullsLeft);
+      G.pullsLeft -= ssPenalty;
       saveState();
-      showBattleResult('lose', `❌ ${boss.failMsg}`, boss.quote + '\n\n「' + bossLine + '」\n\n💀 战斗失败：失去「' + lostCards[0] + '」+ ' + penaltyPulls + '次抽卡机会', true);
+      showBattleResult('lose', `❌ ${boss.failMsg}`, boss.quote + '\n\n「' + bossLine + '」\n\n合力伤害不足，进入淘汰程序。-${ssPenalty} 次翻阅机会。', true);
     }
     battleState.running = false;
     return;
@@ -2285,7 +2292,8 @@ async function runBattle() {
       battleState.currentRotation++;
       const activeCard = battleState.team[activeIdx];
       const infAffected = infiltrateTypes.includes(activeCard.type) && activeCard.type !== '绝版类';
-      roundATK = Math.round(getCardATK(activeCard) * (infAffected ? 0.5 : 1.0));
+      const bossMulti = getBossMultiplier(boss, activeCard);
+      roundATK = Math.round(getCardATK(activeCard) * bossMulti * (infAffected ? 0.5 : 1.0));
       if ((G.sameTeamCount||0) >= 3) roundATK = Math.round(roundATK * 0.5);
       if (battleState.interventionActive) {
         roundATK = Math.round(roundATK * 1.5);
@@ -2369,7 +2377,7 @@ function showBattleResult(type, title, detail, showBack, onContinue) {
     <div class="res-title">${title}</div>
     <div class="res-detail" style="white-space:pre-line">${detail}</div>
     <div class="btn-row">
-      ${showBack ? `<button class="btn btn-outline btn-sm" onclick="resetBoss()">← 重新组队</button>` : ''}
+      ${showBack ? `<button class="btn btn-outline btn-sm" onclick="retryBattle()">⚡ 再战一次</button><button class="btn btn-sm" onclick="resetBoss()" style="margin-left:8px;">← 换阵容</button>` : ''}
       ${!showBack && onContinue ? `<button class="btn btn-red btn-sm" id="continueBtn">继续战斗</button>` : ''}
     </div>`;
   if (!showBack && onContinue) {
@@ -2428,6 +2436,23 @@ function nextBoss() {
   document.getElementById('bossSection').style.display = 'none';
   showToast(`${2026+G.bossProgress} 年来了，重新组队！`);
   document.getElementById('teamSection').scrollIntoView({behavior:'smooth'});
+}
+
+function retryBattle() {
+  // 保留当前阵容，重置战斗状态重新进入
+  const el = document.getElementById('battleResult');
+  if (el) el.style.display = 'none';
+  if (battleState) {
+    battleState.bossHPRemain = battleState.boss.hp;
+    battleState.teamHP = battleState.totalMaxHP;
+    battleState.currentRotation = 0;
+    battleState.interventionCD = 0;
+    battleState.interventionActive = false;
+    battleState.running = false;
+    const fightBtn = document.getElementById('fightBtn');
+    if (fightBtn) { fightBtn.disabled = false; }
+    renderBoss(); // 重新渲染备战界面（恢复血条）
+  }
 }
 
 function resetBoss() {
@@ -2622,27 +2647,21 @@ function renderHeader() {
   document.getElementById('pullsLeft').textContent = G.pullsLeft;
   document.getElementById('totalPulls').textContent = G.totalPulls;
   
-  // 进度条显示剩余抽卡次数（10次为满格）
-  const maxPulls = 10; // 最大抽卡次数
-  const currentPulls = Math.min(G.pullsLeft, maxPulls);
-  const progressPercent = (currentPulls / maxPulls) * 100;
-  document.getElementById('pityBar').style.width = progressPercent + '%';
-  
-  // 进度条颜色根据剩余次数变化
-  const bar = document.getElementById('pityBar');
-  if (bar) {
-    if (currentPulls <= 2) bar.style.background = 'var(--red)';      // 红色警告
-    else if (currentPulls <= 5) bar.style.background = 'var(--orange)'; // 橙色提醒
-    else bar.style.background = 'var(--green)';                      // 绿色充足
-  }
-  
-  // 保底信息显示
   const pitySSR = G.pitySSR || 0;
   const pityUR  = G.pityUR  || 0;
   const toSSR = 50  - pitySSR;
   const toUR  = 100 - pityUR;
+
+  // 10格保底进度条（每10抽一个周期）
+  const segFilled = pitySSR % 10;
+  for (let i = 0; i < 10; i++) {
+    const seg = document.getElementById('pitySeg' + i);
+    if (!seg) continue;
+    seg.className = i < segFilled ? (toSSR <= 10 ? 'pity-seg urgent' : 'pity-seg filled') : 'pity-seg';
+  }
+
   const pi = document.getElementById('pityInfo');
-  if (pi) pi.textContent = `再抽 ${toSSR} 次必出急招 · 再抽 ${toUR} 次必出绝版`;
+  if (pi) pi.textContent = `再抽 ${toSSR} 次必出紧缺档案 · 再抽 ${toUR} 次必出绝版档案`;
   const plr = document.getElementById('pityLeftRow');
   if (plr) plr.textContent = `SSR保底：${pitySSR}/50`;
 }
