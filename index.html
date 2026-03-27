@@ -830,23 +830,42 @@ body{
 
 /* ── 卡牌详情底部弹窗 ──────────────────────────────────── */
 #cardDetailModal {
-  position:fixed;inset:0;background:rgba(0,0,0,0.65);
+  position:fixed;inset:0;background:rgba(0,0,0,0.7);
   z-index:8500;display:flex;align-items:flex-end;justify-content:center;
   opacity:0;pointer-events:none;transition:opacity 0.25s;
 }
 #cardDetailModal.open { opacity:1;pointer-events:all; }
 #cardDetailInner {
-  background:var(--paper);border-radius:16px 16px 0 0;
-  padding:16px 16px 32px;width:100%;max-width:400px;
-  max-height:82vh;overflow-y:auto;
+  background:var(--paper);border-radius:20px 20px 0 0;
+  padding:20px 20px 40px;width:100%;max-width:420px;
+  max-height:90vh;overflow-y:auto;
   transform:translateY(100%);
   transition:transform 0.3s cubic-bezier(0.22,1,0.36,1);
-  display:flex;flex-direction:column;align-items:center;gap:12px;
+  display:flex;flex-direction:column;align-items:center;gap:16px;
 }
 #cardDetailModal.open #cardDetailInner { transform:translateY(0); }
-#cardDetailInner .card { width:140px; max-width:170px; }
-.card-detail-actions { display:flex;gap:10px;width:100%;max-width:260px; }
-.card-detail-actions .btn { flex:1;font-size:13px;padding:10px 0; }
+#cardDetailInner .card { 
+  width:220px; 
+  max-width:260px;
+  transform:scale(1);
+}
+#cardDetailInner .card-stats {
+  font-size:12px;
+  padding:10px 14px;
+}
+.card-detail-actions { 
+  display:flex;
+  gap:10px;
+  width:100%;
+  max-width:320px;
+  margin-top:8px;
+}
+.card-detail-actions .btn { 
+  flex:1;
+  font-size:13px;
+  padding:12px 0;
+  letter-spacing:1px;
+}
 
 /* ── 抽卡结果覆盖层 ──────────────────────────────────────── */
 #drawRevealOverlay {
@@ -2608,24 +2627,40 @@ function renderHeader() {
 function showCardDetail(name) {
   const career = CAREERS.find(c => c.name === name);
   if (!career) return;
+  
+  // 显示完整卡牌（放大版）
   document.getElementById('cardDetailFace').innerHTML = renderCardFace(career);
+  
   const inTeam = G.team.includes(name);
   const teamFull = G.team.length >= 3;
+  const count = G.collection[name] || 0;
   const actions = document.getElementById('cardDetailActions');
-  actions.style.flexDirection = 'column';
-  actions.style.gap = '8px';
+  
+  // 三个按钮：出战、放回、分享
+  let btnHtml = '';
+  
+  // 出战按钮
   if (inTeam) {
-    actions.innerHTML = `
-      <div style="font-size:11px;color:var(--ink-lt);text-align:center;letter-spacing:1px;">已在战斗队伍中</div>
-      <button class="btn btn-sm" style="width:100%" onclick="toggleTeam('${name}');closeCardDetail()">✕ 从队伍移除</button>`;
+    btnHtml += `<button class="btn btn-sm" style="flex:1" onclick="toggleTeam('${name}');closeCardDetail();showToast('${name} 已移出队伍')">✕ 移出队伍</button>`;
   } else if (teamFull) {
-    actions.innerHTML = `
-      <div style="font-size:11px;color:var(--red);text-align:center;letter-spacing:1px;padding:4px 0;">队伍已满·需先移除一位成员</div>
-      <div style="display:flex;gap:8px;width:100%">${G.team.map(n=>`<button class="btn btn-sm btn-outline" style="flex:1;font-size:10px" onclick="toggleTeam('${n}');closeCardDetail();showCardDetail('${name}')">移除<br>${n}</button>`).join('')}</div>`;
+    btnHtml += `<button class="btn btn-sm" style="flex:1;opacity:0.5;cursor:not-allowed;" disabled>队伍已满</button>`;
   } else {
-    actions.innerHTML = `
-      <button class="btn btn-red btn-sm" style="width:100%" onclick="toggleTeam('${name}');closeCardDetail()">加入战斗队伍 →</button>`;
+    btnHtml += `<button class="btn btn-red btn-sm" style="flex:1" onclick="toggleTeam('${name}');closeCardDetail();${career.rarity==='UR'?"showToast('⚡ 绝版秘技已解锁！用完即焚')":"showToast('${name} 加入队伍！')"}">⚔ 出战</button>`;
   }
+  
+  // 放回按钮（关闭弹窗）
+  btnHtml += `<button class="btn btn-outline btn-sm" style="flex:1" onclick="closeCardDetail()">↩ 放回</button>`;
+  
+  // 分享按钮（仅当有重复卡时可用）
+  if (count > 1) {
+    btnHtml += `<button class="btn btn-outline btn-sm" style="flex:1" onclick="showExchangeCode('${name}', ${count});closeCardDetail()">↗ 分享</button>`;
+  } else {
+    btnHtml += `<button class="btn btn-outline btn-sm" style="flex:1;opacity:0.4;cursor:not-allowed;" disabled title="需要重复卡才能分享">↗ 分享</button>`;
+  }
+  
+  actions.innerHTML = `<div style="display:flex;gap:8px;width:100%;">${btnHtml}</div>`;
+  actions.style.flexDirection = 'row';
+  
   document.getElementById('cardDetailModal').classList.add('open');
 }
 function closeCardDetail(e) {
@@ -2662,28 +2697,12 @@ function renderCollection() {
   const total  = CAREERS.length;
   const countEl = document.getElementById('collectionCount');
   if (countEl) countEl.textContent = `已收集 ${unique} / ${total}`;
-  // 点击 = 加入/移出队伍
+  // 点击 = 打开卡牌详情弹窗
   grid.querySelectorAll('.mini-card[data-name]').forEach(el => {
     el.addEventListener('click', function() {
       const name = this.getAttribute('data-name');
       if (!name) return;
-      if (G.team.includes(name)) {
-        toggleTeam(name);
-        playSound('removeTeam');
-        showToast(`${name} 已移出队伍`);
-      } else if (G.team.length >= 3) {
-        showToast('队伍已满，请点 × 移除成员');
-      } else {
-        toggleTeam(name);
-        const career = CAREERS.find(x => x.name === name);
-        if (career?.rarity === 'UR') {
-          playSound('reveal_UR');
-          showToast('⚡ 绝版秘技已解锁！出战任意一关即可秒杀AI浪潮，但此卡用完即焚。');
-        } else {
-          playSound('addTeam');
-          showToast(`${name} 加入队伍！`);
-        }
-      }
+      showCardDetail(name);
     });
   });
 
@@ -2713,31 +2732,14 @@ function renderCollection() {
     museumDiv.innerHTML = '';
   }
 
-  // 为重复卡添加分享按钮
+  // 右键菜单保留（可选）
   grid.querySelectorAll('.mini-card').forEach(el => {
     const name = el.querySelector('.mini-name').textContent;
     const count = G.collection[name] || 0;
     if (count > 1) {
-      el.style.position = 'relative';
-      // 添加分享按钮（小箭头图标）
-      const shareBtn = document.createElement('button');
-      shareBtn.innerHTML = '↗';
-      shareBtn.title = '分享多余卡牌';
-      shareBtn.style.cssText = 'position:absolute;top:2px;right:2px;width:18px;height:18px;border-radius:50%;background:rgba(184,90,0,0.9);color:#fff;border:none;font-size:10px;cursor:pointer;z-index:10;display:flex;align-items:center;justify-content:center;padding:0;opacity:0.9;transition:opacity 0.2s,transform 0.2s;';
-      shareBtn.onmouseenter = () => { shareBtn.style.opacity = '1'; shareBtn.style.transform = 'scale(1.1)'; };
-      shareBtn.onmouseleave = () => { shareBtn.style.opacity = '0.9'; shareBtn.style.transform = 'scale(1)'; };
-      shareBtn.onclick = (e) => {
-        e.stopPropagation(); // 防止触发卡牌选择
-        showExchangeCode(name, count);
-      };
-      el.appendChild(shareBtn);
-      
-      // 保留长按/右键作为备选方式
       el.addEventListener('contextmenu', e => {
         e.preventDefault();
-        if (count > 1) {
-          showExchangeCode(name, count);
-        }
+        showExchangeCode(name, count);
       });
     }
   });
